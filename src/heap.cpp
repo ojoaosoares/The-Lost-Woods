@@ -55,15 +55,16 @@ int Heap::Remover()
 void Heap::HeapifyPorBaixo(int posicao)
 {
     int atual = posicao, 
-    ancestral = GetAncestral(posicao);
+    ancestral = GetAncestral(atual);
 
-    if (atual > 0 && data[atual] < data[ancestral])
+    while (atual > 0 && data[atual] < data[ancestral])
     {
         int temp = data[atual];
         data[atual] = data[ancestral];
         data[ancestral] = temp;
 
-        HeapifyPorBaixo(ancestral);
+        int atual = ancestral;
+        ancestral = GetAncestral(atual);
     }   
 }
 
