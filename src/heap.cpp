@@ -63,7 +63,7 @@ void Heap::HeapifyPorBaixo(int posicao)
         data[atual] = data[ancestral];
         data[ancestral] = temp;
 
-        int atual = ancestral;
+        atual = ancestral;
         ancestral = GetAncestral(atual);
     }   
 }
@@ -83,13 +83,23 @@ void Heap::HeapifyPorCima(int posicao)
 
     else menor = data[esquerda] < data[direita] ? esquerda : direita;
 
-    if (data[atual] > data[menor])
+    while (data[atual] > data[menor])
     {
         int temp = data[atual];
         data[atual] = data[menor];
         data[menor] = temp;
 
-        HeapifyPorCima(menor);
+        atual = menor;
+        esquerda = GetSucessorEsq(atual);
+        direita = GetSucessorDir(atual);
+
+        if (esquerda >= tamanho)
+            return;
+
+        else if (direita >= tamanho)
+            menor = esquerda;
+
+        else menor = data[esquerda] < data[direita] ? esquerda : direita;
     }
 
 }
