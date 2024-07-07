@@ -56,19 +56,31 @@ void Heap<T, Comparator>::insert(long long key, T value) {
 template <typename T, class Comparator>
 void Heap<T, Comparator>::update(long long key, T value) {
 
-    if(!contains(key))
+    if (!contains(key))
         throw "Index doesn't exist";
+
+    if (comp(value, data[indexes[key]].second))
+    {
+        data[indexes[key]].second = value;
+        heapifyDown(indexes[key]);
+    }
+
+    else
+    {
+        data[indexes[key]].second = value;
+        heapifyUp(indexes[key]);
+    }
     
-    data[indexes[key]].second = value;
+    
 }
 
 template <typename T, class Comparator>
-T Heap<T, Comparator>::remove()
+std::pair<long long, T> Heap<T, Comparator>::remove()
 {
     if (empty())
         throw "Heap is empty";
 
-    T temp = data[0].second;
+    std::pair<long long, T> temp = data[0];
     indexes[data[0].first] = -1; size--;
 
     if(!empty())
@@ -79,7 +91,7 @@ T Heap<T, Comparator>::remove()
         heapifyUp(0);
     }
 
-    return temp.second;
+    return temp;
 }
 
 
@@ -143,3 +155,6 @@ void Heap<T, Comparator>::heapifyUp(long long pos)
     }
 
 }
+
+
+template class Heap<long long, std::less<long long>>;
