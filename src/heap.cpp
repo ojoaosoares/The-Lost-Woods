@@ -50,7 +50,8 @@ T Heap<T, Comparator>::remove()
     if (empty())
         throw "Heap is empty";
 
-    T temp = data[0]; size--;
+    T temp = data[0].second;
+    indexes[data[0].first] = -1; size--;
 
     if(!empty())
     {
@@ -58,8 +59,9 @@ T Heap<T, Comparator>::remove()
         indexes[data[size].first] = 0;
 
         heapifyUp(0);
-    }    
-    return temp;
+    }
+
+    return temp.second;
 }
 
 
