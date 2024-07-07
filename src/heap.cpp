@@ -1,56 +1,54 @@
 #include "heap.hpp"
 
 
-template <typename T> 
-Heap<T>::Heap(long long maxsize) : size(0)  {
+template <typename T, class Comparator>
+Heap<T, Comparator>::Heap(long long maxsize) : size(0)  {
     data = new long long[maxsize];
 }
 
-template <typename T> 
-Heap<T>::~Heap() {
+template <typename T, class Comparator>
+Heap<T, Comparator>::~Heap() {
     delete[] data;
 }
 
-template <typename T> 
-long long Heap<T>::getFather(long long i){
+template <typename T, class Comparator>
+long long Heap<T, Comparator>::getFather(long long i){
     return (i-1)/2;
 }
 
-template <typename T> 
-long long Heap<T>::getLeftChild(long long i){
+template <typename T, class Comparator>
+long long Heap<T, Comparator>::getLeftChild(long long i){
     return 2 * i + 1;
 }
 
-template <typename T> 
-long long Heap<T>::getRightChild(long long i){
+template <typename T, class Comparator>
+long long Heap<T, Comparator>::getRightChild(long long i){
     return 2 * i + 2;
 }
 
-template <typename T> 
-bool Heap<T>::empty()
+template <typename T, class Comparator>
+bool Heap<T, Comparator>::empty()
 {
     return size == 0;
 }
 
-template <typename T> 
-void Heap<T>::insert(T x) {
+template <typename T, class Comparator>
+void Heap<T, Comparator>::insert(T x) {
 
     data[size] = x;
 
     heapifyDown(size);
 
     size++;
-        
-    
 }
 
-template <typename T> 
-long long Heap<T>::remove()
+template <typename T, class Comparator>
+T Heap<T, Comparator>::remove()
 {
     if (empty())
         throw "Heap is empty";
 
-    long long temp = data[0]; size--;
+    T temp = data[0]; size--;
 
     if(!empty())
     {
@@ -62,15 +60,15 @@ long long Heap<T>::remove()
 }
 
 
-template <typename T> 
-void Heap<T>::heapifyDown(long long pos)
+template <typename T, class Comparator>
+void Heap<T, Comparator>::heapifyDown(long long pos)
 {
     long long current = pos, 
     father = getFather(current);
 
-    while (current > 0 && data[current] < data[father])
+    while (current > 0 && comp(data[current], data[father]))
     {
-        long long temp = data[current];
+        T temp = data[current];
         data[current] = data[father];
         data[father] = temp;
 
@@ -79,8 +77,8 @@ void Heap<T>::heapifyDown(long long pos)
     }   
 }
 
-template <typename T> 
-void Heap<T>::heapifyUp(long long pos)
+template <typename T, class Comparator>
+void Heap<T, Comparator>::heapifyUp(long long pos)
 {
     long long current = pos, smallest_child,
     left = getLeftChild(current),
@@ -94,9 +92,9 @@ void Heap<T>::heapifyUp(long long pos)
 
     else smallest_child = data[left] < data[right] ? left : right;
 
-    while (data[current] > data[smallest_child])
+    while (comp(data[smallest_child], data[current]))
     {
-        long long temp = data[current];
+        T temp = data[current];
         data[current] = data[smallest_child];
         data[smallest_child] = temp;
 
