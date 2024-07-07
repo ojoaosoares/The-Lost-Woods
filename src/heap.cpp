@@ -3,12 +3,14 @@
 
 template <typename T, class Comparator>
 Heap<T, Comparator>::Heap(long long maxsize) : size(0)  {
-    data = new long long[maxsize];
+    data = new T[maxsize]; indexes = new long long[maxsize];
+    for (long long i = 0; i < maxsize; i++) indexes[i] = -1;
 }
 
 template <typename T, class Comparator>
 Heap<T, Comparator>::~Heap() {
     delete[] data;
+    delete[] indexes;
 }
 
 template <typename T, class Comparator>
@@ -33,7 +35,7 @@ bool Heap<T, Comparator>::empty()
 }
 
 template <typename T, class Comparator>
-void Heap<T, Comparator>::insert(T x) {
+void Heap<T, Comparator>::insert(long long key, T value) {
 
     data[size] = x;
 
@@ -68,7 +70,7 @@ void Heap<T, Comparator>::heapifyDown(long long pos)
 
     while (current > 0 && comp(data[current], data[father]))
     {
-        T temp = data[current];
+        std::pair<long long, T> temp = data[current];
         data[current] = data[father];
         data[father] = temp;
 
@@ -90,11 +92,11 @@ void Heap<T, Comparator>::heapifyUp(long long pos)
     else if (right >= size)
         smallest_child = left;
 
-    else smallest_child = data[left] < data[right] ? left : right;
+    else smallest_child = comp(data[left], data[right]) ? left : right;
 
     while (comp(data[smallest_child], data[current]))
     {
-        T temp = data[current];
+        std::pair<long long, T> temp = data[current];
         data[current] = data[smallest_child];
         data[smallest_child] = temp;
 
@@ -108,7 +110,7 @@ void Heap<T, Comparator>::heapifyUp(long long pos)
         else if (right >= size)
             smallest_child = left;
 
-        else smallest_child = data[left] < data[right] ? left : right;
+        else smallest_child = comp(data[left], data[right]) ? left : right;
     }
 
 }

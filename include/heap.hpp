@@ -11,7 +11,7 @@ class Heap{
         ~Heap();
 
 
-        void insert(T x);
+        void insert(long long key, T value);
         T remove();
 
         bool empty();
@@ -24,7 +24,8 @@ class Heap{
         Comparator comp;
 
         long long size;
-        T* data;
+        std::pair<long long, T> *data;
+        long long *indexes;
 
         void heapifyDown(long long pos);
         void heapifyUp(long long pos);
