@@ -80,7 +80,7 @@ void Heap<T, Comparator>::heapifyDown(long long pos)
     long long current = pos, 
     father = getFather(current);
 
-    while (current > 0 && comp(data[current], data[father]))
+    while (current > 0 && comp(data[current].second, data[father].second))
     {
         std::pair<long long, T> temp = data[current];
         data[current] = data[father];
@@ -108,9 +108,9 @@ void Heap<T, Comparator>::heapifyUp(long long pos)
     else if (right >= size)
         smallest_child = left;
 
-    else smallest_child = comp(data[left], data[right]) ? left : right;
+    else smallest_child = comp(data[left].second, data[right].second) ? left : right;
 
-    while (comp(data[smallest_child], data[current]))
+    while (comp(data[smallest_child].second, data[current].second))
     {
         std::pair<long long, T> temp = data[current];
         data[current] = data[smallest_child];
@@ -130,7 +130,7 @@ void Heap<T, Comparator>::heapifyUp(long long pos)
         else if (right >= size)
             smallest_child = left;
 
-        else smallest_child = comp(data[left], data[right]) ? left : right;
+        else smallest_child = comp(data[left].second, data[right].second) ? left : right;
     }
 
 }
