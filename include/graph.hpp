@@ -10,6 +10,7 @@ class Graph
     private:
         T *vertices;
         SinglyLinkedListUnordered<std::pair<long long, Weight>> *adjacencyLists;
+        long long vertices_number;
         
     public:
         Graph(long long v);
@@ -17,6 +18,7 @@ class Graph
 
         void insertVertice(long long index, T item);
         void insertEdge(long long v1, long long v2, Weight W);
+        void removeEdge(long long v1, long long v2, Weight W);
         bool isAdjacent(long long v1, long long v2, Weight W);
 
 };
