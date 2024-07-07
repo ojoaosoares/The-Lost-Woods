@@ -15,8 +15,8 @@ class Graph
         Graph(long long v);
         ~Graph();
 
-        insertVertice(long long index, T item);
-        insertEdge(long long v1, long long v2);
+        void insertVertice(long long index, T item);
+        void insertEdge(long long v1, long long v2);
 
 };
 
