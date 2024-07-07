@@ -37,7 +37,10 @@ bool Heap<T, Comparator>::empty()
 template <typename T, class Comparator>
 void Heap<T, Comparator>::insert(long long key, T value) {
 
-    data[size] = x;
+    data[size].first = key;
+    data[size].second = value;
+
+    indexes[key] = size;
 
     heapifyDown(size);
 
