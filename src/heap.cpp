@@ -3,7 +3,7 @@
 
 template <typename T, class Comparator>
 Heap<T, Comparator>::Heap(long long maxsize) : size(0)  {
-    data = new T[maxsize]; indexes = new long long[maxsize];
+    data = new std::pair<long long, T>[maxsize]; indexes = new long long[maxsize];
     for (long long i = 0; i < maxsize; i++) indexes[i] = -1;
 }
 
@@ -55,6 +55,7 @@ T Heap<T, Comparator>::remove()
     if(!empty())
     {
         data[0] = data[size];
+        indexes[data[size].first] = 0;
 
         heapifyUp(0);
     }    
@@ -73,6 +74,10 @@ void Heap<T, Comparator>::heapifyDown(long long pos)
         std::pair<long long, T> temp = data[current];
         data[current] = data[father];
         data[father] = temp;
+
+        long long temp_index = indexes[data[current].first];
+        indexes[data[current].first] = indexes[data[father].first];
+        indexes[data[father].first] = temp_index;
 
         current = father;
         father = getFather(current);
@@ -99,6 +104,10 @@ void Heap<T, Comparator>::heapifyUp(long long pos)
         std::pair<long long, T> temp = data[current];
         data[current] = data[smallest_child];
         data[smallest_child] = temp;
+
+        long long temp_index = indexes[data[current].first];
+        indexes[data[current].first] = indexes[data[smallest_child].first];
+        indexes[data[smallest_child].first] = temp_index;
 
         current = smallest_child;
         left = getLeftChild(current);
