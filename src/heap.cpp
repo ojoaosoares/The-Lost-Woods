@@ -1,6 +1,5 @@
 #include "heap.hpp"
 
-
 template <typename T, class Comparator>
 Heap<T, Comparator>::Heap(long long maxsize) : size(0)  {
     data = new std::pair<long long, T>[maxsize]; indexes = new long long[maxsize];
@@ -33,6 +32,13 @@ bool Heap<T, Comparator>::empty()
 {
     return size == 0;
 }
+
+template <typename T, class Comparator>
+bool Heap<T, Comparator>::contains(long long key)
+{
+    return indexes[key] != -1;
+}
+
 
 template <typename T, class Comparator>
 void Heap<T, Comparator>::insert(long long key, T value) {
