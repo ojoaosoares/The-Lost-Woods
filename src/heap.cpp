@@ -1,105 +1,116 @@
 #include "heap.hpp"
 
-Heap::Heap(int maxsize) {
-    data = new int[maxsize];
-    tamanho = 0;
+
+template <typename T> 
+Heap<T>::Heap(long long maxsize) : size(0)  {
+    data = new long long[maxsize];
 }
 
-Heap::~Heap() {
+template <typename T> 
+Heap<T>::~Heap() {
     delete[] data;
 }
 
-int Heap::GetAncestral(int i){
+template <typename T> 
+long long Heap<T>::getFather(long long i){
     return (i-1)/2;
 }
-int Heap::GetSucessorEsq(int i){
+
+template <typename T> 
+long long Heap<T>::getLeftChild(long long i){
     return 2 * i + 1;
 }
-int Heap::GetSucessorDir(int i){
+
+template <typename T> 
+long long Heap<T>::getRightChild(long long i){
     return 2 * i + 2;
 }
 
-bool Heap::Vazio()
+template <typename T> 
+bool Heap<T>::empty()
 {
-    return tamanho == 0;
+    return size == 0;
 }
 
-void Heap::Inserir(int x) {
+template <typename T> 
+void Heap<T>::insert(T x) {
 
-    data[tamanho] = x;
+    data[size] = x;
 
-    HeapifyPorBaixo(tamanho);
+    heapifyDown(size);
 
-    tamanho++;
+    size++;
         
     
 }
 
-int Heap::Remover()
+template <typename T> 
+long long Heap<T>::remove()
 {
-    if (Vazio())
-        throw "O Heap está vazio";
+    if (empty())
+        throw "Heap is empty";
 
-    int temp = data[0]; tamanho--;
+    long long temp = data[0]; size--;
 
-    if(!Vazio())
+    if(!empty())
     {
-        data[0] = data[tamanho];
+        data[0] = data[size];
 
-        HeapifyPorCima(0);
+        heapifyUp(0);
     }    
     return temp;
 }
 
 
-void Heap::HeapifyPorBaixo(int posicao)
+template <typename T> 
+void Heap<T>::heapifyDown(long long pos)
 {
-    int atual = posicao, 
-    ancestral = GetAncestral(atual);
+    long long current = pos, 
+    father = getFather(current);
 
-    while (atual > 0 && data[atual] < data[ancestral])
+    while (current > 0 && data[current] < data[father])
     {
-        int temp = data[atual];
-        data[atual] = data[ancestral];
-        data[ancestral] = temp;
+        long long temp = data[current];
+        data[current] = data[father];
+        data[father] = temp;
 
-        atual = ancestral;
-        ancestral = GetAncestral(atual);
+        current = father;
+        father = getFather(current);
     }   
 }
 
-
-void Heap::HeapifyPorCima(int posicao)
+template <typename T> 
+void Heap<T>::heapifyUp(long long pos)
 {
-    int atual = posicao, menor,
-    esquerda = GetSucessorEsq(atual),
-    direita = GetSucessorDir(atual);
+    long long current = pos, smallest_child,
+    left = getLeftChild(current),
+    right = getRightChild(current);
 
-    if (esquerda >= tamanho)
+    if (left >= size)
         return;
 
-    else if (direita >= tamanho)
-        menor = esquerda;
+    else if (right >= size)
+        smallest_child = left;
 
-    else menor = data[esquerda] < data[direita] ? esquerda : direita;
+    else smallest_child = data[left] < data[right] ? left : right;
 
-    while (data[atual] > data[menor])
+    while (data[current] > data[smallest_child])
     {
-        int temp = data[atual];
-        data[atual] = data[menor];
-        data[menor] = temp;
+        long long temp = data[current];
+        data[current] = data[smallest_child];
+        data[smallest_child] = temp;
 
-        atual = menor;
-        esquerda = GetSucessorEsq(atual);
-        direita = GetSucessorDir(atual);
+        current = smallest_child;
+        left = getLeftChild(current);
+        right = getRightChild(current);
 
-        if (esquerda >= tamanho)
+        if (left >= size)
             return;
 
-        else if (direita >= tamanho)
-            menor = esquerda;
+        else if (right >= size)
+            smallest_child = left;
 
-        else menor = data[esquerda] < data[direita] ? esquerda : direita;
+        else smallest_child = data[left] < data[right] ? left : right;
     }
 
 }

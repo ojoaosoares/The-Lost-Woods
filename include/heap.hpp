@@ -1,35 +1,29 @@
 #ifndef HEAP_HPP
 #define HEAP_HPP
 
-/*  Você pode inserir os includes necessários para que sua classe funcione.
- * Alteracoes no arquivo so podem ser feitas quando explicitadas
- */
-
+template <typename T>
 class Heap{
 
     public:
-        Heap(int maxsize);
+        Heap(long long maxsize);
         ~Heap();
 
-        void Inserir(int x);
-        int Remover();
+        void insert(T x);
+        long long remove();
 
-        //Retorna true caso o heap esteja vazio, false caso contrário.
-        bool Vazio();
+        
+        bool empty();
 
     private:
-        int GetAncestral(int posicao);
-        int GetSucessorEsq(int posicao);
-        int GetSucessorDir(int posicao);
+        long long getFather(long long pos);
+        long long getLeftChild(long long pos);
+        long long getRightChild(long long pos);
 
-        int tamanho;
-        int* data;
+        long long size;
+        T* data;
 
-        /* Funções necessárias para implementar o Heapify recursivo
-         * Você pode apagar elas caso decida implementar o Heapify iterativo
-         */
-        void HeapifyPorBaixo(int posicao);
-        void HeapifyPorCima(int posicao);
+        void heapifyDown(long long pos);
+        void heapifyUp(long long pos);
 };
 
 
