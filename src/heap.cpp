@@ -54,6 +54,15 @@ void Heap<T, Comparator>::insert(long long key, T value) {
 }
 
 template <typename T, class Comparator>
+void Heap<T, Comparator>::update(long long key, T value) {
+
+    if(!contains(key))
+        throw "Index doesn't exist";
+    
+    data[indexes[key]].second = value;
+}
+
+template <typename T, class Comparator>
 T Heap<T, Comparator>::remove()
 {
     if (empty())
