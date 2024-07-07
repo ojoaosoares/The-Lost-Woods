@@ -13,7 +13,7 @@ class Heap{
 
         void insert(long long key, T value);
         void update(long long key, T value);
-        T remove();
+        std::pair<long long, T> remove();
 
         bool empty();
 
