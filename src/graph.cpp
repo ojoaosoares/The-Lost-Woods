@@ -24,3 +24,9 @@ void Graph<T, Weight>::insertEdge(long long v1, long long v2, Weight w) {
     adjacencyLists[v1].insertEnd(newEdge);
 }
 
+
+template <typename T, typename Weight>
+bool Graph<T, Weight>::isAdjacent(long long v1, long long v2, Weight W) {
+    std::pair<long long, Weight> targetEdge(v1, w);
+    return adjacencyLists[v1].search(targetEdge) != -1;
+}

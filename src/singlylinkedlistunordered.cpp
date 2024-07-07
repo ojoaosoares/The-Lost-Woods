@@ -113,3 +113,7 @@ int SinglyLinkedListUnordered<T>::search(T item) const
 template class SinglyLinkedListUnordered<long long>;
 template class SinglyLinkedListUnordered<int>;
 template class SinglyLinkedListUnordered<double>;
+
+template class SinglyLinkedListUnordered<std::pair<long long, long long>>;
+template class SinglyLinkedListUnordered<std::pair<long long, int>>;
+template class SinglyLinkedListUnordered<std::pair<long long, double>>;
