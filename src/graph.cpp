@@ -17,3 +17,9 @@ void Graph<T>::insertVertice(long long index, T item) {
     vertices[index] = item;
 }
 
+
+template <typename T>
+void Graph<T>::insertEdge(long long v1, long long v2) {
+    adjacencyLists[v1].insertEnd(v2);
+}
+
