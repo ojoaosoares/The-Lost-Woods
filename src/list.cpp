@@ -26,3 +26,8 @@ bool List<T>::Empty() const
 template class List<long long>;
 template class List<int>;
 template class List<double>;
+
+template class List<std::pair<long long, long long>>;
+template class List<std::pair<long long, int>>;
+template class List<std::pair<long long, double>>;
+template class List<std::pair<double, double>>;

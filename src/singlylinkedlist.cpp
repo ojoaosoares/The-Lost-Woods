@@ -148,27 +148,6 @@ void SinglyLinkedList<T>::copyArray(T* array, int size)
 }
 
 template <typename T>
-void SinglyLinkedList<T>::printList() const
-{
-    // Output : string, the array is printed in form of "a1 a2 a3 ... an";
-    // Complexity : O(n)
-
-    if(this->Empty())
-        throw "ERROR: Empty list";
-
-    Node<T>* p = head;
-
-    while (p != nullptr)
-    {
-        std::cout << p->item << ' ';
-        p = p->next;
-    }
-    
-    std::cout << '\n';    
-}
-
-
-template <typename T>
 void SinglyLinkedList<T>::clear()
 {
     // Complexity : O(n)
@@ -192,3 +171,8 @@ void SinglyLinkedList<T>::clear()
 template class SinglyLinkedList<long long>;
 template class SinglyLinkedList<int>;
 template class SinglyLinkedList<double>;
+
+template class SinglyLinkedList<std::pair<long long, long long>>;
+template class SinglyLinkedList<std::pair<long long, int>>;
+template class SinglyLinkedList<std::pair<long long, double>>;
+template class SinglyLinkedList<std::pair<double, double>>;
