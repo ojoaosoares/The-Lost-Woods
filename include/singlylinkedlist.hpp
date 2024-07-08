@@ -28,7 +28,6 @@ class SinglyLinkedList : public  List<T>
         virtual T removeIndex(int index) override;
         virtual int search(T item) const = 0;
         virtual void copyArray(T* array, int size);
-        virtual void printList() const override;
         virtual void clear() override;
 
 };

@@ -117,3 +117,4 @@ template class SinglyLinkedListUnordered<double>;
 template class SinglyLinkedListUnordered<std::pair<long long, long long>>;
 template class SinglyLinkedListUnordered<std::pair<long long, int>>;
 template class SinglyLinkedListUnordered<std::pair<long long, double>>;
+template class SinglyLinkedListUnordered<std::pair<double, double>>;

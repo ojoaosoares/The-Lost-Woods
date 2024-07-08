@@ -1,22 +1,38 @@
 #include <iostream>
 #include "heap.hpp"
+#include "graph.hpp"
+#include "euclidean_distance.hpp"
 
 int main() {
 
     long long n; std::cin >> n;
 
-    Heap<long long> heap(n+1);
+    Graph<std::pair<double, double>, double> graph(n);
 
-    for (long long i = 0; i < n; i++)
+    for (size_t i = 0; i < n; i++)
     {
-        long long x; std::cin >> x;
-        heap.insert(i, x);
+        std::pair<double, double> coor;
+        std::cin >> coor.first >> coor.second;
+
+        graph.insertVertice(i, coor);
+    }
+    
+    long long m; std::cin >> m;
+
+    for (size_t i = 0; i < m; i++)
+    {
+        std::pair<long long, long long> vertices;
+        std::cin >> vertices.first >> vertices.second;
+
+        graph.insertEdge(vertices.first, vertices.second, euclidean_distance(graph.getVertice(vertices.first), graph.getVertice(vertices.second)));
     }
 
-    for (long long i = 0; i < n; i++)
+    for (size_t i = 0; i < n; i++)
     {
-        std::pair<long long, long long> values = heap.remove();
-        std::cout << values.second << ' ' << values.first << '\n';
-    }
+        SinglyLinkedListUnordered<std::pair<long long, double>> *neigh = graph.getNeighboors(i);
 
+        for (auto it = neigh->begin(); it != neigh->end(); it++)
+            std::cout << i << ' ' << (*it).first << ' ' << (*it).second << '\n';
+        
+    }
 }

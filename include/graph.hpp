@@ -17,9 +17,12 @@ class Graph
         ~Graph();
 
         void insertVertice(long long index, T item);
+        void removeVertice(long long index);
+        T getVertice(long long index);
+        SinglyLinkedListUnordered<std::pair<long long, Weight>>* getNeighboors(long long v);
         void insertEdge(long long v1, long long v2, Weight W);
-        void removeEdge(long long v1, long long v2, Weight W);
-        bool isAdjacent(long long v1, long long v2, Weight W);
+        void removeEdge(long long v1, long long v2);
+        bool isAdjacent(long long v1, long long v2);
 
 };
 

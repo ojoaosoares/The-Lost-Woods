@@ -18,7 +18,6 @@ class List
         virtual T removeEnd() = 0;
         virtual T removeIndex(int index) = 0;
         virtual int search(T item) const = 0;
-        virtual void printList() const = 0;
         virtual void clear() = 0;
 
 };
