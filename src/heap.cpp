@@ -105,13 +105,13 @@ void Heap<Key, Value, Comparator, Hash>::heapifyDown(long long pos)
 
     while (current > 0 && comp(data[current], data[father]))
     {
-        T temp = data[current];
+        Tuple<Key, Value> temp = data[current];
         data[current] = data[father];
         data[father] = temp;
 
-        long long temp_index = indexes[data[current].first];
-        indexes[data[current].first] = indexes[data[father].first];
-        indexes[data[father].first] = temp_index;
+        long long temp_index = indexes[hash(data[current].first, maxSize)];
+        indexes[hash(data[current].first, maxSize)] = indexes[hash(data[father].first, maxSize)];
+        indexes[hash(data[father].first, maxSize)] = temp_index;
 
         current = father;
         father = getFather(current);
