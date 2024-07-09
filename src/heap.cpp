@@ -41,6 +41,9 @@ bool Heap<Key, Value, Comparator, Hash>::contains(Key key)
 template <typename Key, typename Value, class Comparator, class Hash>
 void Heap<Key, Value, Comparator, Hash>::insert(Key key, Value value) {
 
+    if (size == maxSize)
+        throw "Heap is full";
+
     data[size].first = key;
     data[size].second = value;
 
@@ -52,7 +55,7 @@ void Heap<Key, Value, Comparator, Hash>::insert(Key key, Value value) {
 }
 
 template <typename Key, typename Value, class Comparator, class Hash>
-void Heap<Key, Value, Comparator, Hash>::update(long long key, T value) {
+void Heap<Key, Value, Comparator, Hash>::update(Key key, Value value) {
 
     if (!contains(key))
         throw "Index doesn't exist";
