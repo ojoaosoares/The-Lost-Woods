@@ -1,46 +1,45 @@
 #include "heap.hpp"
 
-template <typename T, class Comparator, class Hash>
-Heap<T, Comparator, Hash>::Heap(long long maxsize) : size(0)  {
-    data = new std::pair<long long, T>[maxsize]; indexes = new long long[maxsize];
+template <typename Key, typename Value, class Comparator, class Hash>
+Heap<Key, Value, Comparator, Hash>::Heap(long long maxsize) : size(0), maxSize(maxsize), data(new Tuple<Key, Value>[maxsize]), indexes(new long long[maxsize]) {
     for (long long i = 0; i < maxsize; i++) indexes[i] = -1;
 }
 
-template <typename T, class Comparator, class Hash>
-Heap<T, Comparator, Hash>::~Heap() {
+template <typename Key, typename Value, class Comparator, class Hash>
+Heap<Key, Value, Comparator, Hash>::~Heap() {
     delete[] data; delete[] indexes;
 }
 
-template <typename T, class Comparator, class Hash>
-long long Heap<T, Comparator, Hash>::getFather(long long i){
+template <typename Key, typename Value, class Comparator, class Hash>
+long long Heap<Key, Value, Comparator, Hash>::getFather(long long i){
     return (i-1)/2;
 }
 
-template <typename T, class Comparator, class Hash>
-long long Heap<T, Comparator, Hash>::getLeftChild(long long i){
+template <typename Key, typename Value, class Comparator, class Hash>
+long long Heap<Key, Value, Comparator, Hash>::getLeftChild(long long i){
     return 2 * i + 1;
 }
 
-template <typename T, class Comparator, class Hash>
-long long Heap<T, Comparator, Hash>::getRightChild(long long i){
+template <typename Key, typename Value, class Comparator, class Hash>
+long long Heap<Key, Value, Comparator, Hash>::getRightChild(long long i){
     return 2 * i + 2;
 }
 
-template <typename T, class Comparator, class Hash>
-bool Heap<T, Comparator, Hash>::empty()
+template <typename Key, typename Value, class Comparator, class Hash>
+bool Heap<Key, Value, Comparator, Hash>::empty()
 {
     return size == 0;
 }
 
-template <typename T, class Comparator, class Hash>
-bool Heap<T, Comparator, Hash>::contains(long long key)
+template <typename Key, typename Value, class Comparator, class Hash>
+bool Heap<Key, Value, Comparator, Hash>::contains(long long key)
 {
     return indexes[key] != -1;
 }
 
 
-template <typename T, class Comparator, class Hash>
-void Heap<T, Comparator, Hash>::insert(long long key, T value) {
+template <typename Key, typename Value, class Comparator, class Hash>
+void Heap<Key, Value, Comparator, Hash>::insert(long long key, T value) {
 
     data[size].first = key;
     data[size].second = value;
@@ -52,8 +51,8 @@ void Heap<T, Comparator, Hash>::insert(long long key, T value) {
     size++;
 }
 
-template <typename T, class Comparator, class Hash>
-void Heap<T, Comparator, Hash>::update(long long key, T value) {
+template <typename Key, typename Value, class Comparator, class Hash>
+void Heap<Key, Value, Comparator, Hash>::update(long long key, T value) {
 
     if (!contains(key))
         throw "Index doesn't exist";
@@ -73,8 +72,8 @@ void Heap<T, Comparator, Hash>::update(long long key, T value) {
     
 }
 
-template <typename T, class Comparator, class Hash>
-T Heap<T, Comparator, Hash>::remove()
+template <typename Key, typename Value, class Comparator, class Hash>
+T Heap<Key, Value, Comparator, Hash>::remove()
 {
     if (empty())
         throw "Heap is empty";
@@ -94,8 +93,8 @@ T Heap<T, Comparator, Hash>::remove()
 }
 
 
-template <typename T, class Comparator, class Hash>
-void Heap<T, Comparator, Hash>::heapifyDown(long long pos)
+template <typename Key, typename Value, class Comparator, class Hash>
+void Heap<Key, Value, Comparator, Hash>::heapifyDown(long long pos)
 {
     long long current = pos, 
     father = getFather(current);
@@ -115,8 +114,8 @@ void Heap<T, Comparator, Hash>::heapifyDown(long long pos)
     }   
 }
 
-template <typename T, class Comparator, class Hash>
-void Heap<T, Comparator, Hash>::heapifyUp(long long pos)
+template <typename Key, typename Value, class Comparator, class Hash>
+void Heap<Key, Value, Comparator, Hash>::heapifyUp(long long pos)
 {
     long long current = pos, smallest_child,
     left = getLeftChild(current),

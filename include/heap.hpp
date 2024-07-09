@@ -1,18 +1,18 @@
 #ifndef HEAP_HPP
 #define HEAP_HPP
 
-#include <functional>
+#include "tuple.hpp"
 
-template <typename T, class Comparator = std::less<T>, class Hash = std::hash<T>>
+template <typename Key, typename Value, class Comparator, class Hash>
 class Heap{
 
     public:
         Heap(long long maxsize);
         ~Heap();
 
-        void insert(long long key, T value);
-        void update(long long key, T value);
-        T remove();
+        void insert(Key key, Value value);
+        void update(Key key, Value value);
+        Tuple<Key, Value> remove();
 
         bool empty();
 
@@ -25,13 +25,14 @@ class Heap{
         Hash hash;
 
         long long size;
-        T *data;
+        long long maxSize;
+        Tuple<Key, Value> *data;
         long long *indexes;
 
         void heapifyDown(long long pos);
         void heapifyUp(long long pos);
 
-        bool contains(long long key);
+        bool contains(Key key);
 };
 
 
