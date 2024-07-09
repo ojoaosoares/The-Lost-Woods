@@ -3,17 +3,16 @@
 
 #include <functional>
 
-template <typename T, class Comparator = std::less<T>>
+template <typename T, class Comparator = std::less<T>, class Hash = std::hash<T>>
 class Heap{
 
     public:
         Heap(long long maxsize);
         ~Heap();
 
-
         void insert(long long key, T value);
         void update(long long key, T value);
-        std::pair<long long, T> remove();
+        T remove();
 
         bool empty();
 
@@ -23,9 +22,10 @@ class Heap{
         long long getRightChild(long long pos);
 
         Comparator comp;
+        Hash hash;
 
         long long size;
-        std::pair<long long, T> *data;
+        T *data;
         long long *indexes;
 
         void heapifyDown(long long pos);

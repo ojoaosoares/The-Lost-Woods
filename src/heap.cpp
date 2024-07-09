@@ -1,47 +1,47 @@
 #include "heap.hpp"
 
-template <typename T, class Comparator>
-Heap<T, Comparator>::Heap(long long maxsize) : size(0)  {
+template <typename T, class Comparator, class Hash>
+Heap<T, Comparator, Hash>::Heap(long long maxsize) : size(0)  {
     data = new std::pair<long long, T>[maxsize]; indexes = new long long[maxsize];
     for (long long i = 0; i < maxsize; i++) indexes[i] = -1;
 }
 
-template <typename T, class Comparator>
-Heap<T, Comparator>::~Heap() {
+template <typename T, class Comparator, class Hash>
+Heap<T, Comparator, Hash>::~Heap() {
     delete[] data;
     delete[] indexes;
 }
 
-template <typename T, class Comparator>
-long long Heap<T, Comparator>::getFather(long long i){
+template <typename T, class Comparator, class Hash>
+long long Heap<T, Comparator, Hash>::getFather(long long i){
     return (i-1)/2;
 }
 
-template <typename T, class Comparator>
-long long Heap<T, Comparator>::getLeftChild(long long i){
+template <typename T, class Comparator, class Hash>
+long long Heap<T, Comparator, Hash>::getLeftChild(long long i){
     return 2 * i + 1;
 }
 
-template <typename T, class Comparator>
-long long Heap<T, Comparator>::getRightChild(long long i){
+template <typename T, class Comparator, class Hash>
+long long Heap<T, Comparator, Hash>::getRightChild(long long i){
     return 2 * i + 2;
 }
 
-template <typename T, class Comparator>
-bool Heap<T, Comparator>::empty()
+template <typename T, class Comparator, class Hash>
+bool Heap<T, Comparator, Hash>::empty()
 {
     return size == 0;
 }
 
-template <typename T, class Comparator>
-bool Heap<T, Comparator>::contains(long long key)
+template <typename T, class Comparator, class Hash>
+bool Heap<T, Comparator, Hash>::contains(long long key)
 {
     return indexes[key] != -1;
 }
 
 
-template <typename T, class Comparator>
-void Heap<T, Comparator>::insert(long long key, T value) {
+template <typename T, class Comparator, class Hash>
+void Heap<T, Comparator, Hash>::insert(long long key, T value) {
 
     data[size].first = key;
     data[size].second = value;
@@ -53,8 +53,8 @@ void Heap<T, Comparator>::insert(long long key, T value) {
     size++;
 }
 
-template <typename T, class Comparator>
-void Heap<T, Comparator>::update(long long key, T value) {
+template <typename T, class Comparator, class Hash>
+void Heap<T, Comparator, Hash>::update(long long key, T value) {
 
     if (!contains(key))
         throw "Index doesn't exist";
@@ -74,13 +74,13 @@ void Heap<T, Comparator>::update(long long key, T value) {
     
 }
 
-template <typename T, class Comparator>
-std::pair<long long, T> Heap<T, Comparator>::remove()
+template <typename T, class Comparator, class Hash>
+T Heap<T, Comparator, Hash>::remove()
 {
     if (empty())
         throw "Heap is empty";
 
-    std::pair<long long, T> temp = data[0];
+    T temp = data[0];
     indexes[data[0].first] = -1; size--;
 
     if(!empty())
@@ -95,15 +95,15 @@ std::pair<long long, T> Heap<T, Comparator>::remove()
 }
 
 
-template <typename T, class Comparator>
-void Heap<T, Comparator>::heapifyDown(long long pos)
+template <typename T, class Comparator, class Hash>
+void Heap<T, Comparator, Hash>::heapifyDown(long long pos)
 {
     long long current = pos, 
     father = getFather(current);
 
     while (current > 0 && comp(data[current].second, data[father].second))
     {
-        std::pair<long long, T> temp = data[current];
+        T temp = data[current];
         data[current] = data[father];
         data[father] = temp;
 
@@ -116,8 +116,8 @@ void Heap<T, Comparator>::heapifyDown(long long pos)
     }   
 }
 
-template <typename T, class Comparator>
-void Heap<T, Comparator>::heapifyUp(long long pos)
+template <typename T, class Comparator, class Hash>
+void Heap<T, Comparator, Hash>::heapifyUp(long long pos)
 {
     long long current = pos, smallest_child,
     left = getLeftChild(current),
@@ -133,7 +133,7 @@ void Heap<T, Comparator>::heapifyUp(long long pos)
 
     while (comp(data[smallest_child].second, data[current].second))
     {
-        std::pair<long long, T> temp = data[current];
+        T temp = data[current];
         data[current] = data[smallest_child];
         data[smallest_child] = temp;
 
