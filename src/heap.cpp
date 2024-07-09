@@ -32,9 +32,9 @@ bool Heap<Key, Value, Comparator, Hash>::empty()
 }
 
 template <typename Key, typename Value, class Comparator, class Hash>
-bool Heap<Key, Value, Comparator, Hash>::contains(long long key)
+bool Heap<Key, Value, Comparator, Hash>::contains(Key key)
 {
-    return indexes[key] != -1;
+    return indexes[hash(key, maxSize)] != -1;
 }
 
 
