@@ -77,18 +77,18 @@ void Heap<Key, Value, Comparator, Hash>::update(Key key, Value value) {
 }
 
 template <typename Key, typename Value, class Comparator, class Hash>
-T Heap<Key, Value, Comparator, Hash>::remove()
+Tuple<Key, Value> Heap<Key, Value, Comparator, Hash>::remove()
 {
     if (empty())
         throw "Heap is empty";
 
-    T temp = data[0];
-    indexes[data[0].first] = -1; size--;
+    Tuple<Key, Value> temp = data[0];
+    indexes[hash(data[0].first, maxSize)] = -1; size--;
 
     if(!empty())
     {
         data[0] = data[size];
-        indexes[data[size].first] = 0;
+        indexes[hash(data[0].first, maxSize)] = 0;
 
         heapifyUp(0);
     }
