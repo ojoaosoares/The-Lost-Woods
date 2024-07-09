@@ -135,13 +135,13 @@ void Heap<Key, Value, Comparator, Hash>::heapifyUp(long long pos)
 
     while (comp(data[smallest_child], data[current]))
     {
-        T temp = data[current];
+        Tuple<Key, Value> temp = data[current];
         data[current] = data[smallest_child];
         data[smallest_child] = temp;
 
-        long long temp_index = indexes[data[current].first];
-        indexes[data[current].first] = indexes[data[smallest_child].first];
-        indexes[data[smallest_child].first] = temp_index;
+        long long temp_index = indexes[hash(data[current].first, maxSize)];
+        indexes[hash(data[current].first, maxSize)] = indexes[hash(data[smallest_child].first, maxSize)];
+        indexes[hash(data[smallest_child].first, maxSize)] = temp_index;
 
         current = smallest_child;
         left = getLeftChild(current);
@@ -157,6 +157,3 @@ void Heap<Key, Value, Comparator, Hash>::heapifyUp(long long pos)
     }
 
 }
-
-
-template class Heap<long long, std::less<long long>>;
