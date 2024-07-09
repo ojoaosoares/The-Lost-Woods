@@ -1,31 +1,27 @@
 #include "graph.hpp"
 
-template <typename T, typename Weight>
-Graph<T, Weight>::Graph(long long v) : vertices_number(v) {
-    vertices = new T[v];
-    adjacencyLists = new SinglyLinkedListUnordered<std::pair<long long, Weight>>[v];
+template <typename Vert, typename Weight>
+Graph<Vert, Weight>::Graph(long long v) : vertices_number(v), vertices(new Vert[v]), adjacencyLists(new SinglyLinkedListUnordered<std::pair<long long, Weight>>[v]) { }
+
+template <typename Vert, typename Weight>
+Graph<Vert, Weight>::~Graph() {
+    delete[] vertices; delete[] adjacencyLists;
 }
 
-template <typename T, typename Weight>
-Graph<T, Weight>::~Graph() {
-    delete[] vertices;
-    delete[] adjacencyLists;
-}
-
-template <typename T, typename Weight>
-void Graph<T, Weight>::insertVertice(long long index, T item) {
+template <typename Vert, typename Weight>
+void Graph<Vert, Weight>::insertVertice(long long index, Vert item) {
     if(index < 0 || index >= vertices_number)
         throw "Invalid Index";
     vertices[index] = item;
 }
 
-template <typename T, typename Weight>
-T Graph<T, Weight>::getVertice(long long index) {
+template <typename Vert, typename Weight>
+Vert Graph<Vert, Weight>::getVertice(long long index) {
     return (vertices[index]);
 }
 
-template <typename T, typename Weight>
-void Graph<T, Weight>::removeVertice(long long index) {
+template <typename Vert, typename Weight>
+void Graph<Vert, Weight>::removeVertice(long long index) {
     if(index < 0 || index >= vertices_number)
         throw "Invalid Index";
     
@@ -45,8 +41,8 @@ void Graph<T, Weight>::removeVertice(long long index) {
     }
 }
 
-template <typename T, typename Weight>
-void Graph<T, Weight>::insertEdge(long long v1, long long v2, Weight w) {
+template <typename Vert, typename Weight>
+void Graph<Vert, Weight>::insertEdge(long long v1, long long v2, Weight w) {
     if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
         throw "Invalid Index";
     
@@ -54,8 +50,8 @@ void Graph<T, Weight>::insertEdge(long long v1, long long v2, Weight w) {
     adjacencyLists[v1].insertEnd(newEdge);
 }
 
-template <typename T, typename Weight>
-SinglyLinkedListUnordered<std::pair<long long, Weight>>* Graph<T, Weight>::getNeighboors(long long v) {
+template <typename Vert, typename Weight>
+SinglyLinkedListUnordered<std::pair<long long, Weight>>* Graph<Vert, Weight>::getNeighboors(long long v) {
 
     if(v < 0 || v >= vertices_number)
         throw "Invalid Index";
@@ -63,8 +59,8 @@ SinglyLinkedListUnordered<std::pair<long long, Weight>>* Graph<T, Weight>::getNe
     return &adjacencyLists[v];
 }
 
-template <typename T, typename Weight>
-bool Graph<T, Weight>::isAdjacent(long long v1, long long v2) {
+template <typename Vert, typename Weight>
+bool Graph<Vert, Weight>::isAdjacent(long long v1, long long v2) {
     
     if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
         throw "Invalid Index";
@@ -84,8 +80,8 @@ bool Graph<T, Weight>::isAdjacent(long long v1, long long v2) {
     
 }
 
-template <typename T, typename Weight>
-void Graph<T, Weight>::removeEdge(long long v1, long long v2) {
+template <typename Vert, typename Weight>
+void Graph<Vert, Weight>::removeEdge(long long v1, long long v2) {
     
     if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
         throw "Invalid Index";
