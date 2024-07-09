@@ -8,8 +8,7 @@ Heap<T, Comparator, Hash>::Heap(long long maxsize) : size(0)  {
 
 template <typename T, class Comparator, class Hash>
 Heap<T, Comparator, Hash>::~Heap() {
-    delete[] data;
-    delete[] indexes;
+    delete[] data; delete[] indexes;
 }
 
 template <typename T, class Comparator, class Hash>
@@ -59,7 +58,7 @@ void Heap<T, Comparator, Hash>::update(long long key, T value) {
     if (!contains(key))
         throw "Index doesn't exist";
 
-    if (comp(value, data[indexes[key]].second))
+    if (comp(value, data[indexes[key]]))
     {
         data[indexes[key]].second = value;
         heapifyDown(indexes[key]);
@@ -101,7 +100,7 @@ void Heap<T, Comparator, Hash>::heapifyDown(long long pos)
     long long current = pos, 
     father = getFather(current);
 
-    while (current > 0 && comp(data[current].second, data[father].second))
+    while (current > 0 && comp(data[current], data[father]))
     {
         T temp = data[current];
         data[current] = data[father];
@@ -129,9 +128,9 @@ void Heap<T, Comparator, Hash>::heapifyUp(long long pos)
     else if (right >= size)
         smallest_child = left;
 
-    else smallest_child = comp(data[left].second, data[right].second) ? left : right;
+    else smallest_child = comp(data[left], data[right]) ? left : right;
 
-    while (comp(data[smallest_child].second, data[current].second))
+    while (comp(data[smallest_child], data[current]))
     {
         T temp = data[current];
         data[current] = data[smallest_child];
@@ -151,7 +150,7 @@ void Heap<T, Comparator, Hash>::heapifyUp(long long pos)
         else if (right >= size)
             smallest_child = left;
 
-        else smallest_child = comp(data[left].second, data[right].second) ? left : right;
+        else smallest_child = comp(data[left], data[right]) ? left : right;
     }
 
 }
