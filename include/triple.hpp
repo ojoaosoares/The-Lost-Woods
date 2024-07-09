@@ -13,4 +13,12 @@ class Triple {
         T3 third.
 };
 
+template<typename T>
+class Hash_Triple_Lost_woods {
+
+    public:
+        long long operator() (const Triple<long long, long long, T>& key,const long long &max) const;
+
+};
+
 #endif
