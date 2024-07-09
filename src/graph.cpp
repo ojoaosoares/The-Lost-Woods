@@ -1,7 +1,7 @@
 #include "graph.hpp"
 
 template <typename Vert, typename Weight>
-Graph<Vert, Weight>::Graph(long long v) : vertices_number(v), vertices(new Vert[v]), adjacencyLists(new SinglyLinkedListUnordered<std::pair<long long, Weight>>[v]) { }
+Graph<Vert, Weight>::Graph(long long v) : vertices_number(v), vertices(new Vert[v]), adjacencyLists(new SinglyLinkedListUnordered<Tuple<long long, Weight>>[v]) { }
 
 template <typename Vert, typename Weight>
 Graph<Vert, Weight>::~Graph() {
@@ -46,12 +46,12 @@ void Graph<Vert, Weight>::insertEdge(long long v1, long long v2, Weight w) {
     if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
         throw "Invalid Index";
     
-    std::pair<long long, Weight> newEdge(v2, w);
+    Tuple<long long, Weight> newEdge(v2, w);
     adjacencyLists[v1].insertEnd(newEdge);
 }
 
 template <typename Vert, typename Weight>
-SinglyLinkedListUnordered<std::pair<long long, Weight>>* Graph<Vert, Weight>::getNeighboors(long long v) {
+SinglyLinkedListUnordered<Tuple<long long, Weight>>* Graph<Vert, Weight>::getNeighboors(long long v) {
 
     if(v < 0 || v >= vertices_number)
         throw "Invalid Index";
@@ -65,7 +65,7 @@ bool Graph<Vert, Weight>::isAdjacent(long long v1, long long v2) {
     if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
         throw "Invalid Index";
 
-    SinglyLinkedListUnordered<std::pair<long long, Weight>> *neighboors = getNeighboors(v1);
+    SinglyLinkedListUnordered<Tuple<long long, Weight>> *neighboors = getNeighboors(v1);
 
     long long index = 0;
     for (auto it = neighboors->begin(); it != neighboors->end(); it++)
@@ -86,7 +86,7 @@ void Graph<Vert, Weight>::removeEdge(long long v1, long long v2) {
     if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
         throw "Invalid Index";
 
-    SinglyLinkedListUnordered<std::pair<long long, Weight>> *neighboors = getNeighboors(v1);
+    SinglyLinkedListUnordered<Tuple<long long, Weight>> *neighboors = getNeighboors(v1);
 
     long long index = 0;
     for (auto it = neighboors->begin(); it != neighboors->end(); it++)
@@ -102,10 +102,10 @@ void Graph<Vert, Weight>::removeEdge(long long v1, long long v2) {
 }
 
 
-template class Graph<std::pair<long long, long long>, long long>;
-template class Graph<std::pair<long long, long long>, int>;
-template class Graph<std::pair<long long, long long>, double>;
+template class Graph<Tuple<long long, long long>, long long>;
+template class Graph<Tuple<long long, long long>, int>;
+template class Graph<Tuple<long long, long long>, double>;
 
-template class Graph<std::pair<double, double>, long long>;
-template class Graph<std::pair<double, double>, int>;
-template class Graph<std::pair<double, double>, double>;
+template class Graph<Tuple<double, double>, long long>;
+template class Graph<Tuple<double, double>, int>;
+template class Graph<Tuple<double, double>, double>;
