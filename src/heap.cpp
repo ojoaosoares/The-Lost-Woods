@@ -32,9 +32,9 @@ bool Heap<Key, Value, Comparator, Hash>::empty()
 }
 
 template <typename Key, typename Value, class Comparator, class Hash>
-bool Heap<Key, Value, Comparator, Hash>::contains(Key key)
+long long Heap<Key, Value, Comparator, Hash>::contains(Key key)
 {
-    return indexes[hash(key, maxSize)] != -1;
+    return indexes[hash(key, maxSize)];
 }
 
 
@@ -57,19 +57,20 @@ void Heap<Key, Value, Comparator, Hash>::insert(Key key, Value value) {
 template <typename Key, typename Value, class Comparator, class Hash>
 void Heap<Key, Value, Comparator, Hash>::update(Key key, Value value) {
 
-    if (!contains(key))
+    long long index = contains(key);
+    if (contains == -1)
         throw "Index doesn't exist";
 
-    if (comp(value, data[indexes[key]]))
+    if (comp(value, data[index]))
     {
-        data[indexes[key]].second = value;
-        heapifyDown(indexes[key]);
+        data[index].second = value;
+        heapifyDown(index);
     }
 
     else
     {
-        data[indexes[key]].second = value;
-        heapifyUp(indexes[key]);
+        data[index].second = value;
+        heapifyUp(index);
     }
     
     

@@ -32,7 +32,7 @@ class Heap{
         void heapifyDown(long long pos);
         void heapifyUp(long long pos);
 
-        bool contains(Key key);
+        long long contains(Key key);
 };
 
 
