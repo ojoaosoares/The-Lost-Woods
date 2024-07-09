@@ -39,12 +39,12 @@ bool Heap<Key, Value, Comparator, Hash>::contains(Key key)
 
 
 template <typename Key, typename Value, class Comparator, class Hash>
-void Heap<Key, Value, Comparator, Hash>::insert(long long key, T value) {
+void Heap<Key, Value, Comparator, Hash>::insert(Key key, Value value) {
 
     data[size].first = key;
     data[size].second = value;
 
-    indexes[key] = size;
+    indexes[hash(key, maxSize)] = size;
 
     heapifyDown(size);
 
