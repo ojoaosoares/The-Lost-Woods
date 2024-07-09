@@ -22,12 +22,3 @@ class Hash_Triple_Lost_woods {
 };
 
 
-template<typename T>
-class Comp_Triple_Lost_woods {
-
-    public:
-        bool operator() (const Triple<long long, long long, T>& v1, const Triple<long long, long long, T>& v2) const;
-
-};
-
-#endif
