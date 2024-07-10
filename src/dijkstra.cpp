@@ -6,7 +6,7 @@
 double dijkstra(Graph<Tuple<double, double>, double> &trail, Graph<Tuple<double, double>, double> &portals,
 ll source, ll dest, ll glades, ll portals_allowed) {
     
-    Tuple<ll, ll> hashparam(glades, portals_allowed);
+    Tuple<ll, ll> hashparam(glades, portals_allowed + 1);
 
     Heap<Tuple<ll, ll>, double, Comp_Lost_Woods, Hash_Lost_Woods,
     Tuple<ll, ll>> priority_queue(glades*(portals_allowed + 1), hashparam);
