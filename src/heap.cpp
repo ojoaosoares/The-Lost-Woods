@@ -3,8 +3,8 @@
 #include "hash.hpp"
 
 template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-Heap<Key, Value, Comparator, Hash, HashParam>::Heap(long long maxsize, HashParam hashparam) : hash(hashparam), size(0), maxSize(maxsize), data(new Tuple<Key, Value>[maxsize]), indexes(new long long[maxsize]) {
-    for (long long i = 0; i < maxsize; i++) indexes[i] = -1;
+Heap<Key, Value, Comparator, Hash, HashParam>::Heap(ll maxsize, HashParam hashparam) : hash(hashparam), size(0), maxSize(maxsize), data(new Tuple<Key, Value>[maxsize]), indexes(new ll[maxsize]) {
+    for (ll i = 0; i < maxsize; i++) indexes[i] = -1;
 }
 
 template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
@@ -13,17 +13,17 @@ Heap<Key, Value, Comparator, Hash, HashParam>::~Heap() {
 }
 
 template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-long long Heap<Key, Value, Comparator, Hash, HashParam>::getFather(long long i){
+ll Heap<Key, Value, Comparator, Hash, HashParam>::getFather(ll i){
     return (i-1)/2;
 }
 
 template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-long long Heap<Key, Value, Comparator, Hash, HashParam>::getLeftChild(long long i){
+ll Heap<Key, Value, Comparator, Hash, HashParam>::getLeftChild(ll i){
     return 2 * i + 1;
 }
 
 template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-long long Heap<Key, Value, Comparator, Hash, HashParam>::getRightChild(long long i){
+ll Heap<Key, Value, Comparator, Hash, HashParam>::getRightChild(ll i){
     return 2 * i + 2;
 }
 
@@ -36,7 +36,7 @@ bool Heap<Key, Value, Comparator, Hash, HashParam>::empty()
 template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
 Tuple<Key, Value>* Heap<Key, Value, Comparator, Hash, HashParam>::contains(Key key)
 {
-    long long index = indexes[hash(key)];
+    ll index = indexes[hash(key)];
 
     if (index == -1) return nullptr;
 
@@ -101,9 +101,9 @@ Tuple<Key, Value> Heap<Key, Value, Comparator, Hash, HashParam>::remove()
 
 
 template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-void Heap<Key, Value, Comparator, Hash, HashParam>::heapifyDown(long long pos)
+void Heap<Key, Value, Comparator, Hash, HashParam>::heapifyDown(ll pos)
 {
-    long long current = pos, 
+    ll current = pos, 
     father = getFather(current);
 
     while (current > 0 && comp(data[current].second, data[father].second))
@@ -112,7 +112,7 @@ void Heap<Key, Value, Comparator, Hash, HashParam>::heapifyDown(long long pos)
         data[current] = data[father];
         data[father] = temp;
 
-        long long temp_index = indexes[hash(data[current].first)];
+        ll temp_index = indexes[hash(data[current].first)];
         indexes[hash(data[current].first)] = indexes[hash(data[father].first)];
         indexes[hash(data[father].first)] = temp_index;
 
@@ -122,9 +122,9 @@ void Heap<Key, Value, Comparator, Hash, HashParam>::heapifyDown(long long pos)
 }
 
 template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-void Heap<Key, Value, Comparator, Hash, HashParam>::heapifyUp(long long pos)
+void Heap<Key, Value, Comparator, Hash, HashParam>::heapifyUp(ll pos)
 {
-    long long current = pos, smallest_child,
+    ll current = pos, smallest_child,
     left = getLeftChild(current),
     right = getRightChild(current);
 
@@ -142,7 +142,7 @@ void Heap<Key, Value, Comparator, Hash, HashParam>::heapifyUp(long long pos)
         data[current] = data[smallest_child];
         data[smallest_child] = temp;
 
-        long long temp_index = indexes[hash(data[current].first)];
+        ll temp_index = indexes[hash(data[current].first)];
         indexes[hash(data[current].first)] = indexes[hash(data[smallest_child].first)];
         indexes[hash(data[smallest_child].first)] = temp_index;
 
@@ -162,4 +162,4 @@ void Heap<Key, Value, Comparator, Hash, HashParam>::heapifyUp(long long pos)
 }
 
 
-template class Heap<Tuple<long long, long long>, double, Comp_Lost_Woods<double>, Hash_Lost_Woods, Tuple<long long, long long>>;
+template class Heap<Tuple<ll, ll>, double, Comp_Lost_Woods, Hash_Lost_Woods, Tuple<ll, ll>>;

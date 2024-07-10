@@ -1,5 +1,6 @@
 #include "list.hpp"
 #include "tuple.hpp"
+#include "utils.hpp"
 
 // Base List implementation
 
@@ -24,4 +25,4 @@ bool List<T>::Empty() const
     return getSize() == 0;
 }
 
-template class List<Tuple<long long, double>>;
+template class List<Tuple<ll, double>>;

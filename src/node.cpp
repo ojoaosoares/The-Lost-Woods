@@ -1,6 +1,7 @@
 #include "node.hpp"
 #include <utility>
 #include "tuple.hpp"
+#include "utils.hpp"
 
 // Node implementation
 
@@ -8,4 +9,4 @@ template <typename T>
 Node<T>::Node(T item) : item(item), next(nullptr) {}
 
 
-template class Node<Tuple<long long, double>>;
+template class Node<Tuple<ll, double>>;

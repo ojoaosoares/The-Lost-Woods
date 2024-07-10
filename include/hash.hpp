@@ -2,15 +2,16 @@
 #define HASH_HPP
 
 #include "tuple.hpp"
+#include "utils.hpp"
 
 class Hash_Lost_Woods {
 
     private:
-        long long glades, portals;
+        ll glades, portals;
 
     public:
-        Hash_Lost_Woods(Tuple<long long, long long> vertice);
-        long long operator() (const Tuple<long long, long long>& key) const;
+        Hash_Lost_Woods(Tuple<ll, ll> vertice);
+        ll operator() (const Tuple<ll, ll>& key) const;
 
 };
 

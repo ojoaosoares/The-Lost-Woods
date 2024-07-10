@@ -1,5 +1,6 @@
 #include <iterator.hpp>
 #include "tuple.hpp"
+#include "utils.hpp"
 
 template <typename T>
 Iterator<T>::Iterator(Node<T>* start) : current(start) {}
@@ -39,7 +40,7 @@ bool operator!=(const Iterator<T>& a, const Iterator<T>& b) {
 
 
 
-template class Iterator<Tuple<long long, double>>;
+template class Iterator<Tuple<ll, double>>;
 
-template bool operator==(const Iterator<Tuple<long long, double>>& a, const Iterator<Tuple<long long, double>>& b);
-template bool operator!=(const Iterator<Tuple<long long, double>>& a, const Iterator<Tuple<long long, double>>& b);
+template bool operator==(const Iterator<Tuple<ll, double>>& a, const Iterator<Tuple<ll, double>>& b);
+template bool operator!=(const Iterator<Tuple<ll, double>>& a, const Iterator<Tuple<ll, double>>& b);

@@ -3,11 +3,10 @@
 
 #include "tuple.hpp"
 
-template<typename T>
 class Comp_Lost_Woods {
 
     public:
-        bool operator() (const T& v1, const T& v2) const;
+        bool operator() (const double& v1, const double& v2) const;
 
 };
 
