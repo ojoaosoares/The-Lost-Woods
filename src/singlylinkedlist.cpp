@@ -1,4 +1,5 @@
 #include "singlylinkedlist.hpp"
+#include "tuple.hpp"
 
 // Singly Linked List implemention
 
@@ -168,11 +169,4 @@ void SinglyLinkedList<T>::clear()
     }
 }
 
-template class SinglyLinkedList<long long>;
-template class SinglyLinkedList<int>;
-template class SinglyLinkedList<double>;
-
-template class SinglyLinkedList<std::pair<long long, long long>>;
-template class SinglyLinkedList<std::pair<long long, int>>;
-template class SinglyLinkedList<std::pair<long long, double>>;
-template class SinglyLinkedList<std::pair<double, double>>;
+template class SinglyLinkedList<Tuple<long long, double>>;

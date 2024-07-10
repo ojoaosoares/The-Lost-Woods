@@ -3,14 +3,15 @@
 
 #include "tuple.hpp"
 
-template <typename Key, typename Value, class Comparator, class Hash>
+template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
 class Heap{
 
     public:
-        Heap(long long maxsize);
+        Heap(long long maxsize, HashParam hashparam);
         ~Heap();
 
         void insert(Key key, Value value);
+        Tuple<Key, Value>* contains(Key key);
         void update(Key key, Value value);
         Tuple<Key, Value> remove();
 
@@ -31,8 +32,6 @@ class Heap{
 
         void heapifyDown(long long pos);
         void heapifyUp(long long pos);
-
-        long long contains(Key key);
 };
 
 

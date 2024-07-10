@@ -2,37 +2,45 @@
 #include "heap.hpp"
 #include "graph.hpp"
 #include "euclidean_distance.hpp"
+#include "dijkstra.hpp"
 
 int main() {
 
-    long long n; std::cin >> n;
+    long long n, m, k; 
+    std::cin >> n >> m >> k;
 
-    Graph<std::pair<double, double>, double> graph(n);
+    Graph<Tuple<double, double>, double> trail(n);
+    Graph<Tuple<double, double>, double> portals(n);
 
     for (size_t i = 0; i < n; i++)
     {
-        std::pair<double, double> coor;
-        std::cin >> coor.first >> coor.second;
+        Tuple<double, double> coordinates;
+        std::cin >> coordinates.first >> coordinates.second;
 
-        graph.insertVertice(i, coor);
+        trail.insertVertice(i, coordinates);
+        portals.insertVertice(i, coordinates);
     }
     
-    long long m; std::cin >> m;
 
     for (size_t i = 0; i < m; i++)
     {
-        std::pair<long long, long long> vertices;
+        Tuple<long long, long long> vertices;
         std::cin >> vertices.first >> vertices.second;
 
-        graph.insertEdge(vertices.first, vertices.second, euclidean_distance(graph.getVertice(vertices.first), graph.getVertice(vertices.second)));
+        trail.insertEdge(vertices.first, vertices.second, euclidean_distance(trail.getVertice(vertices.first), trail.getVertice(vertices.second)));
     }
 
-    for (size_t i = 0; i < n; i++)
+    for (size_t i = 0; i < k; i++)
     {
-        SinglyLinkedListUnordered<std::pair<long long, double>> *neigh = graph.getNeighboors(i);
+        Tuple<long long, long long> vertices;
+        std::cin >> vertices.first >> vertices.second;
 
-        for (auto it = neigh->begin(); it != neigh->end(); it++)
-            std::cout << i << ' ' << (*it).first << ' ' << (*it).second << '\n';
-        
-    }
+        portals.insertEdge(vertices.first, vertices.second, 0);
+    }   
+
+    double s; long long q;
+    std::cin >> s >> q;
+
+    std::cout << dijkstra(trail, portals, 0, n-1, n, q) << '\n';
+    
 }

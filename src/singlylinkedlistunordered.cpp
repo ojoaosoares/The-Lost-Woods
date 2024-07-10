@@ -1,4 +1,5 @@
 #include "singlylinkedlistunordered.hpp"
+#include "tuple.hpp"
 
 // Singly Linked List Unordered Implementation
 
@@ -109,12 +110,5 @@ int SinglyLinkedListUnordered<T>::search(T item) const
 
 }
 
+template class SinglyLinkedListUnordered<Tuple<long long, double>>;
 
-template class SinglyLinkedListUnordered<long long>;
-template class SinglyLinkedListUnordered<int>;
-template class SinglyLinkedListUnordered<double>;
-
-template class SinglyLinkedListUnordered<std::pair<long long, long long>>;
-template class SinglyLinkedListUnordered<std::pair<long long, int>>;
-template class SinglyLinkedListUnordered<std::pair<long long, double>>;
-template class SinglyLinkedListUnordered<std::pair<double, double>>;

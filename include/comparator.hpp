@@ -4,7 +4,7 @@
 #include "tuple.hpp"
 
 template<typename T>
-class Comp_Lost_woods {
+class Comp_Lost_Woods {
 
     public:
         bool operator() (const T& v1, const T& v2) const;

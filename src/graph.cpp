@@ -101,11 +101,4 @@ void Graph<Vert, Weight>::removeEdge(long long v1, long long v2) {
     
 }
 
-
-template class Graph<Tuple<long long, long long>, long long>;
-template class Graph<Tuple<long long, long long>, int>;
-template class Graph<Tuple<long long, long long>, double>;
-
-template class Graph<Tuple<double, double>, long long>;
-template class Graph<Tuple<double, double>, int>;
 template class Graph<Tuple<double, double>, double>;

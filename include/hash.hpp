@@ -3,10 +3,14 @@
 
 #include "tuple.hpp"
 
-class Hash_Lost_woods {
+class Hash_Lost_Woods {
+
+    private:
+        long long glades, portals;
 
     public:
-        long long operator() (const Tuple<long long, long long>& key, const long long &max) const;
+        Hash_Lost_Woods(Tuple<long long, long long> vertice);
+        long long operator() (const Tuple<long long, long long>& key) const;
 
 };
 
