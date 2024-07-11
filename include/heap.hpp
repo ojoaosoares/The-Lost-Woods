@@ -2,37 +2,37 @@
 #define HEAP_HPP
 
 #include "tuple.hpp"
+#include "utils.hpp"
 
-template <typename Key, typename Value, class Comparator, class Hash>
+template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
 class Heap{
 
     public:
-        Heap(long long maxsize);
+        Heap(ll maxsize, HashParam hashparam);
         ~Heap();
 
         void insert(Key key, Value value);
+        Tuple<Key, Value>* contains(Key key);
         void update(Key key, Value value);
         Tuple<Key, Value> remove();
 
         bool empty();
 
     private:
-        long long getFather(long long pos);
-        long long getLeftChild(long long pos);
-        long long getRightChild(long long pos);
+        ll getFather(ll pos);
+        ll getLeftChild(ll pos);
+        ll getRightChild(ll pos);
 
         Comparator comp;
         Hash hash;
 
-        long long size;
-        long long maxSize;
+        ll size;
+        ll maxSize;
         Tuple<Key, Value> *data;
-        long long *indexes;
+        ll *indexes;
 
-        void heapifyDown(long long pos);
-        void heapifyUp(long long pos);
-
-        long long contains(Key key);
+        void heapifyDown(ll pos);
+        void heapifyUp(ll pos);
 };
 
 

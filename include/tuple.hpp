@@ -10,6 +10,8 @@ class Tuple {
 
         T1 first;
         T2 second;
+
+        bool operator==(const Tuple<T1, T2>& other) const;
 };
 
 #endif

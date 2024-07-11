@@ -1,7 +1,8 @@
 #include "graph.hpp"
 
+
 template <typename Vert, typename Weight>
-Graph<Vert, Weight>::Graph(long long v) : vertices_number(v), vertices(new Vert[v]), adjacencyLists(new SinglyLinkedListUnordered<Tuple<long long, Weight>>[v]) { }
+Graph<Vert, Weight>::Graph(ll v) : vertices_number(v), vertices(new Vert[v]), adjacencyLists(new SinglyLinkedListUnordered<Tuple<ll, Weight>>[v]) { }
 
 template <typename Vert, typename Weight>
 Graph<Vert, Weight>::~Graph() {
@@ -9,25 +10,25 @@ Graph<Vert, Weight>::~Graph() {
 }
 
 template <typename Vert, typename Weight>
-void Graph<Vert, Weight>::insertVertice(long long index, Vert item) {
+void Graph<Vert, Weight>::insertVertice(ll index, Vert item) {
     if(index < 0 || index >= vertices_number)
         throw "Invalid Index";
     vertices[index] = item;
 }
 
 template <typename Vert, typename Weight>
-Vert Graph<Vert, Weight>::getVertice(long long index) {
+Vert Graph<Vert, Weight>::getVertice(ll index) {
     return (vertices[index]);
 }
 
 template <typename Vert, typename Weight>
-void Graph<Vert, Weight>::removeVertice(long long index) {
+void Graph<Vert, Weight>::removeVertice(ll index) {
     if(index < 0 || index >= vertices_number)
         throw "Invalid Index";
     
     adjacencyLists[index].clear();
 
-    for (long long i = 0; i < vertices_number; i++)
+    for (ll i = 0; i < vertices_number; i++)
     {
         try
         {
@@ -42,16 +43,16 @@ void Graph<Vert, Weight>::removeVertice(long long index) {
 }
 
 template <typename Vert, typename Weight>
-void Graph<Vert, Weight>::insertEdge(long long v1, long long v2, Weight w) {
+void Graph<Vert, Weight>::insertEdge(ll v1, ll v2, Weight w) {
     if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
         throw "Invalid Index";
     
-    Tuple<long long, Weight> newEdge(v2, w);
+    Tuple<ll, Weight> newEdge(v2, w);
     adjacencyLists[v1].insertEnd(newEdge);
 }
 
 template <typename Vert, typename Weight>
-SinglyLinkedListUnordered<Tuple<long long, Weight>>* Graph<Vert, Weight>::getNeighboors(long long v) {
+SinglyLinkedListUnordered<Tuple<ll, Weight>>* Graph<Vert, Weight>::getNeighboors(ll v) {
 
     if(v < 0 || v >= vertices_number)
         throw "Invalid Index";
@@ -60,14 +61,14 @@ SinglyLinkedListUnordered<Tuple<long long, Weight>>* Graph<Vert, Weight>::getNei
 }
 
 template <typename Vert, typename Weight>
-bool Graph<Vert, Weight>::isAdjacent(long long v1, long long v2) {
+bool Graph<Vert, Weight>::isAdjacent(ll v1, ll v2) {
     
     if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
         throw "Invalid Index";
 
-    SinglyLinkedListUnordered<Tuple<long long, Weight>> *neighboors = getNeighboors(v1);
+    SinglyLinkedListUnordered<Tuple<ll, Weight>> *neighboors = getNeighboors(v1);
 
-    long long index = 0;
+    ll index = 0;
     for (auto it = neighboors->begin(); it != neighboors->end(); it++)
     {
         if ((*it).first == v2)
@@ -81,14 +82,14 @@ bool Graph<Vert, Weight>::isAdjacent(long long v1, long long v2) {
 }
 
 template <typename Vert, typename Weight>
-void Graph<Vert, Weight>::removeEdge(long long v1, long long v2) {
+void Graph<Vert, Weight>::removeEdge(ll v1, ll v2) {
     
     if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
         throw "Invalid Index";
 
-    SinglyLinkedListUnordered<Tuple<long long, Weight>> *neighboors = getNeighboors(v1);
+    SinglyLinkedListUnordered<Tuple<ll, Weight>> *neighboors = getNeighboors(v1);
 
-    long long index = 0;
+    ll index = 0;
     for (auto it = neighboors->begin(); it != neighboors->end(); it++)
     {
         if ((*it).first == v2)
@@ -101,11 +102,4 @@ void Graph<Vert, Weight>::removeEdge(long long v1, long long v2) {
     
 }
 
-
-template class Graph<Tuple<long long, long long>, long long>;
-template class Graph<Tuple<long long, long long>, int>;
-template class Graph<Tuple<long long, long long>, double>;
-
-template class Graph<Tuple<double, double>, long long>;
-template class Graph<Tuple<double, double>, int>;
 template class Graph<Tuple<double, double>, double>;

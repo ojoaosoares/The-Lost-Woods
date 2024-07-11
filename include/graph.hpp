@@ -3,6 +3,7 @@
 
 #include "singlylinkedlistunordered.hpp"
 #include "tuple.hpp"
+#include "utils.hpp"
 
 
 template <typename Vert, typename Weight>
@@ -10,22 +11,22 @@ class Graph
 {
     private:
     
-        long long vertices_number;
+        ll vertices_number;
         Vert *vertices;
-        SinglyLinkedListUnordered<Tuple<long long, Weight>> *adjacencyLists;
+        SinglyLinkedListUnordered<Tuple<ll, Weight>> *adjacencyLists;
         
         
     public:
-        Graph(long long v);
+        Graph(ll v);
         ~Graph();
 
-        void insertVertice(long long index, Vert item);
-        void removeVertice(long long index);
-        Vert getVertice(long long index);
-        SinglyLinkedListUnordered<Tuple<long long, Weight>>* getNeighboors(long long v);
-        void insertEdge(long long v1, long long v2, Weight W);
-        void removeEdge(long long v1, long long v2);
-        bool isAdjacent(long long v1, long long v2);
+        void insertVertice(ll index, Vert item);
+        void removeVertice(ll index);
+        Vert getVertice(ll index);
+        SinglyLinkedListUnordered<Tuple<ll, Weight>>* getNeighboors(ll v);
+        void insertEdge(ll v1, ll v2, Weight W);
+        void removeEdge(ll v1, ll v2);
+        bool isAdjacent(ll v1, ll v2);
 
 };
 

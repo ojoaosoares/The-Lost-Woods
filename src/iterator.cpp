@@ -1,4 +1,6 @@
 #include <iterator.hpp>
+#include "tuple.hpp"
+#include "utils.hpp"
 
 template <typename T>
 Iterator<T>::Iterator(Node<T>* start) : current(start) {}
@@ -37,30 +39,8 @@ bool operator!=(const Iterator<T>& a, const Iterator<T>& b) {
 }
 
 
-template class Iterator<long long>;
-template class Iterator<int>;
-template class Iterator<double>;
 
-template class Iterator<std::pair<long long, long long>>;
-template class Iterator<std::pair<long long, int>>;
-template class Iterator<std::pair<long long, double>>;
+template class Iterator<Tuple<ll, double>>;
 
-template class Iterator<std::pair<double, double>>;
-
-template bool operator==(const Iterator<long long>& a, const Iterator<long long>& b);
-template bool operator==(const Iterator<int>& a, const Iterator<int>& b);
-template bool operator==(const Iterator<double>& a, const Iterator<double>& b);
-
-template bool operator!=(const Iterator<long long>& a, const Iterator<long long>& b);
-template bool operator!=(const Iterator<int>& a, const Iterator<int>& b);
-template bool operator!=(const Iterator<double>& a, const Iterator<double>& b);
-
-template bool operator==(const Iterator<std::pair<long long, long long>>& a, const Iterator<std::pair<long long, long long>>& b);
-template bool operator==(const Iterator<std::pair<long long, int>>& a, const Iterator<std::pair<long long, int>>& b);
-template bool operator==(const Iterator<std::pair<long long, double>>& a, const Iterator<std::pair<long long, double>>& b);
-template bool operator==(const Iterator<std::pair<double, double>>& a, const Iterator<std::pair<double, double>>& b);
-
-template bool operator!=(const Iterator<std::pair<long long, long long>>& a, const Iterator<std::pair<long long, long long>>& b);
-template bool operator!=(const Iterator<std::pair<long long, int>>& a, const Iterator<std::pair<long long, int>>& b);
-template bool operator!=(const Iterator<std::pair<long long, double>>& a, const Iterator<std::pair<long long, double>>& b);
-template bool operator!=(const Iterator<std::pair<double, double>>& a, const Iterator<std::pair<double, double>>& b);
+template bool operator==(const Iterator<Tuple<ll, double>>& a, const Iterator<Tuple<ll, double>>& b);
+template bool operator!=(const Iterator<Tuple<ll, double>>& a, const Iterator<Tuple<ll, double>>& b);
