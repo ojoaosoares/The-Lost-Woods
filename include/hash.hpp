@@ -7,7 +7,7 @@
 class Hash_Lost_Woods {
 
     private:
-        ll glades, portals;
+        ll vert, portals;
 
     public:
         Hash_Lost_Woods(Tuple<ll, ll> vertice);

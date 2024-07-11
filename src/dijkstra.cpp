@@ -4,21 +4,19 @@
 #include "hash.hpp"
 
 double dijkstra(Graph<Tuple<double, double>, double> &trail, Graph<Tuple<double, double>, double> &portals,
-ll source, ll dest, ll glades, ll portals_allowed) {
+ll source, ll dest, ll vert, ll portals_allowed) {
     
-    Tuple<ll, ll> hashparam(glades, portals_allowed + 1);
+    ll maxElements = (vert*(portals_allowed + 1));
+    Tuple<ll, ll> hashparam(vert, portals_allowed + 1);
 
     Heap<Tuple<ll, ll>, double, Comp_Lost_Woods, Hash_Lost_Woods,
-    Tuple<ll, ll>> priority_queue(glades*(portals_allowed + 1), hashparam);
+    Tuple<ll, ll>> priority_queue(maxElements, hashparam);
 
-    Tuple<ll, ll> key(0, 0);
-    double distance = 0;
-
+    Tuple<ll, ll> key(0, 0); double distance = 0;
     priority_queue.insert(key, distance);
 
-    Tuple<Tuple<ll, ll>, double> item;
-
-    Comp_Lost_Woods comp;
+    Tuple<Tuple<ll, ll>, double> item, *exist; Comp_Lost_Woods comp;
+    SinglyLinkedListUnordered<Tuple<ll, double>> *neigh;
 
     while (!priority_queue.empty())
     {
@@ -27,19 +25,19 @@ ll source, ll dest, ll glades, ll portals_allowed) {
         if (item.first.first == dest)
             break;
 
-        SinglyLinkedListUnordered<Tuple<ll, double>> *neigh = trail.getNeighboors(item.first.first);
+        neigh = trail.getNeighboors(item.first.first);
 
         for (auto it = neigh->begin(); it != neigh->end(); it++)
         {
             key.first = (*it).first; key.second = item.first.second;
-            distance = item.second + (*it).second;
+            distance = item.second + (*it).second; // update distance
 
-            Tuple<Tuple<ll, ll>, double> *item = priority_queue.contains(key);
+            exist = priority_queue.contains(key);
 
-            if (item == nullptr)
+            if (exist == nullptr)
                 priority_queue.insert(key, distance);
             
-            else if (comp(distance,item->second))
+            else if (comp(distance,exist->second))
                 priority_queue.update(key, distance);
                 
         }
@@ -47,19 +45,19 @@ ll source, ll dest, ll glades, ll portals_allowed) {
 
         if (item.first.second < portals_allowed)
         {
-            SinglyLinkedListUnordered<Tuple<ll, double>> *neigh_portals = portals.getNeighboors(item.first.first);
+            neigh = portals.getNeighboors(item.first.first);
 
-            for (auto it = neigh_portals->begin(); it != neigh_portals->end(); it++)
+            for (auto it = neigh->begin(); it != neigh->end(); it++)
             {
-                key.first = (*it).first; key.second = item.first.second + 1;
-                distance = item.second;
+                key.first = (*it).first; key.second = item.first.second + 1; // Update portal number
+                distance = item.second + (*it).second; // update distance
 
-                Tuple<Tuple<ll, ll>, double> *item = priority_queue.contains(key);
+                exist = priority_queue.contains(key);
 
-                if (item == nullptr)
+                if (exist == nullptr)
                     priority_queue.insert(key, distance);
                 
-                else if (comp(distance, item->second))
+                else if (comp(distance, exist->second))
                     priority_queue.update(key, distance);
                     
             }
@@ -67,5 +65,5 @@ ll source, ll dest, ll glades, ll portals_allowed) {
         
     }
 
-    return item.second;
+    return (item.first.first == dest) ? item.second : -1;
 }
