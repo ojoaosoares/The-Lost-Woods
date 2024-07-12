@@ -16,4 +16,6 @@ template class Tuple<ll, ll>;
 template class Tuple<ll, int>;
 template class Tuple<ll, double>;
 template class Tuple<double, double>;
+template class Tuple<double, ll>;
 template class Tuple<Tuple<ll, ll>, double>;
+template class Tuple<ll, Tuple<double, ll>>;
