@@ -14,9 +14,14 @@ double dijkstra(Graph<Tuple<double, double>, Tuple<double, ll>> &graph, ll sourc
     Tuple<Tuple<ll, ll>, double> curr_vertice, *exist; 
     SinglyLinkedListUnordered<Tuple<ll, Tuple<double, ll>>> *neigh;
 
+    bool visited[vert]; for (ll i = 0; i < vert; i++) visited[i] = false;
+    // Initialazing the visited array
+
     while (!priority_queue.empty())
     {
         curr_vertice = priority_queue.remove();
+
+        visited[curr_vertice.first.first] = true;
 
         if (curr_vertice.first.first == dest)
             break;
@@ -25,15 +30,14 @@ double dijkstra(Graph<Tuple<double, double>, Tuple<double, ll>> &graph, ll sourc
 
         for (auto edge = neigh->begin(); edge != neigh->end(); edge++)
         {
+            key.first = edge->first; 
             key.second = curr_vertice.first.second;
 
             if (edge->second.second == PORTAL_TYPE)
                 key.second++; // If were analyzing the portals, we increment the number of portals used 
 
-            if (key.second > portals_allowed) // First we verify if the number of portals used doesn't exceed the limit
+            if (key.second > portals_allowed || visited[key.first]) // First we verify if the number of portals used doesn't exceed the limit
                 continue; 
-            
-            key.first = edge->first; 
 
             distance = curr_vertice.second + edge->second.first; // update distance
 
