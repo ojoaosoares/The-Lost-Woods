@@ -2,39 +2,39 @@
 #include "comparator.hpp"
 #include "hash.hpp"
 
-template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-Heap<Key, Value, Comparator, Hash, HashParam>::Heap(ll maxsize, HashParam hashparam) : hash(hashparam), size(0), maxSize(maxsize), data(new Tuple<Key, Value>[maxsize]), indexes(new ll[maxsize]) {
+template <typename Key, typename Value, class Comparator, class Hash>
+Heap<Key, Value, Comparator, Hash>::Heap(ll maxsize, Comparator comp, Hash hash) : size(0), maxSize(maxsize), data(new Tuple<Key, Value>[maxsize]), indexes(new ll[maxsize]), comp(comp), hash(hash) {
     for (ll i = 0; i < maxsize; i++) indexes[i] = -1;
 }
 
-template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-Heap<Key, Value, Comparator, Hash, HashParam>::~Heap() {
+template <typename Key, typename Value, class Comparator, class Hash>
+Heap<Key, Value, Comparator, Hash>::~Heap() {
     delete[] data; delete[] indexes;
 }
 
-template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-ll Heap<Key, Value, Comparator, Hash, HashParam>::getFather(ll i){
+template <typename Key, typename Value, class Comparator, class Hash>
+ll Heap<Key, Value, Comparator, Hash>::getFather(ll i){
     return (i-1)/2;
 }
 
-template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-ll Heap<Key, Value, Comparator, Hash, HashParam>::getLeftChild(ll i){
+template <typename Key, typename Value, class Comparator, class Hash>
+ll Heap<Key, Value, Comparator, Hash>::getLeftChild(ll i){
     return 2 * i + 1;
 }
 
-template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-ll Heap<Key, Value, Comparator, Hash, HashParam>::getRightChild(ll i){
+template <typename Key, typename Value, class Comparator, class Hash>
+ll Heap<Key, Value, Comparator, Hash>::getRightChild(ll i){
     return 2 * i + 2;
 }
 
-template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-bool Heap<Key, Value, Comparator, Hash, HashParam>::empty()
+template <typename Key, typename Value, class Comparator, class Hash>
+bool Heap<Key, Value, Comparator, Hash>::empty()
 {
     return size == 0;
 }
 
-template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-Tuple<Key, Value>* Heap<Key, Value, Comparator, Hash, HashParam>::contains(Key key)
+template <typename Key, typename Value, class Comparator, class Hash>
+Tuple<Key, Value>* Heap<Key, Value, Comparator, Hash>::contains(Key key)
 {
     ll index = indexes[hash(key)];
 
@@ -44,8 +44,8 @@ Tuple<Key, Value>* Heap<Key, Value, Comparator, Hash, HashParam>::contains(Key k
 }
 
 
-template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-void Heap<Key, Value, Comparator, Hash, HashParam>::insert(Key key, Value value) {
+template <typename Key, typename Value, class Comparator, class Hash>
+void Heap<Key, Value, Comparator, Hash>::insert(Key key, Value value) {
 
     if (size == maxSize)
         throw "Heap is full";
@@ -60,8 +60,8 @@ void Heap<Key, Value, Comparator, Hash, HashParam>::insert(Key key, Value value)
     size++;
 }
 
-template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-void Heap<Key, Value, Comparator, Hash, HashParam>::update(Key key, Value value) {
+template <typename Key, typename Value, class Comparator, class Hash>
+void Heap<Key, Value, Comparator, Hash>::update(Key key, Value value) {
 
     Tuple<Key, Value>* item = contains(key);
     if (item == nullptr)
@@ -79,8 +79,8 @@ void Heap<Key, Value, Comparator, Hash, HashParam>::update(Key key, Value value)
     
 }
 
-template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-Tuple<Key, Value> Heap<Key, Value, Comparator, Hash, HashParam>::remove()
+template <typename Key, typename Value, class Comparator, class Hash>
+Tuple<Key, Value> Heap<Key, Value, Comparator, Hash>::remove()
 {
     if (empty())
         throw "Heap is empty";
@@ -100,8 +100,8 @@ Tuple<Key, Value> Heap<Key, Value, Comparator, Hash, HashParam>::remove()
 }
 
 
-template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-void Heap<Key, Value, Comparator, Hash, HashParam>::heapifyDown(ll pos)
+template <typename Key, typename Value, class Comparator, class Hash>
+void Heap<Key, Value, Comparator, Hash>::heapifyDown(ll pos)
 {
     ll current = pos, 
     father = getFather(current);
@@ -121,8 +121,8 @@ void Heap<Key, Value, Comparator, Hash, HashParam>::heapifyDown(ll pos)
     }   
 }
 
-template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
-void Heap<Key, Value, Comparator, Hash, HashParam>::heapifyUp(ll pos)
+template <typename Key, typename Value, class Comparator, class Hash>
+void Heap<Key, Value, Comparator, Hash>::heapifyUp(ll pos)
 {
     ll current = pos, smallest_child,
     left = getLeftChild(current),
@@ -162,4 +162,4 @@ void Heap<Key, Value, Comparator, Hash, HashParam>::heapifyUp(ll pos)
 }
 
 
-template class Heap<Tuple<ll, ll>, double, Comp_Lost_Woods, Hash_Lost_Woods, Tuple<ll, ll>>;
+template class Heap<Tuple<ll, ll>, double, Comp_Lost_Woods, Hash_Lost_Woods>;

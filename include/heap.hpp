@@ -4,11 +4,11 @@
 #include "tuple.hpp"
 #include "utils.hpp"
 
-template <typename Key, typename Value, class Comparator, class Hash, typename HashParam>
+template <typename Key, typename Value, class Comparator, class Hash>
 class Heap{
 
     public:
-        Heap(ll maxsize, HashParam hashparam);
+        Heap(ll maxsize, Comparator comp, Hash hash);
         ~Heap();
 
         void insert(Key key, Value value);
@@ -23,13 +23,14 @@ class Heap{
         ll getLeftChild(ll pos);
         ll getRightChild(ll pos);
 
-        Comparator comp;
-        Hash hash;
-
         ll size;
         ll maxSize;
+
         Tuple<Key, Value> *data;
         ll *indexes;
+
+        Comparator comp;
+        Hash hash;
 
         void heapifyDown(ll pos);
         void heapifyUp(ll pos);
