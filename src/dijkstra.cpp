@@ -6,31 +6,31 @@
 double dijkstra(Graph<Tuple<double, double>, double> &trail, Graph<Tuple<double, double>, double> &portals,
 ll source, ll dest, ll vert, ll portals_allowed) {
     
-    ll maxElements = (vert*(portals_allowed + 1));
-    Tuple<ll, ll> hashparam(vert, portals_allowed + 1);
+    Comp_Lost_Woods comp; // A simple double comparator
+    Hash_Lost_Woods hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
+    ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
+    
+    Heap<Tuple<ll, ll>, double, Comp_Lost_Woods, Hash_Lost_Woods> priority_queue(maxElements, comp, hash);
 
-    Heap<Tuple<ll, ll>, double, Comp_Lost_Woods, Hash_Lost_Woods,
-    Tuple<ll, ll>> priority_queue(maxElements, hashparam);
-
-    Tuple<ll, ll> key(0, 0); double distance = 0;
+    Tuple<ll, ll> key(source, 0); double distance = 0;
     priority_queue.insert(key, distance);
 
-    Tuple<Tuple<ll, ll>, double> item, *exist; Comp_Lost_Woods comp;
+    Tuple<Tuple<ll, ll>, double> curr_vertice, *exist; 
     SinglyLinkedListUnordered<Tuple<ll, double>> *neigh;
 
     while (!priority_queue.empty())
     {
-        item = priority_queue.remove();
+        curr_vertice = priority_queue.remove();
 
-        if (item.first.first == dest)
+        if (curr_vertice.first.first == dest)
             break;
 
-        neigh = trail.getNeighboors(item.first.first);
+        neigh = trail.getNeighboors(curr_vertice.first.first);
 
         for (auto it = neigh->begin(); it != neigh->end(); it++)
         {
-            key.first = (*it).first; key.second = item.first.second;
-            distance = item.second + (*it).second; // update distance
+            key.first = (*it).first; key.second = curr_vertice.first.second;
+            distance = curr_vertice.second + (*it).second; // update distance
 
             exist = priority_queue.contains(key);
 
@@ -43,14 +43,14 @@ ll source, ll dest, ll vert, ll portals_allowed) {
         }
 
 
-        if (item.first.second < portals_allowed)
+        if (curr_vertice.first.second < portals_allowed)
         {
-            neigh = portals.getNeighboors(item.first.first);
+            neigh = portals.getNeighboors(curr_vertice.first.first);
 
             for (auto it = neigh->begin(); it != neigh->end(); it++)
             {
-                key.first = (*it).first; key.second = item.first.second + 1; // Update portal number
-                distance = item.second + (*it).second; // update distance
+                key.first = (*it).first; key.second = curr_vertice.first.second + 1; // Update portal number
+                distance = curr_vertice.second + (*it).second; // update distance
 
                 exist = priority_queue.contains(key);
 
@@ -65,5 +65,5 @@ ll source, ll dest, ll vert, ll portals_allowed) {
         
     }
 
-    return (item.first.first == dest) ? item.second : -1;
+    return (curr_vertice.first.first == dest) ? curr_vertice.second : -1;
 }

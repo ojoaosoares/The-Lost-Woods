@@ -1,8 +1,8 @@
 #ifndef HASH_HPP
 #define HASH_HPP
 
-#include "tuple.hpp"
 #include "utils.hpp"
+#include "tuple.hpp"
 
 class Hash_Lost_Woods {
 
@@ -10,7 +10,7 @@ class Hash_Lost_Woods {
         ll vert, portals;
 
     public:
-        Hash_Lost_Woods(Tuple<ll, ll> vertice);
+        Hash_Lost_Woods(ll vertice, ll portals);
         ll operator() (const Tuple<ll, ll>& key) const;
 
 };
