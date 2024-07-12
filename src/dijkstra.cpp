@@ -1,7 +1,4 @@
 #include "dijkstra.hpp"
-#include "heap.hpp"
-#include "comparator.hpp"
-#include "hash.hpp"
 
 double dijkstra(Graph<Tuple<double, double>, double> &trail, Graph<Tuple<double, double>, double> &portals,
 ll source, ll dest, ll vert, ll portals_allowed) {
@@ -15,7 +12,7 @@ ll source, ll dest, ll vert, ll portals_allowed) {
     Tuple<ll, ll> key(source, 0); double distance = 0;
     priority_queue.insert(key, distance);
 
-    Tuple<Tuple<ll, ll>, double> curr_vertice, *exist; 
+    Tuple<Tuple<ll, ll>, double> curr_vertice; 
     SinglyLinkedListUnordered<Tuple<ll, double>> *neigh;
 
     while (!priority_queue.empty())
@@ -27,43 +24,44 @@ ll source, ll dest, ll vert, ll portals_allowed) {
 
         neigh = trail.getNeighboors(curr_vertice.first.first);
 
-        for (auto it = neigh->begin(); it != neigh->end(); it++)
-        {
-            key.first = (*it).first; key.second = curr_vertice.first.second;
-            distance = curr_vertice.second + (*it).second; // update distance
-
-            exist = priority_queue.contains(key);
-
-            if (exist == nullptr)
-                priority_queue.insert(key, distance);
-            
-            else if (comp(distance,exist->second))
-                priority_queue.update(key, distance);
-                
-        }
+        explorePaths(priority_queue, curr_vertice, neigh, comp, false);
 
 
         if (curr_vertice.first.second < portals_allowed)
         {
             neigh = portals.getNeighboors(curr_vertice.first.first);
 
-            for (auto it = neigh->begin(); it != neigh->end(); it++)
-            {
-                key.first = (*it).first; key.second = curr_vertice.first.second + 1; // Update portal number
-                distance = curr_vertice.second + (*it).second; // update distance
-
-                exist = priority_queue.contains(key);
-
-                if (exist == nullptr)
-                    priority_queue.insert(key, distance);
-                
-                else if (comp(distance, exist->second))
-                    priority_queue.update(key, distance);
-                    
-            }
+            explorePaths(priority_queue, curr_vertice, neigh, comp, true);
         }
         
     }
 
     return (curr_vertice.first.first == dest) ? curr_vertice.second : -1;
+}
+
+
+void explorePaths(Heap<Tuple<ll, ll>, double, Comp_Lost_Woods, Hash_Lost_Woods> &heap, Tuple<Tuple<ll, ll>, double> &curr_vertice,
+SinglyLinkedListUnordered<Tuple<ll, double>> *neigh, Comp_Lost_Woods &comp, bool portals) {
+
+    Tuple<ll, ll> key; double distance;
+    Tuple<Tuple<ll, ll>, double> *exist;
+
+    for (auto it = neigh->begin(); it != neigh->end(); it++)
+    {
+        key.first = (*it).first; key.second = curr_vertice.first.second;
+
+        distance = curr_vertice.second + (*it).second; // update distance
+
+        if (portals)
+            curr_vertice.first.second++; // If were analyzing the portals, we increment the number of portals used 
+
+        exist = heap.contains(key);
+
+        if (exist == nullptr)
+            heap.insert(key, distance);
+        
+        else if (comp(distance, exist->second))
+            heap.update(key, distance);
+            
+    }
 }
