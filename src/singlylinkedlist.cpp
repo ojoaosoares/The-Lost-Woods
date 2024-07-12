@@ -170,4 +170,4 @@ void SinglyLinkedList<T>::clear()
     }
 }
 
-template class SinglyLinkedList<Tuple<ll, double>>;
+template class SinglyLinkedList<Tuple<ll, Tuple<double, ll>>>;

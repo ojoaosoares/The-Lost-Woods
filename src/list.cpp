@@ -25,4 +25,4 @@ bool List<T>::Empty() const
     return getSize() == 0;
 }
 
-template class List<Tuple<ll, double>>;
+template class List<Tuple<ll, Tuple<double, ll>>>;

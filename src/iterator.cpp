@@ -40,7 +40,7 @@ bool operator!=(const Iterator<T>& a, const Iterator<T>& b) {
 
 
 
-template class Iterator<Tuple<ll, double>>;
+template class Iterator<Tuple<ll, Tuple<double, ll>>>;
 
-template bool operator==(const Iterator<Tuple<ll, double>>& a, const Iterator<Tuple<ll, double>>& b);
-template bool operator!=(const Iterator<Tuple<ll, double>>& a, const Iterator<Tuple<ll, double>>& b);
+template bool operator==(const Iterator<Tuple<ll, Tuple<double, ll>>>& a, const Iterator<Tuple<ll, Tuple<double, ll>>>& b);
+template bool operator!=(const Iterator<Tuple<ll, Tuple<double, ll>>>& a, const Iterator<Tuple<ll, Tuple<double, ll>>>& b);
