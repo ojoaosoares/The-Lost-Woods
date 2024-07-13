@@ -5,6 +5,8 @@
 #include "euclidean_distance.hpp"
 #include "dijkstra.hpp"
 #include "astar.hpp"
+#include <chrono>
+#include <iomanip>
 
 int main() {
 
@@ -46,6 +48,24 @@ int main() {
     double s; ll q;
     std::cin >> s >> q;
 
-    std::cout << aStar(wood, 0, n-1, n, q) << '\n';
-    
+    auto inicio = std::chrono::high_resolution_clock::now();
+    double dijkstra_output = dijkstra(wood, 0, n-1, n, q);
+    auto fim = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duracao_dijstra = fim - inicio;    
+
+    inicio = std::chrono::high_resolution_clock::now();
+    double astar_output = aStar(wood, 0, n-1, n, q);
+    fim = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duracao_astar = fim - inicio;
+
+    std::cout << "Dijkstra\n";
+    std::cout << "Caminho encontrado: " << dijkstra_output << " energia\n";
+    std::cout << std::fixed << std::setprecision(7) << "Tempo de execução: " << duracao_dijstra.count() << " segundosz\n";
+
+    std::cout.unsetf(std::ios::fixed);
+
+    std::cout << "A Star\n";
+    std::cout << "Caminho encontrado: " << astar_output << " energia\n";
+    std::cout << std::fixed << std::setprecision(7) << "Tempo de execução: " << duracao_astar.count() << " segundosz\n";
+
 }
