@@ -46,6 +46,6 @@ int main() {
     double s; ll q;
     std::cin >> s >> q;
 
-    std::cout << dijkstra(wood, 0, n-1, n, q) << '\n';
+    std::cout << aStar(wood, 0, n-1, n, q) << '\n';
     
 }

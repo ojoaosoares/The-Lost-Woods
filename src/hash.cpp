@@ -1,7 +1,7 @@
 #include "hash.hpp"
 
-Hash_Lost_Woods::Hash_Lost_Woods(ll vertice, ll portals) : vert(vertice), portals(portals) {}
+Hash_Custom::Hash_Custom(ll vertice, ll portals) : vert(vertice), portals(portals) {}
 
-ll Hash_Lost_Woods::operator() (const Tuple<ll, ll>& key) const {
+ll Hash_Custom::operator() (const Tuple<ll, ll>& key) const {
     return (portals * key.first + key.second);
 }

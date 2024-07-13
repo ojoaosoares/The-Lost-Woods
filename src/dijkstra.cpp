@@ -2,11 +2,11 @@
 
 double dijkstra(Graph<Tuple<double, double>, Tuple<double, ll>> &graph, ll source, ll dest, ll vert, ll portals_allowed) {
     
-    Comp_Lost_Woods comp; // A simple double comparator
-    Hash_Lost_Woods hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
+    Comp_Dijkstra comp; // A simple double comparator
+    Hash_Custom hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
     ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
     
-    Heap<Tuple<ll, ll>, double, Comp_Lost_Woods, Hash_Lost_Woods> priority_queue(maxElements, comp, hash);
+    Heap<Tuple<ll, ll>, double, Comp_Dijkstra, Hash_Custom> priority_queue(maxElements, comp, hash);
 
     Tuple<ll, ll> key(source, 0); double distance = 0;
     priority_queue.insert(key, distance);
@@ -46,7 +46,7 @@ double dijkstra(Graph<Tuple<double, double>, Tuple<double, ll>> &graph, ll sourc
             if (exist == nullptr)
                 priority_queue.insert(key, distance);
             
-            else if (comp(distance, exist->second))
+            else if (distance < exist->second)
                 priority_queue.update(key, distance);
                 
         }
