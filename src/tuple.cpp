@@ -1,5 +1,4 @@
 #include "tuple.hpp"
-#include "utils.hpp"
 
 template<typename T1,typename T2>
 Tuple<T1, T2>::Tuple() : first(T1()), second(T2()) {}
@@ -18,4 +17,5 @@ template class Tuple<ll, double>;
 template class Tuple<double, double>;
 template class Tuple<double, ll>;
 template class Tuple<Tuple<ll, ll>, double>;
+template class Tuple<Tuple<ll, ll>, Tuple<double, double>>;
 template class Tuple<ll, Tuple<double, ll>>;

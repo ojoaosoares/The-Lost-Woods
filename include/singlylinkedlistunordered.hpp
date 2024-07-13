@@ -1,8 +1,9 @@
 #ifndef SINGLY_LINKED_LIST_UNORDERED
 #define SINGLY_LINKED_LIST_UNORDERED
 
-
 #include "singlylinkedlist.hpp"
+
+typedef long long ll;
 
 template  <typename T>
 class SinglyLinkedListUnordered : public  SinglyLinkedList<T>

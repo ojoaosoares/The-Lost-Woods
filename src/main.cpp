@@ -1,9 +1,12 @@
 #include <iostream>
 #include "heap.hpp"
 #include "graph.hpp"
-#include "utils.hpp"
 #include "euclidean_distance.hpp"
-#include "dijkstra.hpp"
+#include "shortest_path.hpp"
+#include <chrono>
+#include <iomanip>
+
+typedef long long ll;
 
 int main() {
 
@@ -44,7 +47,7 @@ int main() {
 
     double s; ll q;
     std::cin >> s >> q;
-
-    std::cout << dijkstra(wood, 0, n-1, n, q) << '\n';
     
+    std::cout << (dijkstra(wood, 0, n-1, n, q) <= s) << '\n';    
+    std::cout << (aStar(wood, 0, n-1, n, q) <= s) << '\n';    
 }
