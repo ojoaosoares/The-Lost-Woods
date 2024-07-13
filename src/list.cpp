@@ -1,6 +1,5 @@
 #include "list.hpp"
 #include "tuple.hpp"
-#include "utils.hpp"
 
 // Base List implementation
 

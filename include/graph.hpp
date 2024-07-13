@@ -3,8 +3,8 @@
 
 #include "singlylinkedlistunordered.hpp"
 #include "tuple.hpp"
-#include "utils.hpp"
 
+typedef long long ll;
 
 template <typename Vert, typename Weight>
 class Graph

@@ -1,6 +1,4 @@
 #include "heap.hpp"
-#include "comparator.hpp"
-#include "hash.hpp"
 
 template <typename Key, typename Value, class Comparator, class Hash>
 Heap<Key, Value, Comparator, Hash>::Heap(ll maxsize, Comparator comp, Hash hash) : size(0), maxSize(maxsize), data(new Tuple<Key, Value>[maxsize]), indexes(new ll[maxsize]), comp(comp), hash(hash) {
@@ -161,6 +159,19 @@ void Heap<Key, Value, Comparator, Hash>::heapifyUp(ll pos)
 
 }
 
+Hash_Custom::Hash_Custom(ll vertice, ll portals) : vert(vertice), portals(portals) {}
+
+ll Hash_Custom::operator() (const Tuple<ll, ll>& key) const {
+    return (portals * key.first + key.second);
+}
+
+bool Comp_Dijkstra::operator() (const double& v1, const double& v2) const {
+    return v1 < v2;
+}
+
+bool Comp_A_Star::operator() (const Tuple<double, double>& v1, const Tuple<double, double>& v2) const {
+    return v1.second + v1.first < v2.second + v2.first;
+}
 
 template class Heap<Tuple<ll, ll>, double, Comp_Dijkstra, Hash_Custom>;
 template class Heap<Tuple<ll, ll>, Tuple<double, double>, Comp_A_Star, Hash_Custom>;

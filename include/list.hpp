@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+typedef long long ll;
+
 template <typename T>
 class List
 {

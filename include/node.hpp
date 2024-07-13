@@ -1,6 +1,8 @@
 #ifndef NODE
 #define NODE
 
+typedef long long ll;
+
 template <typename T>
 class SinglyLinkedList;
 

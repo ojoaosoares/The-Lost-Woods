@@ -1,6 +1,5 @@
 #include "singlylinkedlist.hpp"
 #include "tuple.hpp"
-#include "utils.hpp"
 
 // Singly Linked List implemention
 
@@ -171,3 +170,48 @@ void SinglyLinkedList<T>::clear()
 }
 
 template class SinglyLinkedList<Tuple<ll, Tuple<double, ll>>>;
+
+// Iterator implementation
+
+template <typename T>
+Iterator<T>::Iterator(Node<T>* start) : current(start) {}
+
+template <typename T>
+typename Iterator<T>::reference Iterator<T>::operator*() const {
+    return current->item;
+}
+
+template <typename T>
+typename Iterator<T>::pointer Iterator<T>::operator->() {
+    return &(current->item);
+}
+
+template <typename T>
+Iterator<T>& Iterator<T>::operator++() {
+    current = current->next;
+    return *this;
+}
+
+template <typename T>
+Iterator<T> Iterator<T>::operator++(int) {
+    Iterator temp = *this;
+    ++(*this);
+    return temp;
+}
+
+template <typename T>
+bool operator==(const Iterator<T>& a, const Iterator<T>& b) {
+    return a.current == b.current;
+}
+
+template <typename T>
+bool operator!=(const Iterator<T>& a, const Iterator<T>& b) {
+    return a.current != b.current;
+}
+
+
+
+template class Iterator<Tuple<ll, Tuple<double, ll>>>;
+
+template bool operator==(const Iterator<Tuple<ll, Tuple<double, ll>>>& a, const Iterator<Tuple<ll, Tuple<double, ll>>>& b);
+template bool operator!=(const Iterator<Tuple<ll, Tuple<double, ll>>>& a, const Iterator<Tuple<ll, Tuple<double, ll>>>& b);

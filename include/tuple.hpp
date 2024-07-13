@@ -1,6 +1,8 @@
 #ifndef TUPLE_HPP
 #define TUPLE_HPP
 
+typedef long long ll;
+
 template<typename T1,typename T2>
 class Tuple {        
     public:

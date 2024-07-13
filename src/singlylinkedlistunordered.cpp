@@ -1,6 +1,5 @@
 #include "singlylinkedlistunordered.hpp"
 #include "tuple.hpp"
-#include "utils.hpp"
 
 // Singly Linked List Unordered Implementation
 

@@ -2,7 +2,8 @@
 #define HEAP_HPP
 
 #include "tuple.hpp"
-#include "utils.hpp"
+
+typedef long long ll;
 
 template <typename Key, typename Value, class Comparator, class Hash>
 class Heap{
@@ -36,5 +37,26 @@ class Heap{
         void heapifyUp(ll pos);
 };
 
+class Hash_Custom {
+
+    private:
+        ll vert, portals;
+
+    public:
+        Hash_Custom(ll vertice, ll portals);
+        ll operator() (const Tuple<ll, ll>& key) const;
+
+};
+
+class Comp_Dijkstra {
+    public:
+        bool operator() (const double& v1, const double& v2) const;
+
+};
+
+class Comp_A_Star {
+    public:
+        bool operator() (const Tuple<double, double>& v1, const Tuple<double, double>& v2) const;
+};
 
 #endif
