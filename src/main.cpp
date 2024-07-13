@@ -4,6 +4,7 @@
 #include "utils.hpp"
 #include "euclidean_distance.hpp"
 #include "dijkstra.hpp"
+#include "astar.hpp"
 
 int main() {
 

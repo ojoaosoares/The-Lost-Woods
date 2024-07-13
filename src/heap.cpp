@@ -163,3 +163,4 @@ void Heap<Key, Value, Comparator, Hash>::heapifyUp(ll pos)
 
 
 template class Heap<Tuple<ll, ll>, double, Comp_Lost_Woods, Hash_Lost_Woods>;
+template class Heap<Tuple<ll, ll>, Tuple<double, double>, Comp_A_Star, Hash_Lost_Woods>;
