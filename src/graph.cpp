@@ -21,7 +21,7 @@ Vert Graph<Vert, Weight>::getVertice(const ll &index) const {
 }
 
 template <typename Vert, typename Weight>
-void Graph<Vert, Weight>::insertEdge(const ll &v1, const ll &v2, const Weight &W) {
+void Graph<Vert, Weight>::insertEdge(const ll &v1, const ll &v2, const Weight &w) {
     if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
         throw std::out_of_range("Invalid Index");
     
