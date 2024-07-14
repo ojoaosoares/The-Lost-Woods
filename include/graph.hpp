@@ -7,7 +7,7 @@
 typedef long long ll;
 
 template <typename Vert, typename Weight>
-class Graph
+class Graph_Ad_List
 {
     private:
     
@@ -17,12 +17,12 @@ class Graph
         
         
     public:
-        Graph(const ll &v);
-        ~Graph();
+        Graph_Ad_List(const ll &v);
+        ~Graph_Ad_List();
 
         void insertVertice(const ll &index, const Vert &item);
         Vert getVertice(const ll &index) const;
-        SinglyLinkedListUnordered<Tuple<ll, Weight>>* getNeighboors(const ll &v);
+        SinglyLinkedListUnordered<Tuple<ll, Weight>>* getNeighboors(const ll &v) const;
         void insertEdge(const ll &v1, const ll &v2, const Weight &w);
 };
 

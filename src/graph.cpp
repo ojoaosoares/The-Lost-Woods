@@ -1,22 +1,22 @@
 #include "graph.hpp"
 
 template <typename Vert, typename Weight>
-Graph<Vert, Weight>::Graph(const ll &v) : vertices_number(v), vertices(new Vert[v]), adjacencyLists(new SinglyLinkedListUnordered<Tuple<ll, Weight>>[v]) { }
+Graph_Ad_List<Vert, Weight>::Graph_Ad_List(const ll &v) : vertices_number(v), vertices(new Vert[v]), adjacencyLists(new SinglyLinkedListUnordered<Tuple<ll, Weight>>[v]) { }
 
 template <typename Vert, typename Weight>
-Graph<Vert, Weight>::~Graph() {
+Graph_Ad_List<Vert, Weight>::~Graph_Ad_List() {
     delete[] vertices; delete[] adjacencyLists;   
 }
 
 template <typename Vert, typename Weight>
-void Graph<Vert, Weight>::insertVertice(const ll &index, const Vert &item) {
+void Graph_Ad_List<Vert, Weight>::insertVertice(const ll &index, const Vert &item) {
     if(index < 0 || index >= vertices_number)
         throw std::out_of_range("Invalid Index");
     vertices[index] = item;
 }
 
 template <typename Vert, typename Weight>
-Vert Graph<Vert, Weight>::getVertice(const ll &index) const {
+Vert Graph_Ad_List<Vert, Weight>::getVertice(const ll &index) const {
     if(index < 0 || index >= vertices_number)
         throw std::out_of_range("Invalid Index");
 
@@ -24,7 +24,7 @@ Vert Graph<Vert, Weight>::getVertice(const ll &index) const {
 }
 
 template <typename Vert, typename Weight>
-void Graph<Vert, Weight>::insertEdge(const ll &v1, const ll &v2, const Weight &w) {
+void Graph_Ad_List<Vert, Weight>::insertEdge(const ll &v1, const ll &v2, const Weight &w) {
     if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
         throw std::out_of_range("Invalid Index");
     
@@ -33,7 +33,7 @@ void Graph<Vert, Weight>::insertEdge(const ll &v1, const ll &v2, const Weight &w
 }
 
 template <typename Vert, typename Weight>
-SinglyLinkedListUnordered<Tuple<ll, Weight>>* Graph<Vert, Weight>::getNeighboors(const ll &v) {
+SinglyLinkedListUnordered<Tuple<ll, Weight>>* Graph_Ad_List<Vert, Weight>::getNeighboors(const ll &v) const {
 
     if(v < 0 || v >= vertices_number)
         throw std::out_of_range("Invalid Index");
@@ -41,7 +41,7 @@ SinglyLinkedListUnordered<Tuple<ll, Weight>>* Graph<Vert, Weight>::getNeighboors
     return &adjacencyLists[v];
 }
 
-template class Graph<Tuple<double, double>, Tuple<double, ll>>;
+template class Graph_Ad_List<Tuple<double, double>, Tuple<double, ll>>;
 
 
 // Graph with adjacency matriz

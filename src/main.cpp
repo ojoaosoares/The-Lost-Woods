@@ -13,7 +13,7 @@ int main() {
     ll n, m, k; 
     std::cin >> n >> m >> k;
 
-    Graph<Tuple<double, double>, Tuple<double, ll>> wood(n);
+    Graph_Ad_List<Tuple<double, double>, Tuple<double, ll>> wood(n);
 
     for (size_t i = 0; i < n; i++)
     {
@@ -48,6 +48,6 @@ int main() {
     double s; ll q;
     std::cin >> s >> q;
     
-    std::cout << (dijkstra(wood, 0, n-1, n, q) <= s) << '\n';    
-    std::cout << (aStar(wood, 0, n-1, n, q) <= s) << '\n';    
+    std::cout << (dijkstra_ad_list(wood, 0, n-1, n, q) <= s) << '\n';    
+    std::cout << (aStar_ad_list(wood, 0, n-1, n, q) <= s) << '\n';    
 }
