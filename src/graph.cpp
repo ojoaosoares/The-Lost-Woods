@@ -39,3 +39,22 @@ SinglyLinkedListUnordered<Tuple<ll, Weight>>* Graph<Vert, Weight>::getNeighboors
 }
 
 template class Graph<Tuple<double, double>, Tuple<double, ll>>;
+
+
+// Graph with adjacency matriz
+
+template <typename Vert, typename Weight>
+Graph_Ad_Matrix<Vert, Weight>::Graph_Ad_Matrix(const ll &v) : vertices_number(v), vertices(new Vert[v]), adjacencyMatrix(new Weight*[v])  {
+    for (ll i = 0; i < vertices_number; i++)
+        adjacencyMatrix[i] = new Weight[vertices_number];
+}
+
+template <typename Vert, typename Weight>
+Graph_Ad_Matrix<Vert, Weight>::~Graph_Ad_Matrix() {
+    delete[] vertices;
+    
+    for (ll i = 0; i < vertices_number; i++)
+        delete[] adjacencyMatrix[i];
+
+    delete[] adjacencyMatrix;
+}
