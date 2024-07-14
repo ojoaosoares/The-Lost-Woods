@@ -22,27 +22,6 @@ Vert Graph<Vert, Weight>::getVertice(ll index) {
 }
 
 template <typename Vert, typename Weight>
-void Graph<Vert, Weight>::removeVertice(ll index) {
-    if(index < 0 || index >= vertices_number)
-        throw "Invalid Index";
-    
-    adjacencyLists[index].clear();
-
-    for (ll i = 0; i < vertices_number; i++)
-    {
-        try
-        {
-            removeEdge(i, index);
-        }
-        catch(const std::exception& e)
-        {
-
-        }
-        
-    }
-}
-
-template <typename Vert, typename Weight>
 void Graph<Vert, Weight>::insertEdge(ll v1, ll v2, Weight w) {
     if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
         throw "Invalid Index";
