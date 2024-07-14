@@ -17,6 +17,9 @@ void Graph<Vert, Weight>::insertVertice(const ll &index, const Vert &item) {
 
 template <typename Vert, typename Weight>
 Vert Graph<Vert, Weight>::getVertice(const ll &index) const {
+    if(index < 0 || index >= vertices_number)
+        throw std::out_of_range("Invalid Index");
+
     return (vertices[index]);
 }
 
@@ -64,4 +67,12 @@ void Graph_Ad_Matrix<Vert, Weight>::insertVertice(const ll &index, const Vert &i
     if(index < 0 || index >= vertices_number)
         throw std::out_of_range("Invalid Index");
     vertices[index] = item;
+}
+
+template <typename Vert, typename Weight>
+Vert Graph_Ad_Matrix<Vert, Weight>::getVertice(const ll &index) const {
+    if(index < 0 || index >= vertices_number)
+        throw std::out_of_range("Invalid Index");
+        
+    return (vertices[index]);
 }
