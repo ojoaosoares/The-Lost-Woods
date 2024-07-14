@@ -17,13 +17,13 @@ class Graph
         
         
     public:
-        Graph(ll v);
+        Graph(const ll &v);
         ~Graph();
 
-        void insertVertice(ll index, Vert item);
-        Vert getVertice(ll index);
-        SinglyLinkedListUnordered<Tuple<ll, Weight>>* getNeighboors(ll v);
-        void insertEdge(ll v1, ll v2, Weight W);
+        void insertVertice(const ll &index, const Vert &item);
+        Vert getVertice(const ll &index) const;
+        SinglyLinkedListUnordered<Tuple<ll, Weight>>* getNeighboors(const ll &v);
+        void insertEdge(const ll &v1, const ll &v2, const Weight &W);
 };
 
 #endif
