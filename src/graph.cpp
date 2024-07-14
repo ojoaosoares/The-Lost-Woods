@@ -60,25 +60,4 @@ bool Graph<Vert, Weight>::isAdjacent(ll v1, ll v2) {
     
 }
 
-template <typename Vert, typename Weight>
-void Graph<Vert, Weight>::removeEdge(ll v1, ll v2) {
-    
-    if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
-        throw "Invalid Index";
-
-    SinglyLinkedListUnordered<Tuple<ll, Weight>> *neighboors = getNeighboors(v1);
-
-    ll index = 0;
-    for (auto it = neighboors->begin(); it != neighboors->end(); it++)
-    {
-        if ((*it).first == v2)
-            neighboors->removeIndex(index);
-
-        index++;
-    }
-    
-    throw "Element doesn't exist";
-    
-}
-
 template class Graph<Tuple<double, double>, Tuple<double, ll>>;
