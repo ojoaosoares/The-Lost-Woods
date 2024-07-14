@@ -76,3 +76,11 @@ Vert Graph_Ad_Matrix<Vert, Weight>::getVertice(const ll &index) const {
         
     return (vertices[index]);
 }
+
+template <typename Vert, typename Weight>
+Weight* Graph_Ad_Matrix<Vert, Weight>::getNeighboors(const ll &v) {
+    if(v < 0 || v >= vertices_number)
+        throw std::out_of_range("Invalid Index");
+    
+    return adjacencyMatrix[v];
+}
