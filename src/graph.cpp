@@ -84,3 +84,11 @@ Weight* Graph_Ad_Matrix<Vert, Weight>::getNeighboors(const ll &v) {
     
     return adjacencyMatrix[v];
 }
+
+template <typename Vert, typename Weight>
+void Graph_Ad_Matrix<Vert, Weight>::insertEdge(const ll &v1, const ll &v2, const Weight &w) {
+    if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
+        throw std::out_of_range("Invalid Index");
+         
+    adjacencyMatrix[v1][v2] = w;
+}

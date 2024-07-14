@@ -23,7 +23,7 @@ class Graph
         void insertVertice(const ll &index, const Vert &item);
         Vert getVertice(const ll &index) const;
         SinglyLinkedListUnordered<Tuple<ll, Weight>>* getNeighboors(const ll &v);
-        void insertEdge(const ll &v1, const ll &v2, const Weight &W);
+        void insertEdge(const ll &v1, const ll &v2, const Weight &w);
 };
 
 template <typename Vert, typename Weight>
