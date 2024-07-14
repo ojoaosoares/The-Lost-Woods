@@ -1,6 +1,5 @@
 #include "graph.hpp"
 
-
 template <typename Vert, typename Weight>
 Graph<Vert, Weight>::Graph(ll v) : vertices_number(v), vertices(new Vert[v]), adjacencyLists(new SinglyLinkedListUnordered<Tuple<ll, Weight>>[v]) { }
 
@@ -37,27 +36,6 @@ SinglyLinkedListUnordered<Tuple<ll, Weight>>* Graph<Vert, Weight>::getNeighboors
         throw "Invalid Index";
 
     return &adjacencyLists[v];
-}
-
-template <typename Vert, typename Weight>
-bool Graph<Vert, Weight>::isAdjacent(ll v1, ll v2) {
-    
-    if(v1 < 0 || v1 >= vertices_number || v2 < 0 || v2 >= vertices_number)
-        throw "Invalid Index";
-
-    SinglyLinkedListUnordered<Tuple<ll, Weight>> *neighboors = getNeighboors(v1);
-
-    ll index = 0;
-    for (auto it = neighboors->begin(); it != neighboors->end(); it++)
-    {
-        if ((*it).first == v2)
-            return index;
-
-        index++;
-    }
-    
-    return -1;
-    
 }
 
 template class Graph<Tuple<double, double>, Tuple<double, ll>>;

@@ -24,8 +24,6 @@ class Graph
         Vert getVertice(ll index);
         SinglyLinkedListUnordered<Tuple<ll, Weight>>* getNeighboors(ll v);
         void insertEdge(ll v1, ll v2, Weight W);
-        bool isAdjacent(ll v1, ll v2);
-
 };
 
 #endif
