@@ -58,3 +58,10 @@ Graph_Ad_Matrix<Vert, Weight>::~Graph_Ad_Matrix() {
 
     delete[] adjacencyMatrix;
 }
+
+template <typename Vert, typename Weight>
+void Graph_Ad_Matrix<Vert, Weight>::insertVertice(const ll &index, const Vert &item) {
+    if(index < 0 || index >= vertices_number)
+        throw std::out_of_range("Invalid Index");
+    vertices[index] = item;
+}
