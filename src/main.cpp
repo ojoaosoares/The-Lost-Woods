@@ -14,6 +14,7 @@ int main() {
     std::cin >> n >> m >> k;
 
     Graph_Ad_List<Tuple<double, double>> wood(n);
+    Graph_Ad_Matrix<Tuple<double, double>> wood_matrix(n);
 
     for (size_t i = 0; i < n; i++)
     {
@@ -21,9 +22,9 @@ int main() {
         std::cin >> coordinates.first >> coordinates.second;
 
         wood.insertVertice(coordinates);
+        wood_matrix.insertVertice(coordinates);
     }
     
-
     for (size_t i = 0; i < m; i++)
     {
         Tuple<ll, ll> vertices;
@@ -32,6 +33,7 @@ int main() {
         double distance = euclidean_distance(wood.getVertice(vertices.first), wood.getVertice(vertices.second));
 
         wood.insertEdge(vertices.first, vertices.second, distance);
+        wood_matrix.insertEdge(vertices.first, vertices.second, distance);
     }
 
     for (size_t i = 0; i < k; i++)
@@ -40,11 +42,13 @@ int main() {
         std::cin >> vertices.first >> vertices.second;
 
         wood.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
+        wood_matrix.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
     }   
 
     double s; ll q;
     std::cin >> s >> q;
     
     std::cout << (dijkstra_ad_list(wood, 0, n-1, n, q) <= s) << '\n';    
+    std::cout << (dijkstra_ad_matrix(wood_matrix, 0, n-1, n, q) <= s) << '\n';    
     std::cout << (aStar_ad_list(wood, 0, n-1, n, q) <= s) << '\n';    
 }

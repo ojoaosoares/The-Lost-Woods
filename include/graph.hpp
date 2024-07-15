@@ -46,6 +46,7 @@ class Graph_Ad_Matrix
         void insertVertice(const Vert &item);
         ll verticeExist(const Vert& item) const;
         Vert getVertice(const ll &index) const;
+        ll getVerticesNumber() const;
         double* getNeighboors(const ll &v);
         void insertEdge(const ll &v1, const ll &v2, const double &W);
 };

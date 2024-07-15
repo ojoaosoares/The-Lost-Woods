@@ -34,11 +34,11 @@ double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const
             key.first = edge->first; 
             key.second = curr_vertice.first.second;
 
-            if (edge->second == PORTAL_TYPE)
-                key.second++; // If were analyzing the portals, we increment the number of portals used 
-
             if (key.second > portals_allowed || visited[key.first]) // First we verify if the number of portals used doesn't exceed the limit
                 continue; 
+            
+            if (edge->second == PORTAL_TYPE)
+                key.second++; // If were analyzing the portals, we increment the number of portals used 
 
             distance = curr_vertice.second + edge->second; // update distance
 
@@ -92,11 +92,11 @@ double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll
             key.first = edge->first; 
             key.second = curr_vertice.first.second;
 
-            if (edge->second == PORTAL_TYPE)
-                key.second++; // If were analyzing the portals, we increment the number of portals used 
-
             if (key.second > portals_allowed || visited[key.first]) // First we verify if the number of portals used doesn't exceed the limit
                 continue; 
+
+            if (edge->second == PORTAL_TYPE)
+                key.second++; // If were analyzing the portals, we increment the number of portals used 
 
             distance.first = curr_vertice.second.first + edge->second; // update distance
             distance.second = euclidean_distance(graph.getVertice(key.first), graph.getVertice(dest));
@@ -116,57 +116,57 @@ double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll
 }
 
 
-// double dijkstra_ad_matrix(const Graph_Ad_Matrix<Tuple<double, double>, Tuple<double, ll>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed) {
+double dijkstra_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed) {
     
-//     Comp_Dijkstra comp; // A simple double comparator
-//     Hash_Custom hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
-//     ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
+  Comp_Dijkstra comp; // A simple double comparator
+    Hash_Custom hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
+    ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
     
-//     Heap<Tuple<ll, ll>, double, Comp_Dijkstra, Hash_Custom> priority_queue(maxElements, comp, hash);
+    Heap<Tuple<ll, ll>, double, Comp_Dijkstra, Hash_Custom> priority_queue(maxElements, comp, hash);
 
-//     Tuple<ll, ll> key(source, 0); double distance = 0;
-//     priority_queue.insert(key, distance);
+    Tuple<ll, ll> key(source, 0); double distance = 0;
+    priority_queue.insert(key, distance);
 
-//     Tuple<Tuple<ll, ll>, double> curr_vertice, *exist; 
-//     SinglyLinkedListUnordered<Tuple<ll, Tuple<double, ll>>> *neigh;
+    Tuple<Tuple<ll, ll>, double> curr_vertice, *exist; 
+    double *neigh;
 
-//     bool visited[vert]; for (ll i = 0; i < vert; i++) visited[i] = false;
-//     // Initialazing the visited array
+    bool visited[vert]; for (ll i = 0; i < vert; i++) visited[i] = false;
+    // Initialazing the visited array
 
-//     while (!priority_queue.empty())
-//     {
-//         curr_vertice = priority_queue.remove();
+    while (!priority_queue.empty())
+    {
+        curr_vertice = priority_queue.remove();
 
-//         visited[curr_vertice.first.first] = true;
+        visited[curr_vertice.first.first] = true;
 
-//         if (curr_vertice.first.first == dest)
-//             break;
+        if (curr_vertice.first.first == dest)
+            break;
 
-//         neigh = graph.getNeighboors(curr_vertice.first.first);
+        neigh = graph.getNeighboors(curr_vertice.first.first);
 
-//         for (auto edge = neigh->begin(); edge != neigh->end(); edge++)
-//         {
-//             key.first = edge->first; 
-//             key.second = curr_vertice.first.second;
+        for (ll vert = 0; vert < graph.getVerticesNumber(); vert++)
+        {
+            key.first = vert; 
+            key.second = curr_vertice.first.second;
 
-//             if (edge->second.second == PORTAL_TYPE)
-//                 key.second++; // If were analyzing the portals, we increment the number of portals used 
-
-//             if (key.second > portals_allowed || visited[key.first]) // First we verify if the number of portals used doesn't exceed the limit
-//                 continue; 
-
-//             distance = curr_vertice.second + edge->second.first; // update distance
-
-//             exist = priority_queue.contains(key);
-
-//             if (exist == nullptr)
-//                 priority_queue.insert(key, distance);
+            if (key.second > portals_allowed || visited[key.first] || neigh[vert] < 0) // First we verify if the number of portals used doesn't exceed the limit
+                continue; 
             
-//             else if (distance < exist->second)
-//                 priority_queue.update(key, distance);
-                
-//         }
-//     }
+            if (neigh[vert] == PORTAL_TYPE)
+                key.second++; // If were analyzing the portals, we increment the number of portals used 
 
-//     return (curr_vertice.first.first == dest) ? curr_vertice.second : -1;
-// }
+            distance = curr_vertice.second + neigh[vert]; // update distance
+
+            exist = priority_queue.contains(key);
+
+            if (exist == nullptr)
+                priority_queue.insert(key, distance);
+            
+            else if (distance < exist->second)
+                priority_queue.update(key, distance);
+                
+        }
+    }
+
+    return (curr_vertice.first.first == dest) ? curr_vertice.second : -1;
+}

@@ -13,8 +13,8 @@ double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const
 
 double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed);
 
-double dijkstra_ad_matrix(const Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed);
+double dijkstra_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed);
 
-double aStar_ad_matrix(const Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed);
+double aStar_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed);
 
 #endif

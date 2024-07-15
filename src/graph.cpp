@@ -77,6 +77,12 @@ template <typename Vert>
 Graph_Ad_Matrix<Vert>::Graph_Ad_Matrix(const ll &v) : verticesNumber(0), maxVertices(v), vertices(new Vert[v]), adjacencyMatrix(new double*[v])  {
     for (ll i = 0; i < maxVertices; i++)
         adjacencyMatrix[i] = new double[maxVertices];
+
+
+    for (ll i = 0; i < maxVertices; i++)
+        for (ll j = 0; j < maxVertices; j++)
+            adjacencyMatrix[i][j] = -1;
+    
 }
 
 template <typename Vert>
@@ -98,12 +104,11 @@ template <typename Vert>
 ll Graph_Ad_Matrix<Vert>::verticeExist(const Vert& item) const {
     
     for (ll i = 0; i < verticesNumber; i++)
-        if (vertices[i] = item)
+        if (vertices[i] == item)
             return i;
 
     return -1;
 }
-
 
 template <typename Vert>
 Vert Graph_Ad_Matrix<Vert>::getVertice(const ll &index) const {
@@ -118,7 +123,12 @@ double* Graph_Ad_Matrix<Vert>::getNeighboors(const ll &v) {
     if(v < 0 || v >= verticesNumber)
         throw std::out_of_range("Invalid Index");
     
-    return adjacencyMatrix[v];
+    return &adjacencyMatrix[v][0];
+}
+
+template <typename Vert>
+ll Graph_Ad_Matrix<Vert>::getVerticesNumber() const {
+    return verticesNumber;
 }
 
 template <typename Vert>
@@ -128,3 +138,5 @@ void Graph_Ad_Matrix<Vert>::insertEdge(const ll &v1, const ll &v2, const double 
          
     adjacencyMatrix[v1][v2] = w;
 }
+
+template class Graph_Ad_Matrix<Tuple<double, double>>;
