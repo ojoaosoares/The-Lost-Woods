@@ -6,44 +6,48 @@
 
 typedef long long ll;
 
-template <typename Vert, typename Weight>
+template <typename Vert>
 class Graph_Ad_List
 {
     private:
     
-        ll vertices_number;
+        ll verticesNumber, maxVertices;
         Vert *vertices;
-        SinglyLinkedListUnordered<Tuple<ll, Weight>> *adjacencyLists;
+        SinglyLinkedListUnordered<Tuple<ll, double>> *adjacencyLists;
         
         
     public:
         Graph_Ad_List(const ll &v);
         ~Graph_Ad_List();
 
-        void insertVertice(const ll &index, const Vert &item);
+        void insertVertice(const Vert &item);
+        ll verticeExist(const Vert& item) const;
         Vert getVertice(const ll &index) const;
-        SinglyLinkedListUnordered<Tuple<ll, Weight>>* getNeighboors(const ll &v) const;
-        void insertEdge(const ll &v1, const ll &v2, const Weight &w);
+        ll getVerticesNumber() const;
+        SinglyLinkedListUnordered<Tuple<ll, double>>* getNeighboors(const ll &v) const;
+        void insertEdge(const ll &v1, const ll &v2, const double &w);
+        bool edgeExist(const ll &v1, const ll &v2) const;
 };
 
-template <typename Vert, typename Weight>
+template <typename Vert>
 class Graph_Ad_Matrix
 {
     private:
     
-        ll vertices_number;
+        ll verticesNumber, maxVertices;
         Vert *vertices;
-        Weight **adjacencyMatrix;
+        double **adjacencyMatrix;
         
         
     public:
         Graph_Ad_Matrix(const ll &v);
         ~Graph_Ad_Matrix();
 
-        void insertVertice(const ll &index, const Vert &item);
+        void insertVertice(const Vert &item);
+        ll verticeExist(const Vert& item) const;
         Vert getVertice(const ll &index) const;
-        Weight* getNeighboors(const ll &v);
-        void insertEdge(const ll &v1, const ll &v2, const Weight &W);
+        double* getNeighboors(const ll &v);
+        void insertEdge(const ll &v1, const ll &v2, const double &W);
 };
 
 #endif

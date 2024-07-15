@@ -1,7 +1,7 @@
 #include "shortest_path.hpp"
 #include "euclidean_distance.hpp"
 
-double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>, Tuple<double, ll>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed) {
+double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed) {
     
     Comp_Dijkstra comp; // A simple double comparator
     Hash_Custom hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
@@ -13,7 +13,7 @@ double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>, Tuple<double,
     priority_queue.insert(key, distance);
 
     Tuple<Tuple<ll, ll>, double> curr_vertice, *exist; 
-    SinglyLinkedListUnordered<Tuple<ll, Tuple<double, ll>>> *neigh;
+    SinglyLinkedListUnordered<Tuple<ll, double>> *neigh;
 
     bool visited[vert]; for (ll i = 0; i < vert; i++) visited[i] = false;
     // Initialazing the visited array
@@ -34,13 +34,13 @@ double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>, Tuple<double,
             key.first = edge->first; 
             key.second = curr_vertice.first.second;
 
-            if (edge->second.second == PORTAL_TYPE)
+            if (edge->second == PORTAL_TYPE)
                 key.second++; // If were analyzing the portals, we increment the number of portals used 
 
             if (key.second > portals_allowed || visited[key.first]) // First we verify if the number of portals used doesn't exceed the limit
                 continue; 
 
-            distance = curr_vertice.second + edge->second.first; // update distance
+            distance = curr_vertice.second + edge->second; // update distance
 
             exist = priority_queue.contains(key);
 
@@ -57,7 +57,7 @@ double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>, Tuple<double,
 }
 
 
-double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>, Tuple<double, ll>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed) {
+double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed) {
     
     Comp_A_Star comp; // A simple double comparator
     Hash_Custom hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
@@ -71,7 +71,7 @@ double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>, Tuple<double, ll
     priority_queue.insert(key, distance);
 
     Tuple<Tuple<ll, ll>, Tuple<double, double>> curr_vertice, *exist; 
-    SinglyLinkedListUnordered<Tuple<ll, Tuple<double, ll>>> *neigh;
+    SinglyLinkedListUnordered<Tuple<ll, double>> *neigh;
 
     bool visited[vert]; for (ll i = 0; i < vert; i++) visited[i] = false;
     // Initialazing the visited array
@@ -92,13 +92,13 @@ double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>, Tuple<double, ll
             key.first = edge->first; 
             key.second = curr_vertice.first.second;
 
-            if (edge->second.second == PORTAL_TYPE)
+            if (edge->second == PORTAL_TYPE)
                 key.second++; // If were analyzing the portals, we increment the number of portals used 
 
             if (key.second > portals_allowed || visited[key.first]) // First we verify if the number of portals used doesn't exceed the limit
                 continue; 
 
-            distance.first = curr_vertice.second.first + edge->second.first; // update distance
+            distance.first = curr_vertice.second.first + edge->second; // update distance
             distance.second = euclidean_distance(graph.getVertice(key.first), graph.getVertice(dest));
 
             exist = priority_queue.contains(key);
