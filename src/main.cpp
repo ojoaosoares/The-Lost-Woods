@@ -13,26 +13,27 @@ int main() {
     ll n, m, k; 
     std::cin >> n >> m >> k;
 
-    Graph<Tuple<double, double>, Tuple<double, ll>> wood(n);
+    Graph_Ad_List<Tuple<double, double>> wood(n);
+    Graph_Ad_Matrix<Tuple<double, double>> wood_matrix(n);
 
     for (size_t i = 0; i < n; i++)
     {
         Tuple<double, double> coordinates;
         std::cin >> coordinates.first >> coordinates.second;
 
-        wood.insertVertice(i, coordinates);
+        wood.insertVertice(coordinates);
+        wood_matrix.insertVertice(coordinates);
     }
     
-
     for (size_t i = 0; i < m; i++)
     {
         Tuple<ll, ll> vertices;
         std::cin >> vertices.first >> vertices.second;
 
         double distance = euclidean_distance(wood.getVertice(vertices.first), wood.getVertice(vertices.second));
-        Tuple<double, ll> weight(distance, PATH_TYPE);
 
-        wood.insertEdge(vertices.first, vertices.second, weight);
+        wood.insertEdge(vertices.first, vertices.second, distance);
+        wood_matrix.insertEdge(vertices.first, vertices.second, distance);
     }
 
     for (size_t i = 0; i < k; i++)
@@ -40,14 +41,15 @@ int main() {
         Tuple<ll, ll> vertices;
         std::cin >> vertices.first >> vertices.second;
 
-        Tuple<double, ll> weight(0, PORTAL_TYPE);
-
-        wood.insertEdge(vertices.first, vertices.second, weight);
+        wood.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
+        wood_matrix.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
     }   
 
     double s; ll q;
     std::cin >> s >> q;
     
-    std::cout << (dijkstra(wood, 0, n-1, n, q) <= s) << '\n';    
-    std::cout << (aStar(wood, 0, n-1, n, q) <= s) << '\n';    
+    std::cout << dijkstra_ad_list(wood, 0, n-1, n, q) << '\n';    
+    std::cout << dijkstra_ad_matrix(wood_matrix, 0, n-1, n, q) << '\n';    
+    std::cout << aStar_ad_list(wood, 0, n-1, n, q) << '\n';
+    std::cout << aStar_ad_matrix(wood_matrix, 0, n-1, n, q) << '\n';    
 }

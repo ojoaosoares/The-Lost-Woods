@@ -169,7 +169,7 @@ void SinglyLinkedList<T>::clear()
     }
 }
 
-template class SinglyLinkedList<Tuple<ll, Tuple<double, ll>>>;
+template class SinglyLinkedList<Tuple<ll, double>>;
 
 // Iterator implementation
 
@@ -211,7 +211,7 @@ bool operator!=(const Iterator<T>& a, const Iterator<T>& b) {
 
 
 
-template class Iterator<Tuple<ll, Tuple<double, ll>>>;
+template class Iterator<Tuple<ll, double>>;
 
-template bool operator==(const Iterator<Tuple<ll, Tuple<double, ll>>>& a, const Iterator<Tuple<ll, Tuple<double, ll>>>& b);
-template bool operator!=(const Iterator<Tuple<ll, Tuple<double, ll>>>& a, const Iterator<Tuple<ll, Tuple<double, ll>>>& b);
+template bool operator==(const Iterator<Tuple<ll, double>>& a, const Iterator<Tuple<ll, double>>& b);
+template bool operator!=(const Iterator<Tuple<ll, double>>& a, const Iterator<Tuple<ll, double>>& b);

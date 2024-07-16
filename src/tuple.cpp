@@ -11,11 +11,8 @@ bool Tuple<T1, T2>::operator==(const Tuple<T1, T2>& other) const {
     return (this->first == other.first && this->second == other.second);
 }
 
-template class Tuple<ll, ll>;
-template class Tuple<ll, int>;
+template class Tuple<ll, ll>; 
 template class Tuple<ll, double>;
 template class Tuple<double, double>;
-template class Tuple<double, ll>;
 template class Tuple<Tuple<ll, ll>, double>;
 template class Tuple<Tuple<ll, ll>, Tuple<double, double>>;
-template class Tuple<ll, Tuple<double, ll>>;
