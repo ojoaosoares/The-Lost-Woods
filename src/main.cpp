@@ -48,7 +48,8 @@ int main() {
     double s; ll q;
     std::cin >> s >> q;
     
-    std::cout << (dijkstra_ad_list(wood, 0, n-1, n, q) <= s) << '\n';    
-    std::cout << (dijkstra_ad_matrix(wood_matrix, 0, n-1, n, q) <= s) << '\n';    
-    std::cout << (aStar_ad_list(wood, 0, n-1, n, q) <= s) << '\n';    
+    std::cout << dijkstra_ad_list(wood, 0, n-1, n, q) << '\n';    
+    std::cout << dijkstra_ad_matrix(wood_matrix, 0, n-1, n, q) << '\n';    
+    std::cout << aStar_ad_list(wood, 0, n-1, n, q) << '\n';
+    std::cout << aStar_ad_matrix(wood_matrix, 0, n-1, n, q) << '\n';    
 }
