@@ -8,3 +8,10 @@ obj/
 
 *.o
 
+tests/
+
+graphs/
+
+.png
+
+.txt
