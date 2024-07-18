@@ -25,3 +25,4 @@ bool List<T>::Empty() const
 }
 
 template class List<Tuple<ll, double>>;
+template class List<ll>;

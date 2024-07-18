@@ -1,7 +1,7 @@
 #include "shortest_path.hpp"
 #include "euclidean_distance.hpp"
 
-double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed) {
+double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed, SinglyLinkedListUnordered<ll> &path) {
     
     const ll vert = graph.getVerticesNumber();
     const ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
@@ -68,9 +68,8 @@ double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const
     }
 
     ll atual = dest;
-    
     while (atual != -1) {
-        std::cout << atual << '\n';
+        path.insertBegin(atual);
         atual = visited[atual].second;
     }
 
@@ -78,7 +77,7 @@ double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const
 }
 
 
-double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed) {
+double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed, SinglyLinkedListUnordered<ll> &path) {
     
     const ll vert = graph.getVerticesNumber();
     const ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
@@ -96,14 +95,19 @@ double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll
     Tuple<Tuple<ll, ll>, Tuple<double, double>> curr_vertice, *exist; 
     SinglyLinkedListUnordered<Tuple<ll, double>> *neigh;
 
-    bool visited[vert]; for (ll i = 0; i < vert; i++) visited[i] = false;
+    Tuple<bool, ll> visited[vert]; 
+    for (ll i = 0; i < vert; i++)
+    {
+        visited[i].first = false;
+        visited[i].second = -1;
+    }
     // Initialazing the visited array
 
     while (!priority_queue.empty())
     {
         curr_vertice = priority_queue.remove();
 
-        visited[curr_vertice.first.first] = true;
+        visited[curr_vertice.first.first].first = true;
 
         if (curr_vertice.first.first == dest)
             break;
@@ -118,7 +122,7 @@ double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll
             if (edge->second == PORTAL_TYPE)
                 key.second++; // If were analyzing the portals, we increment the number of portals used 
 
-            if (key.second > portals_allowed || visited[key.first]) // First we verify if the number of portals used doesn't exceed the limit
+            if (key.second > portals_allowed || visited[key.first].first) // First we verify if the number of portals used doesn't exceed the limit
                 continue; 
 
             distance.first = curr_vertice.second.first + edge->second; // update distance
@@ -127,19 +131,31 @@ double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll
             exist = priority_queue.contains(key);
 
             if (exist == nullptr)
+            {   
                 priority_queue.insert(key, distance);
+                visited[key.first].second = curr_vertice.first.first;
+            }
             
             else if (distance.first < exist->second.first)
+            {
                 priority_queue.update(key, distance);
+                visited[key.first].second = curr_vertice.first.first;
+            }
                 
         }
+    }
+
+    ll atual = dest;
+    while (atual != -1) {
+        path.insertBegin(atual);
+        atual = visited[atual].second;
     }
 
     return (curr_vertice.first.first == dest) ? curr_vertice.second.first : -1;
 }
 
 
-double dijkstra_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed) {
+double dijkstra_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed, SinglyLinkedListUnordered<ll> &path) {
     
     const ll vert = graph.getVerticesNumber();
     const ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
@@ -155,14 +171,19 @@ double dijkstra_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const l
     Tuple<Tuple<ll, ll>, double> curr_vertice, *exist; 
     double *neigh;
 
-    bool visited[vert]; for (ll i = 0; i < vert; i++) visited[i] = false;
+    Tuple<bool, ll> visited[vert]; 
+    for (ll i = 0; i < vert; i++)
+    {
+        visited[i].first = false;
+        visited[i].second = -1;
+    }
     // Initialazing the visited array
 
     while (!priority_queue.empty())
     {
         curr_vertice = priority_queue.remove();
 
-        visited[curr_vertice.first.first] = true;
+        visited[curr_vertice.first.first].first = true;
 
         if (curr_vertice.first.first == dest)
             break;
@@ -177,7 +198,7 @@ double dijkstra_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const l
             if (neigh[vert] == PORTAL_TYPE)
                 key.second++; // If were analyzing the portals, we increment the number of portals used 
 
-            if (key.second > portals_allowed || visited[key.first] || neigh[vert] < 0) // First we verify if the number of portals used doesn't exceed the limit
+            if (key.second > portals_allowed || visited[key.first].first || neigh[vert] < 0) // First we verify if the number of portals used doesn't exceed the limit
                 continue; 
 
             distance = curr_vertice.second + neigh[vert]; // update distance
@@ -185,19 +206,31 @@ double dijkstra_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const l
             exist = priority_queue.contains(key);
 
             if (exist == nullptr)
+            {
                 priority_queue.insert(key, distance);
+                visited[key.first].second = curr_vertice.first.first;
+            }
             
             else if (distance < exist->second)
+            {
                 priority_queue.update(key, distance);
+                visited[key.first].second = curr_vertice.first.first;
+            }
                 
         }
+    }
+
+    ll atual = dest;
+    while (atual != -1) {
+        path.insertBegin(atual);
+        atual = visited[atual].second;
     }
 
     return (curr_vertice.first.first == dest) ? curr_vertice.second : -1;
 }
 
 
-double aStar_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed) {
+double aStar_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed, SinglyLinkedListUnordered<ll> &path) {
     
     const ll vert = graph.getVerticesNumber();
     const ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
@@ -215,14 +248,19 @@ double aStar_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &
     Tuple<Tuple<ll, ll>, Tuple<double, double>> curr_vertice, *exist; 
     double *neigh;
 
-    bool visited[vert]; for (ll i = 0; i < vert; i++) visited[i] = false;
+    Tuple<bool, ll> visited[vert]; 
+    for (ll i = 0; i < vert; i++)
+    {
+        visited[i].first = false;
+        visited[i].second = -1;
+    }
     // Initialazing the visited array
 
     while (!priority_queue.empty())
     {
         curr_vertice = priority_queue.remove();
 
-        visited[curr_vertice.first.first] = true;
+        visited[curr_vertice.first.first].first = true;
 
         if (curr_vertice.first.first == dest)
             break;
@@ -237,7 +275,7 @@ double aStar_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &
             if (neigh[vert] == PORTAL_TYPE)
                 key.second++; // If were analyzing the portals, we increment the number of portals used 
 
-            if (key.second > portals_allowed || visited[key.first] || neigh[vert] < 0) // First we verify if the number of portals used doesn't exceed the limit
+            if (key.second > portals_allowed || visited[key.first].first || neigh[vert] < 0) // First we verify if the number of portals used doesn't exceed the limit
                 continue; 
 
             distance.first = curr_vertice.second.first + neigh[vert]; // update distance
@@ -246,12 +284,24 @@ double aStar_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &
             exist = priority_queue.contains(key);
 
             if (exist == nullptr)
+            {   
                 priority_queue.insert(key, distance);
+                visited[key.first].second = curr_vertice.first.first;
+            }
             
             else if (distance.first < exist->second.first)
+            {
                 priority_queue.update(key, distance);
+                visited[key.first].second = curr_vertice.first.first;
+            }
                 
         }
+    }
+
+    ll atual = dest;
+    while (atual != -1) {
+        path.insertBegin(atual);
+        atual = visited[atual].second;
     }
 
     return (curr_vertice.first.first == dest) ? curr_vertice.second.first : -1;

@@ -44,6 +44,27 @@ int main() {
     double s; ll q;
     std::cin >> s >> q;
     
-    std::cout << (dijkstra_ad_list(wood, 0, n-1, q) <= s) << '\n';    
-    std::cout << (aStar_ad_list(wood, 0, n-1, q) <= s) << '\n';   
+    SinglyLinkedListUnordered<ll> dijkstraPath, aStarPath;
+
+    std::cout << (dijkstra_ad_list(wood, 0, n-1, q, dijkstraPath) <= s) << '\n';    
+    std::cout << (aStar_ad_list(wood, 0, n-1, q, aStarPath) <= s) << '\n';
+
+    std::cout << "Dijkstra path found\n";
+
+    for (auto vert = dijkstraPath.begin(); vert != dijkstraPath.end(); vert++)
+    {
+        std::cout << *vert << ' ';
+    }
+
+    std::cout << '\n';
+
+
+    std::cout << "A* path found\n";
+    
+    for (auto vert = aStarPath.begin(); vert != aStarPath.end(); vert++)
+    {
+        std::cout << *vert << ' ';
+    }
+
+    std::cout << '\n';
 }

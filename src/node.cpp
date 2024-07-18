@@ -9,3 +9,4 @@ Node<T>::Node(T item) : item(item), next(nullptr) {}
 
 
 template class Node<Tuple<ll, double>>;
+template class Node<ll>;

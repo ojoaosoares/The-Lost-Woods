@@ -111,4 +111,5 @@ int SinglyLinkedListUnordered<T>::search(T item) const
 }
 
 template class SinglyLinkedListUnordered<Tuple<ll, double>>;
+template class SinglyLinkedListUnordered<ll>;
 
