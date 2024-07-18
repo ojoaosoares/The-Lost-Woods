@@ -21,11 +21,11 @@ def main():
         G.add_node(i - 1, pos=(x, y))
         
     for i in range(verticesNumber + 1, verticesNumber + 1 + edgesNumber):
-        v1, v2 = map(float, lines[i].split())
+        v1, v2 = map(int, lines[i].split())
         G.add_edge(v1, v2, color='blue')
         
     for i in range(verticesNumber + 1 + edgesNumber, verticesNumber + 1 + edgesNumber + portalsNumber):
-        v1, v2 = map(float, lines[i].split())
+        v1, v2 = map(int, lines[i].split())
         G.add_edge(v1, v2, color='red')
         
         

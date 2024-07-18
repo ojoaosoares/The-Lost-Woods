@@ -18,6 +18,10 @@ def main():
         print("Use: max numbers of edges in a simple graph exceded")
         return
     
+    if (edgesNumber) < verticesNumber:
+        print("Use: min number of edges allowed exceded")
+        return
+    
     vertices = set()
     
     while len(vertices) < verticesNumber:
@@ -28,6 +32,12 @@ def main():
             
     edges = set()
     
+    atualVertice = 0
+    for i in range(1, verticesNumber - 1):
+        edges.add((atualVertice, i))
+        atualVertice = i
+        
+        
     while len(edges) < edgesNumber:
         v1 = random.randint(0, verticesNumber - 2)
         v2 = random.randint(1, verticesNumber - 1)
