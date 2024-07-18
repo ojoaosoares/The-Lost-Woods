@@ -14,7 +14,6 @@ int main() {
     std::cin >> n >> m >> k;
 
     Graph_Ad_List<Tuple<double, double>> wood(n);
-    Graph_Ad_Matrix<Tuple<double, double>> wood_matrix(n);
 
     for (size_t i = 0; i < n; i++)
     {
@@ -22,7 +21,6 @@ int main() {
         std::cin >> coordinates.first >> coordinates.second;
 
         wood.insertVertice(coordinates);
-        wood_matrix.insertVertice(coordinates);
     }
     
     for (size_t i = 0; i < m; i++)
@@ -33,7 +31,6 @@ int main() {
         double distance = euclidean_distance(wood.getVertice(vertices.first), wood.getVertice(vertices.second));
 
         wood.insertEdge(vertices.first, vertices.second, distance);
-        wood_matrix.insertEdge(vertices.first, vertices.second, distance);
     }
 
     for (size_t i = 0; i < k; i++)
@@ -42,14 +39,32 @@ int main() {
         std::cin >> vertices.first >> vertices.second;
 
         wood.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
-        wood_matrix.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
     }   
 
     double s; ll q;
     std::cin >> s >> q;
     
-    std::cout << dijkstra_ad_list(wood, 0, n-1, n, q) << '\n';    
-    std::cout << dijkstra_ad_matrix(wood_matrix, 0, n-1, n, q) << '\n';    
-    std::cout << aStar_ad_list(wood, 0, n-1, n, q) << '\n';
-    std::cout << aStar_ad_matrix(wood_matrix, 0, n-1, n, q) << '\n';    
+    SinglyLinkedListUnordered<ll> dijkstraPath, aStarPath;
+
+    std::cout << (dijkstra_ad_list(wood, 0, n-1, q, dijkstraPath) <= s) << '\n';    
+    std::cout << (aStar_ad_list(wood, 0, n-1, q, aStarPath) <= s) << '\n';
+
+    std::cout << "Dijkstra path found\n";
+
+    for (auto vert = dijkstraPath.begin(); vert != dijkstraPath.end(); vert++)
+    {
+        std::cout << *vert << ' ';
+    }
+
+    std::cout << '\n';
+
+
+    std::cout << "A* path found\n";
+    
+    for (auto vert = aStarPath.begin(); vert != aStarPath.end(); vert++)
+    {
+        std::cout << *vert << ' ';
+    }
+
+    std::cout << '\n';
 }
