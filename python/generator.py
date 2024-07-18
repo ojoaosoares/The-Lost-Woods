@@ -2,6 +2,10 @@ import sys
 import random
 import os
 from datetime import datetime
+import math
+
+def euclidean_distance(v1, v2):
+    return math.sqrt((v1[0] - v2[0]) ** 2 + (v1[1] - v2[1]) ** 2)
 
 def main():
     if len(sys.argv) != 4:
@@ -18,39 +22,53 @@ def main():
         print("Use: max numbers of edges in a simple graph exceded")
         return
     
-    if (edgesNumber) < verticesNumber:
-        print("Use: min number of edges allowed exceded")
-        return
+    # if (edgesNumber) < verticesNumber:
+    #     print("Use: min number of edges allowed exceded")
+    #     return
     
     vertices = set()
+    
+    min_distance = 5
     
     while len(vertices) < verticesNumber:
         x = verticesNumber * random.random()
         y = verticesNumber * random.random()
-        if (x, y) not in vertices:
+        if (x, y) not in vertices and all(euclidean_distance((x, y), v) >= min_distance for v in vertices):
             vertices.add((x,y))
-            
-    edges = set()
-    
-    atualVertice = 0
-    for i in range(1, verticesNumber - 1):
-        edges.add((atualVertice, i))
-        atualVertice = i
-        
-        
-    while len(edges) < edgesNumber:
-        v1 = random.randint(0, verticesNumber - 2)
-        v2 = random.randint(1, verticesNumber - 1)
-        if (v1, v2) not in edges and v1 != v2 and ((v2, v1) not in edges or len(edges) >= maxEdgesAllowed/2):
-            edges.add((v1,v2))
             
     portals = set()
             
     while len(portals) < portalsNumber:
         v1 = random.randint(0, verticesNumber - 2)
         v2 = random.randint(1, verticesNumber - 1)
-        if (v1, v2) not in edges and (v1, v2) not in portals and v1 != v2:
+        if (v1, v2) not in portals and v1 != v2:
             portals.add((v1,v2))
+            
+    vertices = list(vertices)
+    
+    possible_edges = []
+    for i in range(verticesNumber):
+        for j in range(verticesNumber):
+            if i != j and (i, j) not in portals:
+                distance = euclidean_distance(vertices[i], vertices[j])
+                possible_edges.append((distance, i, j))
+    
+    possible_edges.sort()
+    
+    edges = set()
+    
+    for i in range(0, len(possible_edges), 2):
+        _, v1, v2 = possible_edges[i + random.randint(0, 1)]
+        if len(edges) >= edgesNumber:
+            break
+        edges.add((v1, v2))
+        
+    while len(edges) < edgesNumber:
+        v1 = random.randint(0, verticesNumber - 2)
+        v2 = random.randint(1, verticesNumber - 1)
+        if (v1, v2) not in edges and v1 != v2:
+            edges.add((v1,v2))
+    
             
     directory = 'tests/'
     
