@@ -44,6 +44,6 @@ int main() {
     double s; ll q;
     std::cin >> s >> q;
     
-    std::cout << (dijkstra_ad_list(wood, 0, n-1, n, q) <= s) << '\n';    
-    std::cout << (aStar_ad_list(wood, 0, n-1, n, q) <= s) << '\n';   
+    std::cout << (dijkstra_ad_list(wood, 0, n-1, q) <= s) << '\n';    
+    std::cout << (aStar_ad_list(wood, 0, n-1, q) <= s) << '\n';   
 }

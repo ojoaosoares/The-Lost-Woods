@@ -1,12 +1,14 @@
 #include "shortest_path.hpp"
 #include "euclidean_distance.hpp"
 
-double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed) {
+double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed) {
     
-    Comp_Dijkstra comp; // A simple double comparator
-    Hash_Custom hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
-    ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
-    
+    const ll vert = graph.getVerticesNumber();
+    const ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
+
+    const Comp_Dijkstra comp; // A simple double comparator
+    const Hash_Custom hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
+
     Heap<Tuple<ll, ll>, double, Comp_Dijkstra, Hash_Custom> priority_queue(maxElements, comp, hash);
 
     Tuple<ll, ll> key(source, 0); double distance = 0;
@@ -76,11 +78,13 @@ double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const
 }
 
 
-double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed) {
+double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed) {
     
-    Comp_A_Star comp; // A simple double comparator
-    Hash_Custom hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
-    ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
+    const ll vert = graph.getVerticesNumber();
+    const ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
+
+    const Comp_A_Star comp; // A simple double comparator
+    const Hash_Custom hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
     
     Heap<Tuple<ll, ll>, Tuple<double, double>, Comp_A_Star, Hash_Custom> priority_queue(maxElements, comp, hash);
 
@@ -135,11 +139,13 @@ double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll
 }
 
 
-double dijkstra_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed) {
+double dijkstra_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed) {
     
-  Comp_Dijkstra comp; // A simple double comparator
-    Hash_Custom hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
-    ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
+    const ll vert = graph.getVerticesNumber();
+    const ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
+
+    const Comp_Dijkstra comp; // A simple double comparator
+    const Hash_Custom hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
     
     Heap<Tuple<ll, ll>, double, Comp_Dijkstra, Hash_Custom> priority_queue(maxElements, comp, hash);
 
@@ -191,10 +197,13 @@ double dijkstra_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const l
 }
 
 
-double aStar_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &vert, const ll &portals_allowed) {
-    Comp_A_Star comp; // A simple double comparator
-    Hash_Custom hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
-    ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
+double aStar_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed) {
+    
+    const ll vert = graph.getVerticesNumber();
+    const ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
+
+    const Comp_A_Star comp; // A simple double comparator
+    const Hash_Custom hash(vert, portals_allowed + 1); // Possible number of vertices, possible number of portals
     
     Heap<Tuple<ll, ll>, Tuple<double, double>, Comp_A_Star, Hash_Custom> priority_queue(maxElements, comp, hash);
 
