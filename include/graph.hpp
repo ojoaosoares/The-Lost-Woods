@@ -49,6 +49,7 @@ class Graph_Ad_Matrix
         ll getVerticesNumber() const;
         double* getNeighboors(const ll &v);
         void insertEdge(const ll &v1, const ll &v2, const double &W);
+        bool edgeExist(const ll &v1, const ll &v2) const;
 };
 
 #endif

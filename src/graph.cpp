@@ -139,4 +139,13 @@ void Graph_Ad_Matrix<Vert>::insertEdge(const ll &v1, const ll &v2, const double 
     adjacencyMatrix[v1][v2] = w;
 }
 
+
+template <typename Vert>
+bool Graph_Ad_Matrix<Vert>::edgeExist(const ll &v1, const ll &v2) const {
+    if(v1 < 0 || v1 >= verticesNumber || v2 < 0 || v2 >= verticesNumber)
+        throw std::out_of_range("Invalid Index");    
+
+    return adjacencyMatrix[v1][v2] != -1;
+}
+
 template class Graph_Ad_Matrix<Tuple<double, double>>;
