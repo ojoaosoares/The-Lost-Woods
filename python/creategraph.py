@@ -39,8 +39,7 @@ def main():
     plt.figure(figsize=(8, 6))
     nx.draw(G, pos, with_labels=True, edge_color=cores, node_color='lightblue', node_size=500, font_size=10, font_color='black')
     nx.draw_networkx_edges(G, pos, edge_color=cores, arrowstyle='->', arrowsize=20)
-    plt.title('Graph')
-    # plt.show()
+    plt.title(f'Graph with {verticesNumber} vertices, {edgesNumber} edges, and {portalsNumber} portals')
     
     directory = 'graphs/'
 
