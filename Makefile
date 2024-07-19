@@ -19,6 +19,11 @@ $(shell mkdir -p $(OBJ_FOLDER))
 
 $(shell mkdir -p $(BIN_FOLDER))
 
+
+ifeq ($(TEST), list-matrix)
+    CXXFLAGS += -DTEST_LIST_MATRIX
+endif
+
 $(OBJ_FOLDER)%.o: $(SRC_FOLDER)%.cpp
 	$(CC) $(CXXFLAGS) -c $< -o $@ -I$(INCLUDE_FOLDER)
 

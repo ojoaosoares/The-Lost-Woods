@@ -77,11 +77,11 @@ def main():
         _, v1, v2 = possible_edges[i]
         if len(edges) >= edgesNumber:
             break
-        if (edges_count[v1][0] < edges_count[v1][1]):
+        if (edges_count[v1][0] < edges_count[v1][1]) and (v1, v2) not in edges and (v1, v2) not in portals:
             edges.add((v1, v2))
             edges_count[v1] =  (edges_count[v1][0] + 1, edges_count[v1][1])
             edges_count[v2] = (edges_count[v2][0], edges_count[v2][1] + 1)
-        else:
+        elif (v2, v1) not in edges and (v2, v1) not in portals:
             edges.add((v2, v1))
             edges_count[v2] =  (edges_count[v2][0] + 1, edges_count[v2][1])
             edges_count[v1] = (edges_count[v1][0], edges_count[v1][1] + 1)
@@ -91,11 +91,11 @@ def main():
         _, v1, v2 = possible_edges[i]
         if len(edges) >= edgesNumber:
             break
-        if (v1, v2) not in edges:
+        if (v1, v2) not in edges and (v1, v2) not in portals:
             edges.add((v1, v2))
             edges_count[v1] =  (edges_count[v1][0] + 1, edges_count[v1][1])
             edges_count[v2] = (edges_count[v2][0], edges_count[v2][1] + 1)
-        else:
+        elif (v2, v1) not in edges and (v2, v1) not in portals:
             edges.add((v2, v1))
             edges_count[v2] =  (edges_count[v2][0] + 1, edges_count[v2][1])
             edges_count[v1] = (edges_count[v1][0], edges_count[v1][1] + 1)
@@ -103,7 +103,7 @@ def main():
     
     
             
-    directory = 'inputs/'
+    directory = 'tests/'
     
     os.makedirs(directory, exist_ok=True)
 
