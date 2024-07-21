@@ -65,11 +65,14 @@ void Heap<Key, Value, Comparator, Hash>::update(Key key, Value value) {
     if (item == nullptr)
         throw "Index doesn't exist";
 
+    
+    
+    Value temp = item->second;
     item->second = value;
-    if (comp(value, item->second))    
+
+    if (comp(value, temp))    
         heapifyDown(indexes[hash(key)]);
     
-
     else
         heapifyUp(indexes[hash(key)]);
     

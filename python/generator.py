@@ -15,16 +15,28 @@ def generate_random_point_near(v, min_distance, max_distance):
     return (x, y)
 
 def main():
-    if len(sys.argv) != 4:
-        print("Use: python3 generator.py <vertices> <edges> <portals>")
+    if len(sys.argv) != 6 and sys.argv[1] != 't' and sys.argv[1] != 'd':
+        print("Use: python3 generator.py </d> <vertices> <edges> <portals> <seed>")
+        print("Use: if you chose <t> the values of <edges> and <portals> must be integers values")
+        print("Use: if you chose <d> the values of <edges> and <portals> must be percentage (between 0 and 1)")
         return
     
-    verticesNumber = int(sys.argv[1])
-    edgesNumber = int(sys.argv[2])
-    portalsNumber = int(sys.argv[3])
+    seed = int(sys.argv[5])
+    random.seed(seed)
     
+    verticesNumber = int(sys.argv[2])
     maxEdgesAllowed = verticesNumber * (verticesNumber - 1)
     
+    if (sys.argv[1] == 't'):
+        edgesNumber = int(sys.argv[3]) - int(sys.argv[4])
+        portalsNumber = int(sys.argv[4])
+        
+    elif (sys.argv[1] == 'd'):
+        edgesNumber = int(float(sys.argv[3]) * maxEdgesAllowed * float((1 - float(sys.argv[4]))))
+        portalsNumber = int(float(sys.argv[3]) * maxEdgesAllowed * float(sys.argv[4]))
+        
+    
+        
     if (edgesNumber + portalsNumber) > maxEdgesAllowed:
         print("Use: max numbers of edges in a simple graph exceded")
         return
@@ -64,30 +76,34 @@ def main():
     
     possible_edges = []
     for i in range(verticesNumber):
-        for j in range(verticesNumber):
-            if i != j and (i, j) not in portals:
+        for j in range(i):
+            if (i, j) not in portals:
                 distance = euclidean_distance(vertices[i], vertices[j])
                 possible_edges.append((distance, i, j))
+            elif (j, i) not in portals:
+                distance = euclidean_distance(vertices[j], vertices[i])
+                possible_edges.append((distance, j, i))
     
     possible_edges.sort()
     
     edges = set()
     
-    for i in range(0, len(possible_edges), 2):
+    for i in range(len(possible_edges)):
         _, v1, v2 = possible_edges[i]
         if len(edges) >= edgesNumber:
             break
-        if (edges_count[v1][0] < edges_count[v1][1]) and (v1, v2) not in edges and (v1, v2) not in portals:
+        if (abs(edges_count[v1][0] - edges_count[v1][1] + 1) + abs(edges_count[v2][0] - edges_count[v2][1] - 1) < abs(edges_count[v1][0] - edges_count[v1][1] - 1) + abs(edges_count[v2][0] - edges_count[v2][1] + 1)) or (v2, v1) in portals:
             edges.add((v1, v2))
             edges_count[v1] =  (edges_count[v1][0] + 1, edges_count[v1][1])
             edges_count[v2] = (edges_count[v2][0], edges_count[v2][1] + 1)
-        elif (v2, v1) not in edges and (v2, v1) not in portals:
+        else:
             edges.add((v2, v1))
             edges_count[v2] =  (edges_count[v2][0] + 1, edges_count[v2][1])
             edges_count[v1] = (edges_count[v1][0], edges_count[v1][1] + 1)
             
     
-    for i in range(1, len(possible_edges), 2):
+    for i in range(len(possible_edges)):
+        
         _, v1, v2 = possible_edges[i]
         if len(edges) >= edgesNumber:
             break
@@ -109,7 +125,7 @@ def main():
 
     # Obter a data atual e formatar
     date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    file = f'{directory}test_{date}.txt'
+    file = f'{directory}test_{verticesNumber}_{edgesNumber}_{portalsNumber}_{date}.txt'
 
 
     with open(file, 'w') as f:

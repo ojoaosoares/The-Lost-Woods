@@ -8,13 +8,17 @@
 
 typedef long long ll;
 
+#define NONE_TEST_CODE 0
+#define DIJKSTRA_TEST_CODE 1
+#define ASTAR_TEST_CODE 2
+
 #ifdef TEST_LIST_MATRIX
 
 int main() {
     
     try
     {    
-        ll n, m, k; 
+        ll n = 0, m = 0, k = 0; 
         std::cin >> n >> m >> k;
 
         if(n <= 0)
@@ -70,10 +74,15 @@ int main() {
             wood_matrix.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
         }   
 
-        ll q; std::cin >> q;
-        
-        if(q < 0)
-            throw std::domain_error("Maximum of portals that can be used cannot be negative");
+        ll q = 0; std::cin >> q;
+
+        if(q < 0 || q > k)
+            throw std::domain_error("Invalid maximum of portals");
+
+        double *distanceToDest = new double[n];
+        for (ll i = 0; i < n; i++)
+            distanceToDest[i] = euclidean_distance(wood_list.getVertice(i), wood_list.getVertice(n - 1));
+        //distance to destiny array
 
         SinglyLinkedListUnordered<ll> dijkstraPath, aStarPath;
 
@@ -81,19 +90,21 @@ int main() {
 
         std::cout << "Adjacency list tests\n";
 
+        std::chrono::duration<double> duration;
+
         auto start = std::chrono::high_resolution_clock::now();
     
-        dijkstra_ad_list(wood_list, 0, n-1, q, dijkstraPath);
+        std::cout << dijkstra_ad_list(wood_list, 0, n-1, q, dijkstraPath) << '\n';
 
         auto end = std::chrono::high_resolution_clock::now();
 
-        std::chrono::duration<double> duration = end - start;
+        duration = end - start;
 
         std::cout << "\tDijkstra: " << duration.count() << " seconds" << std::endl;
 
         start = std::chrono::high_resolution_clock::now();
 
-        aStar_ad_list(wood_list, 0, n-1, q, aStarPath);
+        std::cout << aStar_ad_list(wood_list, 0, n-1, q, distanceToDest,aStarPath) << '\n';
 
         end = std::chrono::high_resolution_clock::now();
 
@@ -106,7 +117,7 @@ int main() {
 
         start = std::chrono::high_resolution_clock::now();
     
-        dijkstra_ad_matrix(wood_matrix, 0, n-1, q, dijkstraPath);
+        std::cout << dijkstra_ad_matrix(wood_matrix, 0, n-1, q, dijkstraPath) << '\n';
 
         end = std::chrono::high_resolution_clock::now();
 
@@ -116,7 +127,7 @@ int main() {
 
         start = std::chrono::high_resolution_clock::now();
 
-        aStar_ad_matrix(wood_matrix, 0, n-1, q, aStarPath);
+        std::cout << aStar_ad_matrix(wood_matrix, 0, n-1, q, distanceToDest, aStarPath) << '\n';
 
         end = std::chrono::high_resolution_clock::now();
 
@@ -124,7 +135,205 @@ int main() {
 
         std::cout << "\tA*: " << duration.count() << " seconds" << std::endl;
 
+        delete[] distanceToDest;
+
     }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+#elif TEST_LIST_SPACE
+
+int main() {
+    
+    try
+    {    
+        ll n = 0, m = 0, k = 0, dikOrAstar = 0; 
+        std::cin >> n >> m >> k >> dikOrAstar;
+
+        if(n <= 0)
+            throw std::domain_error("Vertices number cannot be negative or zero");
+
+        if(m < 0)
+            throw std::domain_error("Paths number cannot be negative");
+
+        if(k < 0)
+            throw std::domain_error("Portals number cannot be negative");
+
+        if ((m + k) > n * (n - 1))
+            throw std::domain_error("Maximum number of edges in a simple directed graph exced");
+
+        if (dikOrAstar != NONE_TEST_CODE && dikOrAstar != DIJKSTRA_TEST_CODE && dikOrAstar != ASTAR_TEST_CODE)
+        {
+            throw std::domain_error("Invalid test 0 for none type 1 for dijkstra 2 for A*");
+        }
+            
+        Graph_Ad_List<Tuple<double, double>> wood_list(n);
+
+        for (size_t i = 0; i < n; i++)
+        {
+            Tuple<double, double> coordinates;
+            std::cin >> coordinates.first >> coordinates.second;
+
+            if (wood_list.verticeExist(coordinates) != -1)
+                throw std::invalid_argument("Vertice already exist");
+
+            wood_list.insertVertice(coordinates);
+        }
+        
+        for (size_t i = 0; i < m; i++)
+        {
+            Tuple<ll, ll> vertices;
+            std::cin >> vertices.first >> vertices.second;
+
+            double distance = euclidean_distance(wood_list.getVertice(vertices.first), wood_list.getVertice(vertices.second));
+
+            if (wood_list.edgeExist(vertices.first, vertices.second))
+                throw std::invalid_argument("Path already exist");
+
+            wood_list.insertEdge(vertices.first, vertices.second, distance);
+        }
+
+        for (size_t i = 0; i < k; i++)
+        {
+            Tuple<ll, ll> vertices;
+            std::cin >> vertices.first >> vertices.second;
+
+            if (wood_list.edgeExist(vertices.first, vertices.second))
+                throw std::invalid_argument("Portal already exist");
+
+            wood_list.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
+        }   
+
+        ll q = 0; std::cin >> q;
+
+        if(q < 0 || q > k)
+            throw std::domain_error("Invalid maximum of portals");
+
+        if (dikOrAstar == DIJKSTRA_TEST_CODE)
+        {
+            SinglyLinkedListUnordered<ll> dijkstraPath;
+
+            dijkstra_ad_list(wood_list, 0, n-1, q, dijkstraPath);
+        }
+
+        else if(dikOrAstar == ASTAR_TEST_CODE)
+        {
+            double *distanceToDest = new double[n];
+            for (ll i = 0; i < n; i++)
+                distanceToDest[i] = euclidean_distance(wood_list.getVertice(i), wood_list.getVertice(n - 1));
+
+            SinglyLinkedListUnordered<ll> aStarPath;
+
+            aStar_ad_list(wood_list, 0, n-1, q, distanceToDest, aStarPath);
+
+            delete[] distanceToDest;
+        }
+
+        
+
+    }
+
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+
+#elif TEST_MATRIX_SPACE
+
+int main() {
+    
+    try
+    {    
+        ll n = 0, m = 0, k = 0, dikOrAstar = 0; 
+        std::cin >> n >> m >> k >> dikOrAstar;
+
+        if(n <= 0)
+            throw std::domain_error("Vertices number cannot be negative or zero");
+
+        if(m < 0)
+            throw std::domain_error("Paths number cannot be negative");
+
+        if(k < 0)
+            throw std::domain_error("Portals number cannot be negative");
+
+        if ((m + k) > n * (n - 1))
+            throw std::domain_error("Maximum number of edges in a simple directed graph exced");
+
+        if (dikOrAstar != NONE_TEST_CODE && dikOrAstar != DIJKSTRA_TEST_CODE && dikOrAstar != ASTAR_TEST_CODE)
+        {
+            throw std::domain_error("Invalid test 0 for none type 1 for dijkstra 2 for A*");
+        }
+        
+        Graph_Ad_Matrix<Tuple<double, double>> wood_matrix(n);
+
+        for (size_t i = 0; i < n; i++)
+        {
+            Tuple<double, double> coordinates;
+            std::cin >> coordinates.first >> coordinates.second;
+
+            if (wood_matrix.verticeExist(coordinates) != -1)
+                throw std::invalid_argument("Vertice already exist");
+
+            wood_matrix.insertVertice(coordinates);
+        }
+        
+        for (size_t i = 0; i < m; i++)
+        {
+            Tuple<ll, ll> vertices;
+            std::cin >> vertices.first >> vertices.second;
+
+            double distance = euclidean_distance(wood_matrix.getVertice(vertices.first), wood_matrix.getVertice(vertices.second));
+
+            if (wood_matrix.edgeExist(vertices.first, vertices.second))
+                throw std::invalid_argument("Path already exist");
+
+            wood_matrix.insertEdge(vertices.first, vertices.second, distance);
+        }
+
+        for (size_t i = 0; i < k; i++)
+        {
+            Tuple<ll, ll> vertices;
+            std::cin >> vertices.first >> vertices.second;
+
+            if (wood_matrix.edgeExist(vertices.first, vertices.second))
+                throw std::invalid_argument("Portal already exist");
+
+            wood_matrix.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
+        }   
+
+        ll q = 0; std::cin >> q;
+
+        if(q < 0 || q > k)
+            throw std::domain_error("Invalid maximum of portals");
+
+
+        if(dikOrAstar == DIJKSTRA_TEST_CODE)
+        {
+            SinglyLinkedListUnordered<ll> dijkstraPath;
+
+            dijkstra_ad_matrix(wood_matrix, 0, n-1, q, dijkstraPath);
+        }
+
+        else if (dikOrAstar == ASTAR_TEST_CODE)
+        {
+            double *distanceToDest = new double[n];
+            for (ll i = 0; i < n; i++)
+                distanceToDest[i] = euclidean_distance(wood_matrix.getVertice(i), wood_matrix.getVertice(n - 1));
+
+            SinglyLinkedListUnordered<ll> aStarPath;
+
+            aStar_ad_matrix(wood_matrix, 0, n-1, q, distanceToDest, aStarPath);
+
+            delete[] distanceToDest;
+        }
+
+    }
+
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
@@ -139,7 +348,7 @@ int main() {
     
     try
     {    
-        ll n, m, k; 
+        ll n = 0, m = 0, k = 0; 
         std::cin >> n >> m >> k;
 
         if(n <= 0)
@@ -191,20 +400,27 @@ int main() {
             wood.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
         }   
 
-        double s; ll q;
+        double s = 0; ll q = 0;
 
         std::cin >> s >> q;
 
         if(s < 0)
             throw std::domain_error("Energy cannot be negative");
 
-        if(q < 0)
-            throw std::domain_error("Maximum of portals that can be used cannot be negative");
+        if(q < 0 || q > k)
+            throw std::domain_error("Invalid maximum of portals");
+
+        double *distanceToDest = new double[n];
+        for (ll i = 0; i < n; i++)
+            distanceToDest[i] = euclidean_distance(wood.getVertice(i), wood.getVertice(n - 1));
+        //distance to destiny array
         
         SinglyLinkedListUnordered<ll> dijkstraPath, aStarPath;
 
         std::cout << (dijkstra_ad_list(wood, 0, n-1, q, dijkstraPath) <= s) << '\n';    
-        std::cout << (aStar_ad_list(wood, 0, n-1, q, aStarPath) <= s) << '\n';
+        std::cout << (aStar_ad_list(wood, 0, n-1, q, distanceToDest, aStarPath) <= s) << '\n';
+
+        delete[] distanceToDest;
 
     }
     catch(const std::exception& e)

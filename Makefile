@@ -22,6 +22,10 @@ $(shell mkdir -p $(BIN_FOLDER))
 
 ifeq ($(TEST), list-matrix)
     CXXFLAGS += -DTEST_LIST_MATRIX
+else ifeq ($(TEST), list-space)
+	CXXFLAGS += -DTEST_LIST_SPACE
+else ifeq ($(TEST), matrix-space)
+	CXXFLAGS += -DTEST_MATRIX_SPACE
 endif
 
 $(OBJ_FOLDER)%.o: $(SRC_FOLDER)%.cpp
