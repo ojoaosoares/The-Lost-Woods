@@ -27,6 +27,7 @@ class Graph_Ad_List
         SinglyLinkedListUnordered<Tuple<ll, double>>* getNeighboors(const ll &v) const;
         void insertEdge(const ll &v1, const ll &v2, const double &w);
         bool edgeExist(const ll &v1, const ll &v2) const;
+        bool portalExist(const ll &v1, const ll &v2) const;
 };
 
 template <typename Vert>

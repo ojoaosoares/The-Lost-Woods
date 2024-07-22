@@ -64,7 +64,22 @@ bool Graph_Ad_List<Vert>::edgeExist(const ll &v1, const ll &v2) const {
     SinglyLinkedListUnordered<Tuple<ll, double>> *neigh = &adjacencyLists[v1];
 
     for (auto edge = neigh->begin(); edge != neigh->end(); edge++)
-        if (edge->first == v2)
+        if (edge->first == v2 && edge->second != 0)
+            return true;
+
+    return false;
+}
+
+
+template <typename Vert>
+bool Graph_Ad_List<Vert>::portalExist(const ll &v1, const ll &v2) const {
+    if(v1 < 0 || v1 >= verticesNumber || v2 < 0 || v2 >= verticesNumber)
+        throw std::out_of_range("Invalid Index");
+
+    SinglyLinkedListUnordered<Tuple<ll, double>> *neigh = &adjacencyLists[v1];
+
+    for (auto edge = neigh->begin(); edge != neigh->end(); edge++)
+        if (edge->first == v2 && edge->second == 0)
             return true;
 
     return false;
