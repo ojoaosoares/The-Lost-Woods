@@ -10,6 +10,8 @@ Graph_Ad_List<Vert>::~Graph_Ad_List() {
 
 template <typename Vert>
 void Graph_Ad_List<Vert>::insertVertice(const Vert &item) {
+    if(verticesNumber >= maxVertices)
+        throw std::out_of_range("The number of vertices reached its limit");
     vertices[verticesNumber++] = item;
 }
 
@@ -74,34 +76,36 @@ template class Graph_Ad_List<Tuple<double, double>>;
 // Graph with adjacency matriz
 
 template <typename Vert>
-Graph_Ad_Matrix<Vert>::Graph_Ad_Matrix(const ll &v) : verticesNumber(0), maxVertices(v), vertices(new Vert[v]), adjacencyMatrix(new double*[v])  {
+Graph_Ad_Matriz<Vert>::Graph_Ad_Matriz(const ll &v) : verticesNumber(0), maxVertices(v), vertices(new Vert[v]), adjacencyMatriz(new double*[v])  {
     for (ll i = 0; i < maxVertices; i++)
-        adjacencyMatrix[i] = new double[maxVertices];
+        adjacencyMatriz[i] = new double[maxVertices];
 
 
     for (ll i = 0; i < maxVertices; i++)
         for (ll j = 0; j < maxVertices; j++)
-            adjacencyMatrix[i][j] = -1;
+            adjacencyMatriz[i][j] = -1;
     
 }
 
 template <typename Vert>
-Graph_Ad_Matrix<Vert>::~Graph_Ad_Matrix() {
+Graph_Ad_Matriz<Vert>::~Graph_Ad_Matriz() {
     delete[] vertices;
     
     for (ll i = 0; i < maxVertices; i++)
-        delete[] adjacencyMatrix[i];
+        delete[] adjacencyMatriz[i];
 
-    delete[] adjacencyMatrix;
+    delete[] adjacencyMatriz;
 }
 
 template <typename Vert>
-void Graph_Ad_Matrix<Vert>::insertVertice(const Vert &item) {
+void Graph_Ad_Matriz<Vert>::insertVertice(const Vert &item) {
+    if(verticesNumber >= maxVertices)
+        throw std::out_of_range("The number of vertices reached its limit");
     vertices[verticesNumber++] = item;
 }
 
 template <typename Vert>
-ll Graph_Ad_Matrix<Vert>::verticeExist(const Vert& item) const {
+ll Graph_Ad_Matriz<Vert>::verticeExist(const Vert& item) const {
     
     for (ll i = 0; i < verticesNumber; i++)
         if (vertices[i] == item)
@@ -111,7 +115,7 @@ ll Graph_Ad_Matrix<Vert>::verticeExist(const Vert& item) const {
 }
 
 template <typename Vert>
-Vert Graph_Ad_Matrix<Vert>::getVertice(const ll &index) const {
+Vert Graph_Ad_Matriz<Vert>::getVertice(const ll &index) const {
     if(index < 0 || index >= verticesNumber)
         throw std::out_of_range("Invalid Index");
         
@@ -119,33 +123,33 @@ Vert Graph_Ad_Matrix<Vert>::getVertice(const ll &index) const {
 }
 
 template <typename Vert>
-double* Graph_Ad_Matrix<Vert>::getNeighboors(const ll &v) {
+double* Graph_Ad_Matriz<Vert>::getNeighboors(const ll &v) {
     if(v < 0 || v >= verticesNumber)
         throw std::out_of_range("Invalid Index");
     
-    return &adjacencyMatrix[v][0];
+    return &adjacencyMatriz[v][0];
 }
 
 template <typename Vert>
-ll Graph_Ad_Matrix<Vert>::getVerticesNumber() const {
+ll Graph_Ad_Matriz<Vert>::getVerticesNumber() const {
     return verticesNumber;
 }
 
 template <typename Vert>
-void Graph_Ad_Matrix<Vert>::insertEdge(const ll &v1, const ll &v2, const double &w) {
+void Graph_Ad_Matriz<Vert>::insertEdge(const ll &v1, const ll &v2, const double &w) {
     if(v1 < 0 || v1 >= verticesNumber || v2 < 0 || v2 >= verticesNumber)
         throw std::out_of_range("Invalid Index");
          
-    adjacencyMatrix[v1][v2] = w;
+    adjacencyMatriz[v1][v2] = w;
 }
 
 
 template <typename Vert>
-bool Graph_Ad_Matrix<Vert>::edgeExist(const ll &v1, const ll &v2) const {
+bool Graph_Ad_Matriz<Vert>::edgeExist(const ll &v1, const ll &v2) const {
     if(v1 < 0 || v1 >= verticesNumber || v2 < 0 || v2 >= verticesNumber)
         throw std::out_of_range("Invalid Index");    
 
-    return adjacencyMatrix[v1][v2] != -1;
+    return adjacencyMatriz[v1][v2] != -1;
 }
 
-template class Graph_Ad_Matrix<Tuple<double, double>>;
+template class Graph_Ad_Matriz<Tuple<double, double>>;

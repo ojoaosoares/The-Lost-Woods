@@ -15,9 +15,9 @@ def generate_random_point_near(v, min_distance, max_distance):
     return (x, y)
 
 def main():
-    if len(sys.argv) != 6 and sys.argv[1] != 't' and sys.argv[1] != 'd':
-        print("Use: python3 generator.py </d> <vertices> <edges> <portals> <seed>")
-        print("Use: if you chose <t> the values of <edges> and <portals> must be integers values")
+    if len(sys.argv) != 6 or (sys.argv[1] != 't' and sys.argv[1] != 'd'):
+        print("Use: python3 generator.py <mode = i/d> <vertices> <edges> <portals> <seed>")
+        print("Use: if you chose <i> the values of <edges> and <portals> must be integers values")
         print("Use: if you chose <d> the values of <edges> and <portals> must be percentage (between 0 and 1)")
         return
     

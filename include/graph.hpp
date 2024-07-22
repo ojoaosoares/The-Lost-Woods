@@ -30,18 +30,18 @@ class Graph_Ad_List
 };
 
 template <typename Vert>
-class Graph_Ad_Matrix
+class Graph_Ad_Matriz
 {
     private:
     
         ll verticesNumber, maxVertices;
         Vert *vertices;
-        double **adjacencyMatrix;
+        double **adjacencyMatriz;
         
         
     public:
-        Graph_Ad_Matrix(const ll &v);
-        ~Graph_Ad_Matrix();
+        Graph_Ad_Matriz(const ll &v);
+        ~Graph_Ad_Matriz();
 
         void insertVertice(const Vert &item);
         ll verticeExist(const Vert& item) const;

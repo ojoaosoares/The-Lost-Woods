@@ -30,7 +30,7 @@ double dijkstra_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const
     {
         curr_vertice = priority_queue.remove();
 
-        for (ll i = curr_vertice.first.second; i < portals_allowed; i++)
+        for (ll i = curr_vertice.first.second; i < portals_allowed + 1; i++)
         {
             key = curr_vertice.first;
             key.second = i;
@@ -119,7 +119,7 @@ double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll
     {
         curr_vertice = priority_queue.remove();
 
-        for (ll i = curr_vertice.first.second; i < portals_allowed; i++)
+        for (ll i = curr_vertice.first.second; i < portals_allowed + 1; i++)
         {
             key = curr_vertice.first;
             key.second = i;
@@ -176,7 +176,7 @@ double aStar_ad_list(const Graph_Ad_List<Tuple<double, double>> &graph, const ll
 }
 
 
-double dijkstra_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed, SinglyLinkedListUnordered<ll> &path) {
+double dijkstra_ad_matriz(Graph_Ad_Matriz<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed, SinglyLinkedListUnordered<ll> &path) {
     
     const ll vert = graph.getVerticesNumber();
     const ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
@@ -205,7 +205,7 @@ double dijkstra_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const l
     {
         curr_vertice = priority_queue.remove();
 
-        for (ll i = curr_vertice.first.second; i < portals_allowed; i++)
+        for (ll i = curr_vertice.first.second; i < portals_allowed + 1; i++)
         {
             key = curr_vertice.first;
             key.second = i;
@@ -261,7 +261,7 @@ double dijkstra_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const l
 }
 
 
-double aStar_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed, double *distanceToDest, SinglyLinkedListUnordered<ll> &path)
+double aStar_ad_matriz(Graph_Ad_Matriz<Tuple<double, double>> &graph, const ll &source, const ll &dest, const ll &portals_allowed, double *distanceToDest, SinglyLinkedListUnordered<ll> &path)
 {    
     const ll vert = graph.getVerticesNumber();
     const ll maxElements = vert * (portals_allowed + 1); // number of vertices * possible number of portals
@@ -291,7 +291,7 @@ double aStar_ad_matrix(Graph_Ad_Matrix<Tuple<double, double>> &graph, const ll &
     {
         curr_vertice = priority_queue.remove();
 
-        for (ll i = curr_vertice.first.second; i < portals_allowed; i++)
+        for (ll i = curr_vertice.first.second; i < portals_allowed + 1; i++)
         {
             key = curr_vertice.first;
             key.second = i;
