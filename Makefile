@@ -19,6 +19,14 @@ $(shell mkdir -p $(OBJ_FOLDER))
 
 $(shell mkdir -p $(BIN_FOLDER))
 
+ifeq ($(TEST), algs)
+    CXXFLAGS += -DTEST_ALGS
+else ifeq ($(TEST), list-space)
+	CXXFLAGS += -DTEST_LIST_SPACE
+else ifeq ($(TEST), matriz-space)
+	CXXFLAGS += -DTEST_MATRIZ_SPACE
+endif
+
 $(OBJ_FOLDER)%.o: $(SRC_FOLDER)%.cpp
 	$(CC) $(CXXFLAGS) -c $< -o $@ -I$(INCLUDE_FOLDER)
 

@@ -2,38 +2,58 @@
 
 template <typename Key, typename Value, class Comparator, class Hash>
 Heap<Key, Value, Comparator, Hash>::Heap(ll maxsize, Comparator comp, Hash hash) : size(0), maxSize(maxsize), data(new Tuple<Key, Value>[maxsize]), indexes(new ll[maxsize]), comp(comp), hash(hash) {
+    // Input: (int) maxsize, (Comparator) comp, a custom class used to define de priorities,
+    // (Hash) has, a custom class to hash the key into the indexes array
+    // Complexity: O(maxsize)
+
     for (ll i = 0; i < maxsize; i++) indexes[i] = -1;
 }
 
 template <typename Key, typename Value, class Comparator, class Hash>
 Heap<Key, Value, Comparator, Hash>::~Heap() {
     delete[] data; delete[] indexes;
+    // Complexity: O(1)
 }
 
 template <typename Key, typename Value, class Comparator, class Hash>
 ll Heap<Key, Value, Comparator, Hash>::getFather(ll i){
+    // Input: (int) i, the index in the heap of the current item
+    // Output: (int) returns the index of the father of the current item
+    // Complexity: O(1)
     return (i-1)/2;
 }
 
 template <typename Key, typename Value, class Comparator, class Hash>
 ll Heap<Key, Value, Comparator, Hash>::getLeftChild(ll i){
+    // Input: (int) i, the index in the heap of the current item
+    // Output: (int) returns the index of the left child of the current item
+    // Complexity: O(1)
     return 2 * i + 1;
 }
 
 template <typename Key, typename Value, class Comparator, class Hash>
 ll Heap<Key, Value, Comparator, Hash>::getRightChild(ll i){
+    // Input: (int) i, the index in the heap of the current item
+    // Output: (int) returns the index of the right child of the current item
+    // Complexity: O(1)
     return 2 * i + 2;
 }
 
 template <typename Key, typename Value, class Comparator, class Hash>
 bool Heap<Key, Value, Comparator, Hash>::empty()
 {
+    // Output: (bool) returns if the heap is empty or not
+    // Complexity: O(1)
     return size == 0;
 }
 
 template <typename Key, typename Value, class Comparator, class Hash>
 Tuple<Key, Value>* Heap<Key, Value, Comparator, Hash>::contains(Key key)
 {
+    // Input: (Key) key, the key of the element being searched
+    // Output: (Tuple<Key, Value> *) returns a pointer to an element, if it exists
+    // Complexity: O(1)
+
     ll index = indexes[hash(key)];
 
     if (index == -1) return nullptr;
@@ -44,6 +64,9 @@ Tuple<Key, Value>* Heap<Key, Value, Comparator, Hash>::contains(Key key)
 
 template <typename Key, typename Value, class Comparator, class Hash>
 void Heap<Key, Value, Comparator, Hash>::insert(Key key, Value value) {
+
+    // Input: (Key) the key of the element being created, (Value) value, the value of the element
+    // Complexity: O(log(maxsize))
 
     if (size == maxSize)
         throw "Heap is full";
@@ -61,15 +84,20 @@ void Heap<Key, Value, Comparator, Hash>::insert(Key key, Value value) {
 template <typename Key, typename Value, class Comparator, class Hash>
 void Heap<Key, Value, Comparator, Hash>::update(Key key, Value value) {
 
+    // Input: (Key) the key of the element being updated, (Value) value, the new value of the element
+    // Complexity: O(log(maxsize))
+
     Tuple<Key, Value>* item = contains(key);
     if (item == nullptr)
         throw "Index doesn't exist";
 
+    
+    Value temp = item->second;
     item->second = value;
-    if (comp(value, item->second))    
+
+    if (comp(value, temp))    
         heapifyDown(indexes[hash(key)]);
     
-
     else
         heapifyUp(indexes[hash(key)]);
     
@@ -80,6 +108,8 @@ void Heap<Key, Value, Comparator, Hash>::update(Key key, Value value) {
 template <typename Key, typename Value, class Comparator, class Hash>
 Tuple<Key, Value> Heap<Key, Value, Comparator, Hash>::remove()
 {
+    // Complexity: O(log(maxsize))
+
     if (empty())
         throw "Heap is empty";
 
@@ -101,6 +131,8 @@ Tuple<Key, Value> Heap<Key, Value, Comparator, Hash>::remove()
 template <typename Key, typename Value, class Comparator, class Hash>
 void Heap<Key, Value, Comparator, Hash>::heapifyDown(ll pos)
 {
+    // Input: (int) the index of the element with the position being fixed
+    // Complexity: O(log(maxsize))
     ll current = pos, 
     father = getFather(current);
 
@@ -122,6 +154,9 @@ void Heap<Key, Value, Comparator, Hash>::heapifyDown(ll pos)
 template <typename Key, typename Value, class Comparator, class Hash>
 void Heap<Key, Value, Comparator, Hash>::heapifyUp(ll pos)
 {
+    // Input: (int) the index of the element with the position being fixed
+    // Complexity: O(log(maxsize))
+
     ll current = pos, smallest_child,
     left = getLeftChild(current),
     right = getRightChild(current);
@@ -160,16 +195,23 @@ void Heap<Key, Value, Comparator, Hash>::heapifyUp(ll pos)
 }
 
 Hash_Custom::Hash_Custom(ll vertice, ll portals) : vert(vertice), portals(portals) {}
+    // Complexity: O(log(1))
 
 ll Hash_Custom::operator() (const Tuple<ll, ll>& key) const {
     return (portals * key.first + key.second);
+    // Input: (Key) the key of the element being hashed
+    // Complexity: O(1)
 }
 
 bool Comp_Dijkstra::operator() (const double& v1, const double& v2) const {
+    // Input: (double) v1, (double) v2, the two elements being compared
+    // Complexity: O(1)
     return v1 < v2;
 }
 
 bool Comp_A_Star::operator() (const Tuple<double, double>& v1, const Tuple<double, double>& v2) const {
+    // Input: (Tuple<double, double>) v1, (Tuple<double, double>) v2, the two elements being compared
+    // Complexity: O(1)
     return v1.second + v1.first < v2.second + v2.first;
 }
 

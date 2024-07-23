@@ -27,28 +27,31 @@ class Graph_Ad_List
         SinglyLinkedListUnordered<Tuple<ll, double>>* getNeighboors(const ll &v) const;
         void insertEdge(const ll &v1, const ll &v2, const double &w);
         bool edgeExist(const ll &v1, const ll &v2) const;
+        bool portalExist(const ll &v1, const ll &v2) const;
 };
 
 template <typename Vert>
-class Graph_Ad_Matrix
+class Graph_Ad_Matriz
 {
     private:
-    
         ll verticesNumber, maxVertices;
         Vert *vertices;
-        double **adjacencyMatrix;
+        Tuple<double, bool> **adjacencyMatriz;
         
         
     public:
-        Graph_Ad_Matrix(const ll &v);
-        ~Graph_Ad_Matrix();
+        Graph_Ad_Matriz(const ll &v);
+        ~Graph_Ad_Matriz();
 
         void insertVertice(const Vert &item);
         ll verticeExist(const Vert& item) const;
         Vert getVertice(const ll &index) const;
         ll getVerticesNumber() const;
-        double* getNeighboors(const ll &v);
+        Tuple<double, bool>* getNeighboors(const ll &v);
         void insertEdge(const ll &v1, const ll &v2, const double &W);
+        void insertPortal(const ll &v1, const ll &v2);
+        bool edgeExist(const ll &v1, const ll &v2) const;
+        bool portalExist(const ll &v1, const ll &v2) const;
 };
 
 #endif
