@@ -190,7 +190,7 @@ double dijkstra_ad_matriz(Graph_Ad_Matriz<Tuple<double, double>> &graph, const l
     priority_queue.insert(key, distance);
 
     Tuple<Tuple<ll, ll>, double> curr_vertice, *exist = nullptr; 
-    double *neigh = nullptr;
+    Tuple<double, bool> *neigh = nullptr;
 
     Tuple<bool, Tuple<ll, ll>> *visited = new Tuple<bool, Tuple<ll, ll>>[maxElements]; 
 
@@ -221,31 +221,57 @@ double dijkstra_ad_matriz(Graph_Ad_Matriz<Tuple<double, double>> &graph, const l
 
         for (ll vert = 0; vert < graph.getVerticesNumber(); vert++)
         {
-            key.first = vert; 
-            key.second = curr_vertice.first.second;
-
-            if (neigh[vert] == PORTAL_TYPE)
-                key.second++; // If were analyzing the portals, we increment the number of portals used 
-
-            if (visited[hash(key)].first || neigh[vert] < 0 || key.second > portals_allowed) // First we verify if the number of portals used doesn't exceed the limit
-                continue; 
-
-            distance = curr_vertice.second + neigh[vert]; // update distance
-
-            exist = priority_queue.contains(key);
-
-            if (exist == nullptr)
+            if (neigh[vert].first > 0)
             {
-                priority_queue.insert(key, distance);
-                visited[hash(key)].second = curr_vertice.first;
-            }
-            
-            else if (distance < exist->second)
-            {
-                priority_queue.update(key, distance);
-                visited[hash(key)].second = curr_vertice.first;
-            }
+                key.first = vert; 
+                key.second = curr_vertice.first.second;
+
+                if (visited[hash(key)].first)
+                    continue; 
+
+                distance = curr_vertice.second + neigh[vert].first; // update distance
+
+                exist = priority_queue.contains(key);
+
+                if (exist == nullptr)
+                {
+                    priority_queue.insert(key, distance);
+                    visited[hash(key)].second = curr_vertice.first;
+                }
                 
+                else if (distance < exist->second)
+                {
+                    priority_queue.update(key, distance);
+                    visited[hash(key)].second = curr_vertice.first;
+                }
+            }
+
+            if (neigh[vert].second == true)
+            {
+                key.first = vert; 
+                key.second = curr_vertice.first.second + 1;
+
+                // If were analyzing the portals, we increment the number of portals used 
+
+                if (visited[hash(key)].first || key.second > portals_allowed) // First we verify if the number of portals used doesn't exceed the limit
+                    continue; 
+
+                distance = curr_vertice.second; // update distance
+
+                exist = priority_queue.contains(key);
+
+                if (exist == nullptr)
+                {
+                    priority_queue.insert(key, distance);
+                    visited[hash(key)].second = curr_vertice.first;
+                }
+                
+                else if (distance < exist->second)
+                {
+                    priority_queue.update(key, distance);
+                    visited[hash(key)].second = curr_vertice.first;
+                }
+            }     
         }
     }
 
@@ -285,7 +311,7 @@ double aStar_ad_matriz(Graph_Ad_Matriz<Tuple<double, double>> &graph, const ll &
     priority_queue.insert(key, distance);
 
     Tuple<Tuple<ll, ll>, Tuple<double, double>> curr_vertice, *exist = nullptr; 
-    double *neigh = nullptr;
+    Tuple<double, bool> *neigh = nullptr;
 
     while (!priority_queue.empty())
     {
@@ -307,31 +333,60 @@ double aStar_ad_matriz(Graph_Ad_Matriz<Tuple<double, double>> &graph, const ll &
 
         for (ll vert = 0; vert < graph.getVerticesNumber(); vert++)
         {
-            key.first = vert; 
-            key.second = curr_vertice.first.second;
 
-            if (neigh[vert] == PORTAL_TYPE)
-                key.second++; // If were analyzing the portals, we increment the number of portals used 
-
-            if (neigh[vert] < 0  || visited[hash(key)].first ||key.second > portals_allowed) // First we verify if the number of portals used doesn't exceed the limit
-                continue; 
-
-            distance.first = curr_vertice.second.first + neigh[vert]; // update distance
-            distance.second = distanceToDest[key.first];
-
-            exist = priority_queue.contains(key);
-
-            if (exist == nullptr)
-            {   
-                priority_queue.insert(key, distance);
-                visited[hash(key)].second = curr_vertice.first;
-            }
-            
-            else if (distance.first < exist->second.first)
+            if (neigh[vert].first > 0)
             {
-                priority_queue.update(key, distance);
-                visited[hash(key)].second = curr_vertice.first;
+                key.first = vert; 
+                key.second = curr_vertice.first.second;
+
+                if (visited[hash(key)].first)
+                    continue; 
+
+                distance.first = curr_vertice.second.first + neigh[vert].first; // update distance
+                distance.second = distanceToDest[key.first];
+
+                exist = priority_queue.contains(key);
+
+                if (exist == nullptr)
+                {
+                    priority_queue.insert(key, distance);
+                    visited[hash(key)].second = curr_vertice.first;
+                }
+                
+                else if (distance.first < exist->second.first)
+                {
+                    priority_queue.update(key, distance);
+                    visited[hash(key)].second = curr_vertice.first;
+                }
             }
+
+            if (neigh[vert].second == true)
+            {
+                key.first = vert; 
+                key.second = curr_vertice.first.second + 1;
+
+                // If were analyzing the portals, we increment the number of portals used 
+
+                if (visited[hash(key)].first || key.second > portals_allowed) // First we verify if the number of portals used doesn't exceed the limit
+                    continue; 
+
+                distance.first = curr_vertice.second.first;
+                distance.second = distanceToDest[key.first];
+
+                exist = priority_queue.contains(key);
+
+                if (exist == nullptr)
+                {
+                    priority_queue.insert(key, distance);
+                    visited[hash(key)].second = curr_vertice.first;
+                }
+                
+                else if (distance.first < exist->second.first)
+                {
+                    priority_queue.update(key, distance);
+                    visited[hash(key)].second = curr_vertice.first;
+                }
+            }     
                 
         }
     }

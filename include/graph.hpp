@@ -34,10 +34,9 @@ template <typename Vert>
 class Graph_Ad_Matriz
 {
     private:
-    
         ll verticesNumber, maxVertices;
         Vert *vertices;
-        double **adjacencyMatriz;
+        Tuple<double, bool> **adjacencyMatriz;
         
         
     public:
@@ -48,9 +47,11 @@ class Graph_Ad_Matriz
         ll verticeExist(const Vert& item) const;
         Vert getVertice(const ll &index) const;
         ll getVerticesNumber() const;
-        double* getNeighboors(const ll &v);
+        Tuple<double, bool>* getNeighboors(const ll &v);
         void insertEdge(const ll &v1, const ll &v2, const double &W);
+        void insertPortal(const ll &v1, const ll &v2);
         bool edgeExist(const ll &v1, const ll &v2) const;
+        bool portalExist(const ll &v1, const ll &v2) const;
 };
 
 #endif

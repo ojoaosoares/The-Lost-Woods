@@ -28,14 +28,12 @@ def main():
     maxEdgesAllowed = verticesNumber * (verticesNumber - 1)
     
     if (sys.argv[1] == 't'):
-        edgesNumber = int(sys.argv[3]) - int(sys.argv[4])
+        edgesNumber = int(sys.argv[3])
         portalsNumber = int(sys.argv[4])
         
     elif (sys.argv[1] == 'd'):
-        edgesNumber = int(float(sys.argv[3]) * maxEdgesAllowed * float((1 - float(sys.argv[4]))))
-        portalsNumber = int(float(sys.argv[3]) * maxEdgesAllowed * float(sys.argv[4]))
-        
-    
+        edgesNumber = int(float(sys.argv[3]) * maxEdgesAllowed )
+        portalsNumber = int(maxEdgesAllowed * float(sys.argv[4]))
         
     if (edgesNumber + portalsNumber) > maxEdgesAllowed:
         print("Use: max numbers of edges in a simple graph exceded")

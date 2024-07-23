@@ -71,8 +71,6 @@ int main() {
         if(k < 0)
             throw std::domain_error("Portals number cannot be negative");
 
-        if ((m + k) > n * (n - 1))
-            throw std::domain_error("Maximum number of edges in a simple directed graph exced");
         
         Graph_Ad_List<Tuple<double, double>> wood_list(n);
         Graph_Ad_Matriz<Tuple<double, double>> wood_matriz(n);
@@ -108,11 +106,11 @@ int main() {
             Tuple<ll, ll> vertices;
             std::cin >> vertices.first >> vertices.second;
 
-            if (wood_matriz.edgeExist(vertices.first, vertices.second))
+            if (wood_matriz.portalExist(vertices.first, vertices.second))
                 throw std::invalid_argument("Portal already exist");
 
             wood_list.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
-            wood_matriz.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
+            wood_matriz.insertPortal(vertices.first, vertices.second);
         }   
 
         ll q = k/10; std::cin >> q;
@@ -235,9 +233,6 @@ int main() {
         if(k < 0)
             throw std::domain_error("Portals number cannot be negative");
 
-        if ((m + k) > n * (n - 1))
-            throw std::domain_error("Maximum number of edges in a simple directed graph exced");
-
         if (dijkOrAstar != NONE_TEST_CODE && dijkOrAstar != DIJKSTRA_TEST_CODE && dijkOrAstar != ASTAR_TEST_CODE)
         {
             throw std::domain_error("Invalid test 0 for none type 1 for dijkstra 2 for A*");
@@ -274,7 +269,7 @@ int main() {
             Tuple<ll, ll> vertices;
             std::cin >> vertices.first >> vertices.second;
 
-            if (wood_list.edgeExist(vertices.first, vertices.second))
+            if (wood_list.portalExist(vertices.first, vertices.second))
                 throw std::invalid_argument("Portal already exist");
 
             wood_list.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
@@ -334,9 +329,6 @@ int main() {
         if(k < 0)
             throw std::domain_error("Portals number cannot be negative");
 
-        if ((m + k) > n * (n - 1))
-            throw std::domain_error("Maximum number of edges in a simple directed graph exced");
-
         if (dijkOrAstar != NONE_TEST_CODE && dijkOrAstar != DIJKSTRA_TEST_CODE && dijkOrAstar != ASTAR_TEST_CODE)
         {
             throw std::domain_error("Invalid test 0 for none type 1 for dijkstra 2 for A*");
@@ -373,7 +365,7 @@ int main() {
             Tuple<ll, ll> vertices;
             std::cin >> vertices.first >> vertices.second;
 
-            if (wood_matriz.edgeExist(vertices.first, vertices.second))
+            if (wood_matriz.portalExist(vertices.first, vertices.second))
                 throw std::invalid_argument("Portal already exist");
 
             wood_matriz.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
@@ -432,9 +424,6 @@ int main() {
 
         if(k < 0)
             throw std::domain_error("Portals number cannot be negative");
-
-        if ((m + k) > n * (n - 1))
-            throw std::domain_error("Maximum number of edges in a simple directed graph exced");
         
         Graph_Ad_List<Tuple<double, double>> wood(n);
 
@@ -467,7 +456,7 @@ int main() {
             Tuple<ll, ll> vertices;
             std::cin >> vertices.first >> vertices.second;
 
-            if (wood.edgeExist(vertices.first, vertices.second))
+            if (wood.portalExist(vertices.first, vertices.second))
                 throw std::invalid_argument("Portal already exist");
 
             wood.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
@@ -480,7 +469,7 @@ int main() {
         if(s < 0)
             throw std::domain_error("Energy cannot be negative");
 
-        if(q < 0 || q > k)
+        if(q < 0)
             throw std::domain_error("Invalid maximum of portals");
 
         double *distanceToDest = new double[n];
