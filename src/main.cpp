@@ -432,8 +432,8 @@ int main() {
             Tuple<double, double> coordinates;
             std::cin >> coordinates.first >> coordinates.second;
 
-            if (wood.verticeExist(coordinates) != -1)
-                throw std::invalid_argument("Vertice already exist");
+            // if (wood.verticeExist(coordinates) != -1)
+            //     throw std::invalid_argument("Vertice already exist");
 
             wood.insertVertice(coordinates);
         }
@@ -445,8 +445,8 @@ int main() {
 
             double distance = euclidean_distance(wood.getVertice(vertices.first), wood.getVertice(vertices.second));
 
-            if (wood.edgeExist(vertices.first, vertices.second))
-                throw std::invalid_argument("Path already exist");
+            // if (wood.edgeExist(vertices.first, vertices.second))
+            //     throw std::invalid_argument("Path already exist");
 
             wood.insertEdge(vertices.first, vertices.second, distance);
         }
@@ -456,13 +456,13 @@ int main() {
             Tuple<ll, ll> vertices;
             std::cin >> vertices.first >> vertices.second;
 
-            if (wood.portalExist(vertices.first, vertices.second))
-                throw std::invalid_argument("Portal already exist");
+            // if (wood.portalExist(vertices.first, vertices.second))
+            //     throw std::invalid_argument("Portal already exist");
 
             wood.insertEdge(vertices.first, vertices.second, PORTAL_TYPE);
         }   
 
-        double s = 0; ll q = 0;
+        double s = 105; ll q = k/10;
 
         std::cin >> s >> q;
 
