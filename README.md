@@ -1,7 +1,5 @@
 # The Lost Woods
 
-# Dijkstra vs A* Algorithm Comparison
-
 ## Introduction
 
 This project compares the performance of the **Dijkstra** and **A*** algorithms in a graph traversal scenario. The graph includes vertices with coordinates, trails with Euclidean distances, and portals that act as zero-distance paths. The A* algorithm uses the Euclidean distance as its heuristic function. The goal is to find the shortest path from a starting vertex to a destination vertex while considering a limited energy budget and a maximum number of usable portals.
