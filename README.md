@@ -66,9 +66,9 @@ After compiling, run the program using:
 ./bin/a.out < input_file.txt
 ```
 
-# Input File Format
+## Input File Format
 
-## First Line
+### First Line
 - **n**: Number of vertices.  
 - **m**: Number of trails.  
 - **k**: Number of portals.  
@@ -77,20 +77,20 @@ After compiling, run the program using:
   - `1` for Dijkstra  
   - `2` for A*  
 
-## Next `n` Lines
+### Next `n` Lines
 Each line contains the **x** and **y** coordinates of a vertex.  
 
-## Next `m` Lines
+### Next `m` Lines
 Each line contains two integers representing the **start** and **end** vertices of a trail.  
 
-## Next `k` Lines
+### Next `k` Lines
 Each line contains two integers representing the **start** and **end** vertices of a portal.  
 
-## Last Line
+### Last Line
 - **s**: The amount of energy available.  
 - **q**: The maximum number of usable portals.  
 
 
-# Program Output
+## Program Output
 
 The output of the program depends on the compilation type.
